@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+</head>
+<body>
+<div id="wrapper">
+    <p class = "subtitle">환영합니다!</p>
+    <h1 class = "title">I Can Do IT콘텐츠과</h1>
+    <form action="/user/login" th:object="${userForm}" method="post">
+        <div class="login">
+            <div class="loginId">
+                <input class = "Input-Id" type="text" th:field="*{loginId}" placeholder="이메일을 입력해 주세요.">
+            </div>
+            <div class="loginPw">
+                <input class = "Input-Pw" type="text" th:field="*{loginPw}" placeholder="비밀번호를 입력해 주세요.">
+                 <input type="checkbox"/><br>
+            </div>
+            <button type="submit" value="Submit" id="loginbutton">로그인</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
