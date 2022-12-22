@@ -14,9 +14,15 @@
             <div class="loginId">
                 <input class = "Input-Id" type="text" th:field="*{loginId}" placeholder="이메일을 입력해 주세요.">
             </div>
+            <div class="invalid-feedback-login" th:errors="*{loginId}" style="display:block;">
+                Please select a valid state.
+            </div>
             <div class="loginPw">
                 <input class = "Input-Pw" type="text" th:field="*{loginPw}" placeholder="비밀번호를 입력해 주세요.">
                  <input type="checkbox"/><br>
+            </div>
+            <div class="invalid-feedback-password" th:errors="*{loginPw}" style="display:block;">
+                Please select a valid state.
             </div>
             <button type="submit" value="Submit" id="loginbutton">로그인</button>
         </div>
