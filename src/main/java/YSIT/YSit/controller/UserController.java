@@ -4,6 +4,7 @@ import YSIT.YSit.domain.SchoolCategory;
 import YSIT.YSit.domain.User;
 import YSIT.YSit.repository.UserRepository;
 import YSIT.YSit.service.UserService;
+import com.mysql.cj.util.StringUtils;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,11 +31,16 @@ public class UserController {
     }
     @PostMapping("/user/register") // 회원가입 기능
     public String register(@Valid @ModelAttribute UserForm form, BindingResult result) {
+        if(!userService.doublecheckLoginId(form.getLoginId()).isEmpty()){
+            result.rejectValue("loginId", "sameId");
+        }
+
         if (result.hasErrors()) {
             return "/user/Register";
         }
+
         SchoolCategory schoolCategory;
-//        log.info("\nrank = {}", form.getRank());
+
         if (form.getRank()){
             schoolCategory = SchoolCategory.STUDENT;
         } else {
@@ -59,13 +65,28 @@ public class UserController {
         return "user/Login";
     }
     @PostMapping("/user/login") // 로그인 기능
-    public String login(UserForm form) {
-        try {
-            userService.matchLogins(form.getLoginId(), form.getLoginPw());
-        } catch (IllegalStateException e) {
-//            Errors errors = null;
-//            errors.rejectValue(invalidId);
+    public String login(@ModelAttribute UserForm form, BindingResult result) {
+        if(form.getLoginId().isBlank()){
+            result.rejectValue("loginId", "required");
         }
+        if(form.getLoginPw().isBlank()){
+            result.rejectValue("loginPw", "required");
+        }
+        if (result.hasErrors()) {
+            return "user/Login";
+        }
+
+        if(form.getLoginId().isBlank()){
+            result.rejectValue("name", "required");
+        }
+        if (userService.matchLogins(form.getLoginId(), form.getLoginPw()).isEmpty()) {
+            result.rejectValue("loginPw", "validLogin");
+        }
+
+        if (result.hasErrors()) {
+            return "user/Login";
+        }
+
         return "redirect:/";
     }
 

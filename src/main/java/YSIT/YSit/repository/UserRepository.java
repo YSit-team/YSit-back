@@ -2,10 +2,7 @@ package YSIT.YSit.repository;
 
 import YSIT.YSit.domain.SchoolCategory;
 import YSIT.YSit.domain.User;
-import YSIT.YSit.service.UserService;
-import com.mysql.cj.protocol.a.authentication.Sha256PasswordPlugin;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Table;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -26,7 +23,7 @@ public class UserRepository {
         return em.find(User.class, id);
     }
 
-    public List<User> findIdAndPw(String loginId, String loginPw) {
+    public List<User> findLoginIdAndPw(String loginId, String loginPw) {
         return em.createQuery("select u from User u where u.loginId = :loginId and u.loginPw = :loginPw", User.class)
                 .setParameter("loginId", loginId)
                 .setParameter("loginPw", loginPw)

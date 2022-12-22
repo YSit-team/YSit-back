@@ -2,11 +2,7 @@ package YSIT.YSit.service;
 
 import YSIT.YSit.domain.User;
 import YSIT.YSit.repository.UserRepository;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.io.UnsupportedEncodingException;
 
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,27 +14,23 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class UserService {
     private final UserRepository userRepository;
-    private final EntityManager em;
 
     @Transactional(readOnly = false)
     public Long register(User user) {
-        doublecheckLoginId(user);
+        List<User> findDoubleCheck = doublecheckLoginId(user.getLoginId());
+        if (!findDoubleCheck.isEmpty()){
+            throw new IllegalStateException("Id already exists");
+        }
         userRepository.save(user);
         return user.getId();
     }
 
-    private void doublecheckLoginId(User user) { // 아이디 중복확인
-        List<User> findLoginId = userRepository.findLoginId(user.getLoginId());
-        if (!findLoginId.isEmpty()) {
-            throw new IllegalStateException("Id already exists");
-        }
+    public List<User> doublecheckLoginId(String LoginId) { // 아이디 중복확인
+        return userRepository.findLoginId(LoginId);
     }
 
-    public void matchLogins(String loginId, String loginPw) { //
-        List<User> findLogins = userRepository.findIdAndPw(loginId, userRepository.encryption(loginPw));
-        if (findLogins.isEmpty()) {
-            throw new IllegalStateException("ID 혹은 PASSWORD가 틀렸습니다.");
-        }
+    public List<User> matchLogins(String loginId, String loginPw) { //
+        return userRepository.findLoginIdAndPw(loginId, userRepository.encryption(loginPw));
     }
 
     public List<User> findUserAll() {
