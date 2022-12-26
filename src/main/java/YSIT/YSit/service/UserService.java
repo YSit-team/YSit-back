@@ -33,6 +33,26 @@ public class UserService {
         return userRepository.findLoginIdAndPw(loginId, userRepository.encryption(loginPw));
     }
 
+    @Transactional(readOnly = false) // Dirty Check
+    public void updateUser(User updateData) {
+        User user1 = userRepository.findOne(updateData.getId());
+        if (updateData.getName() != null) {
+            user1.changeName(updateData.getName());
+        }
+        if (updateData.getLoginId() != null) {
+            user1.changeLoginId(updateData.getLoginId());
+        }
+        if (updateData.getLoginId() != null) {
+            user1.changeLoginPw(updateData.getLoginPw());
+        }
+        if (updateData.getSchoolCategory() != null) {
+            user1.changeSchoolCategory(updateData.getSchoolCategory());
+        }
+    }
+    public void deleteById(Long Id) {
+        userRepository.deleteById(Id);
+    }
+
     public List<User> findUserAll() {
         return userRepository.findAll();
     }

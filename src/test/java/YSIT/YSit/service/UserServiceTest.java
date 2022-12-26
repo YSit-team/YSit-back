@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -155,12 +156,35 @@ class UserServiceTest {
                 .loginId(loginId2)
                 .loginPw(userRepository.encryption(loginPw))
                 .build();
-        userRepository.updateUser(user);
+        userService.updateUser(user);
         em.flush();
         User result = userRepository.findOne(user1.getId());
         if (result.getName() == name2) {
             return;
         }
+        User temp = userRepository.findOne(2L);
+        if (temp.getName() == null) {
+            return;
+        }
         fail("실패");
+    }
+
+    @Test
+    public void deleteTest() {
+        String name = "Test";
+        String loginId = "Test";
+        String loginPw = "Test";
+        User user1 = User.builder()
+                .name(name)
+                .loginId(loginId)
+                .loginPw(userRepository.encryption(loginPw))
+                .build();
+        userService.register(user1);
+        Long Id = user1.getId();
+        userService.deleteById(Id);
+        User user = userRepository.findOne(Id);
+        if (!Objects.isNull(user)){
+            fail("실패");
+        }
     }
 }

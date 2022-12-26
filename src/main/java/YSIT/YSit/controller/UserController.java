@@ -39,11 +39,10 @@ public class UserController {
         List<User> tempUser = userService.doublecheckLoginId(form.getLoginId());
         if(!tempUser.isEmpty()){
             result.rejectValue("loginId", "sameId");
+            return "/user/Register";
         }
         if(form.getLoginId().isBlank() || form.getLoginPw().isBlank() || form.getName().isBlank()){
             result.rejectValue("loginId", "required");
-        }
-        if (result.hasErrors()) {
             return "/user/Register";
         }
 
@@ -91,11 +90,11 @@ public class UserController {
             return "user/Login";
         }
 
-//        User user = matchLogins.get(0);
-//
-//        // 쿠키 처리
-//        Cookie cookie = new Cookie("Id", String.valueOf(user.getId()));
-//        response.addCookie(cookie);
+        User user = matchLogins.get(0);
+
+        // 쿠키 처리
+        Cookie cookie = new Cookie("Id", String.valueOf(user.getId()));
+        response.addCookie(cookie);
 
         return "home";
     }
@@ -108,8 +107,6 @@ public class UserController {
 
     @PostMapping("/user/userList")
     public String userList(@ModelAttribute UserListForm form, Model model) {
-        log.info("\nstudent = {}\nteacher = {}", form.getStudent(), form.getTeacher());
-
         int check_bool = 0;
         List<User> findList = null;
 
@@ -142,29 +139,40 @@ public class UserController {
     }
 
     @GetMapping("/user/userUpdate")
-    public String updatePage(Model model, @CookieValue("Id") Long Id) {
-        User user = userRepository.findOne(Id);
+    public String updatePage(Model model,
+                             @CookieValue(value = "Id", required = false) String Id) {
+        if (Id == null || Id.isEmpty()) {
+            return "redirect:/";
+        }
+
+        Long id = Long.parseLong(Id);
+        User user = userRepository.findOne(id);
         model.addAttribute("loginId", user.getLoginId());
         model.addAttribute("updateForm", new UserForm());
         return "user/UserUpdate";
     }
     @PostMapping("/user/userUpdate")
-    @Transactional
     public String userUpdate(@ModelAttribute UserForm form,
-                             @CookieValue("Id") Long Id) {
-        log.info("CookieId = {}", Id);
-        User user = userRepository.findOne(Id);
-        log.info("LoginId = {}", user.getLoginId());
+                             @CookieValue(value = "Id") String Id) {
+        Long id = Long.parseLong(Id);
 
         User user2 = User.builder()
-                .id(Id)
+                .id(id)
                 .name(form.getName())
                 .loginId(form.getLoginId())
                 .loginPw(form.getLoginPw())
                 .build();
-        userRepository.updateUser(user2);
-        em.flush();
+        userService.updateUser(user2);
 
-        return "user/UserUpdate";
+        return "redirect:/";
+    }
+
+    @GetMapping("/user/logout")
+    public String logoutPage(HttpServletResponse response) {
+        Cookie cookie = new Cookie("Id", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+
+        return "redirect:/";
     }
 }

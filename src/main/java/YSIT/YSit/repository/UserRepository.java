@@ -55,21 +55,9 @@ public class UserRepository {
                 .getResultList();
     }
 
-    @Transactional // Dirty Check
-    public void updateUser(User updateData) {
-        User user1 = em.find(User.class, updateData.getId());
-        if (updateData.getName() != null) {
-            user1.changeName(updateData.getName());
-        }
-        if (updateData.getLoginId() != null) {
-            user1.changeLoginId(updateData.getLoginId());
-        }
-        if (updateData.getLoginId() != null) {
-            user1.changeLoginPw(updateData.getLoginPw());
-        }
-        if (updateData.getSchoolCategory() != null) {
-            user1.changeSchoolCategory(updateData.getSchoolCategory());
-        }
+    public void deleteById(Long Id) {
+        User user = em.find(User.class, Id);
+        em.remove(user);
     }
 
     public String encryption(String password) {
