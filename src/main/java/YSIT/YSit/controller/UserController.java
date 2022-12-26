@@ -4,19 +4,21 @@ import YSIT.YSit.domain.SchoolCategory;
 import YSIT.YSit.domain.User;
 import YSIT.YSit.repository.UserRepository;
 import YSIT.YSit.service.UserService;
-import com.mysql.cj.util.StringUtils;
+import jakarta.persistence.EntityManager;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.validation.Errors;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,17 +26,23 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
+    private final EntityManager em;
+
     @GetMapping("/user/register") // 회원가입 진입
     public String registerForm(Model model) {
         model.addAttribute("userForm", new UserForm());
         return "user/Register";
     }
+
     @PostMapping("/user/register") // 회원가입 기능
     public String register(@Valid @ModelAttribute UserForm form, BindingResult result) {
-        if(!userService.doublecheckLoginId(form.getLoginId()).isEmpty()){
+        List<User> tempUser = userService.doublecheckLoginId(form.getLoginId());
+        if(!tempUser.isEmpty()){
             result.rejectValue("loginId", "sameId");
         }
-
+        if(form.getLoginId().isBlank() || form.getLoginPw().isBlank() || form.getName().isBlank()){
+            result.rejectValue("loginId", "required");
+        }
         if (result.hasErrors()) {
             return "/user/Register";
         }
@@ -65,29 +73,31 @@ public class UserController {
         return "user/Login";
     }
     @PostMapping("/user/login") // 로그인 기능
-    public String login(@ModelAttribute UserForm form, BindingResult result) {
+    public String login(@ModelAttribute UserForm form, BindingResult result,
+                        HttpServletResponse response) {
         if(form.getLoginId().isBlank()){
             result.rejectValue("loginId", "required");
+            return "user/Login";
         }
         if(form.getLoginPw().isBlank()){
             result.rejectValue("loginPw", "required");
-        }
-        if (result.hasErrors()) {
             return "user/Login";
         }
 
-        if(form.getLoginId().isBlank()){
-            result.rejectValue("name", "required");
-        }
-        if (userService.matchLogins(form.getLoginId(), form.getLoginPw()).isEmpty()) {
+        List<User> matchLogins = userService.matchLogins(form.getLoginId(), form.getLoginPw());
+        if (matchLogins.isEmpty()) {
             result.rejectValue("loginPw", "validLogin");
-        }
 
-        if (result.hasErrors()) {
             return "user/Login";
         }
 
-        return "redirect:/";
+//        User user = matchLogins.get(0);
+//
+//        // 쿠키 처리
+//        Cookie cookie = new Cookie("Id", String.valueOf(user.getId()));
+//        response.addCookie(cookie);
+
+        return "home";
     }
 
     @GetMapping("/user/userList") // 회원 목록
@@ -101,16 +111,21 @@ public class UserController {
         log.info("\nstudent = {}\nteacher = {}", form.getStudent(), form.getTeacher());
 
         int check_bool = 0;
-        List<User> findList;
+        List<User> findList = null;
 
         if (form.getStudent()) {
             findList = userService.findStudentAll();
-        } else if (form.getTeacher()) {
+            check_bool += 1;
+        }
+        if (form.getTeacher()) {
             findList = userService.findTeacherAll();
-        } else {
+            check_bool += 1;
+        }
+        if (check_bool >= 2 || check_bool <= 0) {
             findList = userService.findUserAll();
         }
-        if (!findList.isEmpty()) {
+
+        if (findList != null) {
             model.addAttribute("users", findList);
         } else {
             User user = User.builder()
@@ -124,5 +139,32 @@ public class UserController {
         }
         model.addAttribute("userList", new UserListForm());
         return "user/UserList";
+    }
+
+    @GetMapping("/user/userUpdate")
+    public String updatePage(Model model, @CookieValue("Id") Long Id) {
+        User user = userRepository.findOne(Id);
+        model.addAttribute("loginId", user.getLoginId());
+        model.addAttribute("updateForm", new UserForm());
+        return "user/UserUpdate";
+    }
+    @PostMapping("/user/userUpdate")
+    @Transactional
+    public String userUpdate(@ModelAttribute UserForm form,
+                             @CookieValue("Id") Long Id) {
+        log.info("CookieId = {}", Id);
+        User user = userRepository.findOne(Id);
+        log.info("LoginId = {}", user.getLoginId());
+
+        User user2 = User.builder()
+                .id(Id)
+                .name(form.getName())
+                .loginId(form.getLoginId())
+                .loginPw(form.getLoginPw())
+                .build();
+        userRepository.updateUser(user2);
+        em.flush();
+
+        return "user/UserUpdate";
     }
 }

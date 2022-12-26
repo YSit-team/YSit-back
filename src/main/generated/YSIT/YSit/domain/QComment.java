@@ -24,15 +24,19 @@ public class QComment extends EntityPathBase<Comment> {
 
     public final QArticle article;
 
-    public final StringPath cbody = createString("cbody");
+    public final StringPath cBody = createString("cBody");
 
     public final DateTimePath<java.time.LocalDateTime> cDate = createDateTime("cDate", java.time.LocalDateTime.class);
 
-    public final ListPath<Comment, QComment> child = this.<Comment, QComment>createList("child", Comment.class, QComment.class, PathInits.DIRECT2);
+    public final NumberPath<Long> group = createNumber("group", Long.class);
+
+    public final NumberPath<Long> groupOrder = createNumber("groupOrder", Long.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final QComment parent;
+    public final NumberPath<Long> level = createNumber("level", Long.class);
+
+    public final NumberPath<Long> parentId = createNumber("parentId", Long.class);
 
     public final QUser student;
 
@@ -55,7 +59,6 @@ public class QComment extends EntityPathBase<Comment> {
     public QComment(Class<? extends Comment> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.article = inits.isInitialized("article") ? new QArticle(forProperty("article"), inits.get("article")) : null;
-        this.parent = inits.isInitialized("parent") ? new QComment(forProperty("parent"), inits.get("parent")) : null;
         this.student = inits.isInitialized("student") ? new QUser(forProperty("student")) : null;
     }
 

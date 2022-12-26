@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -133,5 +134,33 @@ class UserServiceTest {
         }
 
         fail("예외가 발생해야 한다");
+    }
+
+    @Test
+    public void updateUserTest() {
+        String name = "Test";
+        String loginId = "Test";
+        String loginPw = "Test";
+        User user1 = User.builder()
+                .name(name)
+                .loginId(loginId)
+                .loginPw(userRepository.encryption(loginPw))
+                .build();
+        userService.register(user1);
+        String name2 = "Complete";
+        String loginId2 = "Complete";
+        User user = User.builder()
+                .id(user1.getId())
+                .name(name2)
+                .loginId(loginId2)
+                .loginPw(userRepository.encryption(loginPw))
+                .build();
+        userRepository.updateUser(user);
+        em.flush();
+        User result = userRepository.findOne(user1.getId());
+        if (result.getName() == name2) {
+            return;
+        }
+        fail("실패");
     }
 }

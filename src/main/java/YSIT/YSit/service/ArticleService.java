@@ -22,7 +22,7 @@ public class ArticleService {
         return articleRepository.findByTitle(title);
     }
 
-    public List<Article> findBybody(String body) {
+    public List<Article> findByBody(String body) {
         return articleRepository.findByBody(body);
     }
 }
