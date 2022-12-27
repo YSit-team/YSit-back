@@ -22,9 +22,9 @@ public class QArticle extends EntityPathBase<Article> {
 
     public static final QArticle article = new QArticle("article");
 
-    public final QBoard board;
-
     public final StringPath body = createString("body");
+
+    public final EnumPath<Board> category = createEnum("category", Board.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
@@ -54,7 +54,6 @@ public class QArticle extends EntityPathBase<Article> {
 
     public QArticle(Class<? extends Article> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.board = inits.isInitialized("board") ? new QBoard(forProperty("board")) : null;
         this.user = inits.isInitialized("user") ? new QUser(forProperty("user")) : null;
     }
 

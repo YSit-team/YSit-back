@@ -6,7 +6,9 @@ import YSIT.YSit.repository.UserRepository;
 import YSIT.YSit.service.UserService;
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -73,7 +75,7 @@ public class UserController {
     }
     @PostMapping("/user/login") // 로그인 기능
     public String login(@ModelAttribute UserForm form, BindingResult result,
-                        HttpServletResponse response) {
+                        HttpServletRequest request) {
         if(form.getLoginId().isBlank()){
             result.rejectValue("loginId", "required");
             return "user/Login";
@@ -92,12 +94,15 @@ public class UserController {
 
         User user = matchLogins.get(0);
 
-        // 쿠키 처리
-        Cookie cookie = new Cookie("Id", String.valueOf(user.getId()));
-        response.addCookie(cookie);
+        HttpSession session = request.getSession();
+        session.setAttribute("Id", user.getId());
 
-        return "home";
+        return "redirect:/";
     }
+
+    public class SessionConst {
+        public static final String LOGIN_USER = "loginUser";
+    };
 
     @GetMapping("/user/userList") // 회원 목록
     public String userListForm(Model model) {
@@ -139,23 +144,21 @@ public class UserController {
     }
 
     @GetMapping("/user/userUpdate")
-    public String updatePage(Model model,
-                             @CookieValue(value = "Id", required = false) String Id) {
-        if (Id == null || Id.isEmpty()) {
-            return "redirect:/";
+    public String updatePage(Model model,HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if (Objects.isNull(session.getAttribute("Id"))){
+            return "Home";
         }
-
-        Long id = Long.parseLong(Id);
-        User user = userRepository.findOne(id);
+        Long id = (Long) session.getAttribute("Id");
+        User user = userService.findOne(id);
         model.addAttribute("loginId", user.getLoginId());
         model.addAttribute("updateForm", new UserForm());
         return "user/UserUpdate";
     }
     @PostMapping("/user/userUpdate")
-    public String userUpdate(@ModelAttribute UserForm form,
-                             @CookieValue(value = "Id") String Id) {
-        Long id = Long.parseLong(Id);
-
+    public String userUpdate(@ModelAttribute UserForm form, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Long id = (Long) session.getAttribute("Id");
         User user2 = User.builder()
                 .id(id)
                 .name(form.getName())
@@ -168,10 +171,9 @@ public class UserController {
     }
 
     @GetMapping("/user/logout")
-    public String logoutPage(HttpServletResponse response) {
-        Cookie cookie = new Cookie("Id", null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
+    public String logoutPage(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.invalidate();
 
         return "redirect:/";
     }

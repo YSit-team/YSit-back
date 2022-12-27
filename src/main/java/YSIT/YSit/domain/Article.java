@@ -13,9 +13,8 @@ public class Article {
     @Column(name = "article_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Board.class)
-    @JoinColumn(name = "category")
-    private Board board;
+    @Enumerated(EnumType.STRING)
+    private Board category;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
     @JoinColumn(name = "user_id")
@@ -27,4 +26,13 @@ public class Article {
     private String title;
     private String body;
     private LocalDateTime regDate;
+
+    @Builder
+    public Article (String title, String body, Board category, User user, ArticleStatus status) {
+        this.title = title;
+        this.body = body;
+        this.category = category;
+        this.user = user;
+        this.status = status;
+    }
 }

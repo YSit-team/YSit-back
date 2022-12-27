@@ -10,10 +10,15 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ArticleService {
     private final ArticleRepository articleRepository;
-    @Transactional
+    @Transactional(readOnly = false)
     public Long save(Article article) {
+        List<Article> articles = articleRepository.findByTitle(article.getTitle());
+        if (!articles.isEmpty()){
+            throw new IllegalStateException("이미 있는 제목입니다");
+        }
         articleRepository.save(article);
         return article.getId();
     }
@@ -24,5 +29,8 @@ public class ArticleService {
 
     public List<Article> findByBody(String body) {
         return articleRepository.findByBody(body);
+    }
+    public Article findOne(Long id) {
+        return articleRepository.findOne(id);
     }
 }

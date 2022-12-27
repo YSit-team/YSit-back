@@ -20,8 +20,4 @@ public class UserForm {
     private Boolean rank;
     public UserForm(){
     }
-
-    public void changeId(Long id) {
-        this.id = id;
-    }
 }
