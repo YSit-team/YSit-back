@@ -20,20 +20,10 @@ public class Comment {
     @JoinColumn(name = "student_id")
     private User student;
 
-    private String cbody;
+    private String cBody;
     private LocalDateTime cDate;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    private Comment parent;
-    @OneToMany(mappedBy = "parent")
-    @Column(name = "child_id")
-    private List<Comment> child = new ArrayList<>();
-
-    public void addChildComment(Comment child) {
-        this.child.add(child);
-        child.addParentComment(this);
-    }
-    private void addParentComment(Comment parent) {
-        this.parent = parent;
-    }
+    private Long group;
+    private Long level;
+    private Long groupOrder;
+    private Long parentId;
 }

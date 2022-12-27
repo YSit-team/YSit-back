@@ -18,8 +18,4 @@ public class CommentRepository {
     public Comment findOne(Long Comment_id) {
         return em.find(Comment.class, Comment_id);
     }
-
-//    public List<Comment> findArtToCom(Long Article_id) {
-//        return em.createQuery("select c from Comment c where c.")
-//    }
 }

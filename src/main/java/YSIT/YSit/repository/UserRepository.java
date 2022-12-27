@@ -5,10 +5,12 @@ import YSIT.YSit.domain.User;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -51,6 +53,11 @@ public class UserRepository {
         return em.createQuery("select u from User u where u.schoolCategory = :userType",User.class)
                 .setParameter("userType", SchoolCategory.STUDENT)
                 .getResultList();
+    }
+
+    public void deleteById(Long Id) {
+        User user = em.find(User.class, Id);
+        em.remove(user);
     }
 
     public String encryption(String password) {
