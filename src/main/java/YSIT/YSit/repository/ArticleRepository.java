@@ -26,14 +26,16 @@ public class ArticleRepository {
     }
 
     public List<Article> findByTitle(String title) {
-        return em.createQuery("select a from Article a where a.title like %:title%", Article.class)
-                .setParameter("title", title)
+        String paramTitle = "%"+title+"%";
+        return em.createQuery("select a from Article a where a.title like :title", Article.class)
+                .setParameter("title", paramTitle)
                 .getResultList();
     }
 
     public List<Article> findByBody(String body) {
-        return em.createQuery("select a from Article a where a.body like %:body%", Article.class)
-                .setParameter("body", body)
+        String paramBody = "%"+body+"%";
+        return em.createQuery("select a from Article a where a.body like :body", Article.class)
+                .setParameter("body", paramBody)
                 .getResultList();
     }
 }

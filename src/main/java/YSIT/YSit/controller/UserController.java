@@ -147,7 +147,7 @@ public class UserController {
     public String updatePage(Model model,HttpServletRequest request) {
         HttpSession session = request.getSession();
         if (Objects.isNull(session.getAttribute("Id"))){
-            return "Home";
+            return "redirect:/";
         }
         Long id = (Long) session.getAttribute("Id");
         User user = userService.findOne(id);

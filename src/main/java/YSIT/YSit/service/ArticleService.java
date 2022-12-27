@@ -22,7 +22,9 @@ public class ArticleService {
         articleRepository.save(article);
         return article.getId();
     }
-
+    public List<Article> findAll() {
+        return articleRepository.findAll();
+    }
     public List<Article> findByTitle(String title) {
         return articleRepository.findByTitle(title);
     }

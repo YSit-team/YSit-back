@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
 
 import static org.junit.Assert.*;
@@ -56,5 +57,30 @@ public class ArticleServiceTest {
         }
     }
 
+    @Test
+    public void findByTitle() {
+        String title = "게시물1";
+        String body = "내용1";
+        Board category = Board.자유;
+        ArticleStatus status = ArticleStatus.PUBLIC;
+        User user = User.builder()
+                .name("TEST")
+                .loginId("TEST")
+                .loginPw("TEST")
+                .build();
+        userService.register(user);
+        Article article = Article.builder()
+                .title(title)
+                .body(body)
+                .category(category)
+                .user(user)
+                .status(status)
+                .build();
+        articleService.save(article);
 
+        List<Article> articleList = articleRepository.findByTitle("게시물");
+        if (articleList.isEmpty()) {
+            fail("실패");
+        }
+    }
 }

@@ -36,6 +36,8 @@ public class QArticle extends EntityPathBase<Article> {
 
     public final QUser user;
 
+    public final StringPath writeUser = createString("writeUser");
+
     public QArticle(String variable) {
         this(Article.class, forVariable(variable), INITS);
     }
