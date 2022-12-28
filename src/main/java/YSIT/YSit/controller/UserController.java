@@ -41,6 +41,7 @@ public class UserController {
         List<User> tempUser = userService.doublecheckLoginId(form.getLoginId());
         if(!tempUser.isEmpty()){
             result.rejectValue("loginId", "sameId");
+            log.info("errorCode = {}", result);
             return "/user/Register";
         }
         if(form.getLoginId().isBlank()){

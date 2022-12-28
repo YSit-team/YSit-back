@@ -6,12 +6,13 @@
  }
 </style>
 <body>
-<form role="form" th:action="@{/article/articlePage/{id}/update (id=${originForm.id})}" th:object="${originForm}"
+<form role="form" th:action="@{/article/articlePage/{id}/update (id=${updateForm.id})}" th:object="${updateForm}"
       method="post">
 
   <div class="form-group">
     <label th:for="updateTitle">제목</label>
-    <input type="text" th:field="*{updateTitle}" class="form-control"
+    <input type="text" th:field="*{updateTitle}" class="form-control-title"
+           th:placeholder="${originTitle}"
            th:class="${#fields.hasErrors('updateTitle')}? 'form-control fieldError' : 'form-control'">
     <div class="invalid-feedback-title" th:errors="*{updateTitle}" style="display:block;">
       Please select a valid state

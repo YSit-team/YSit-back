@@ -24,7 +24,11 @@
       <label th:for="search">검색어</label>
       <input type="text" th:field="*{search}" class="form-control"
              placeholder="검색할 내용을 입력하세요">
+      <div class="invalid-feedback-title" th:errors="*{search}" style="display:block;">
+        Please select a valid state
+      </div>
     </div>
+
 
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>

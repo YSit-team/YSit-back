@@ -9,6 +9,7 @@ import YSIT.YSit.service.UserService;
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -91,8 +92,15 @@ public class ArticleController {
     }
 
     @GetMapping("/article/articleList")
-    public String articleListForm(Model model) {
+    public String articleListForm(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Long id = (Long)session.getAttribute("Id");
+        User user = userService.findOne(id);
+        List<Article> articles = articleService.findAll();
+        model.addAttribute("user", user);
+        model.addAttribute("articles", articles);
         model.addAttribute("articleList", new ArticleListForm());
+
         return "article/ArticleList";
     }
 
@@ -154,18 +162,18 @@ public class ArticleController {
                 .originBody(article.getBody())
                 .build();
         log.info("TITLE = {}", article.getTitle());
-        model.addAttribute("originForm", form);
+        model.addAttribute("updateForm", form);
         return "article/ArticleUpdate";
     }
 
     @PostMapping("/article/articlePage/{originFormId}/update")
     public String articleUpdate(@PathVariable("originFormId") Long articleId,
-                                @ModelAttribute ArticleUpdateForm form, BindingResult result,
+                                @Valid @ModelAttribute ArticleUpdateForm form,
+                                BindingResult result,
                                 HttpServletRequest request,
                                 Model model) {
         List<Article> compareArt = articleService.findByTitle(form.getUpdateTitle());
         if (!compareArt.isEmpty()) {
-            result.rejectValue("updateTitle", "sameTitle");
             Article article = articleService.findOne(articleId);
             ArticleUpdateForm articleUpdateForm = ArticleUpdateForm.builder()
                     .id(articleId)
@@ -173,9 +181,9 @@ public class ArticleController {
                     .originBody(article.getBody())
                     .build();
 
-            model.addAttribute("originForm", articleUpdateForm);
-        }
-        if (result.hasErrors()){
+            model.addAttribute("updateForm", articleUpdateForm);
+            result.rejectValue("updateTitle", "sameTitle");
+            log.info("errorCode = {}", result);
             return "article/ArticleUpdate";
         }
         HttpSession session = request.getSession();
