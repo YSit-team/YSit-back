@@ -83,4 +83,79 @@ public class ArticleServiceTest {
             fail("실패");
         }
     }
+
+    @Test
+    public void articleUpdateTest() {
+        String title = "게시물1";
+        String body = "내용1";
+        Board category = Board.자유;
+        ArticleStatus status = ArticleStatus.PUBLIC;
+        User user = User.builder()
+                .name("TEST")
+                .loginId("TEST")
+                .loginPw("TEST")
+                .build();
+        userService.register(user);
+        Article article = Article.builder()
+                .title(title)
+                .body(body)
+                .category(category)
+                .user(user)
+                .status(status)
+                .build();
+        articleService.save(article);
+        String updateTitle = "가입인사";
+        String updateBody = "안녕하세요";
+        ArticleStatus updateStatus = ArticleStatus.PRIVATE;
+        Article updateArt = Article.builder()
+                .id(article.getId())
+                .title(updateTitle)
+                .body(updateBody)
+                .status(updateStatus)
+                .build();
+        articleService.updateArticle(updateArt);
+        em.flush();
+
+        Article findArt = articleService.findOne(article.getId());
+        if (findArt.getTitle() == updateTitle) {
+            if (findArt.getBody() == updateBody) {
+                if (findArt.getStatus() == updateStatus) {
+                    return;
+                } else {
+                    fail("상태 실패");
+                }
+            } else {
+                fail("내용 실패");
+            }
+        } else {
+            fail("제목 실패");
+        }
+    }
+
+    @Test
+    public void findByLoginIdTest() {
+        String title = "게시물1";
+        String body = "내용1";
+        Board category = Board.자유;
+        ArticleStatus status = ArticleStatus.PUBLIC;
+        User user = User.builder()
+                .name("TEST")
+                .loginId("TEST")
+                .loginPw("TEST")
+                .build();
+        userService.register(user);
+        Article article = Article.builder()
+                .title(title)
+                .body(body)
+                .category(category)
+                .user(user)
+                .status(status)
+                .build();
+        articleService.save(article);
+
+        List<Article> articleList = articleRepository.findByLoginId(user.getLoginId());
+        if (articleList.isEmpty()) {
+            fail("실패");
+        }
+    }
 }

@@ -43,8 +43,16 @@ public class UserController {
             result.rejectValue("loginId", "sameId");
             return "/user/Register";
         }
-        if(form.getLoginId().isBlank() || form.getLoginPw().isBlank() || form.getName().isBlank()){
+        if(form.getLoginId().isBlank()){
             result.rejectValue("loginId", "required");
+        }
+        if(form.getLoginPw().isBlank()) {
+            result.rejectValue("loginPw", "required");
+        }
+        if(form.getName().isBlank()){
+            result.rejectValue("name","required");
+        }
+        if (result.hasErrors()) {
             return "/user/Register";
         }
 

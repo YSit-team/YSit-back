@@ -45,19 +45,18 @@ public class ArticleController {
 
     @PostMapping("/article/write")
     public String write(@ModelAttribute ArticleForm form, BindingResult result,
-                        HttpServletRequest request) {
+                        HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
-
+        Long id = (Long) session.getAttribute("Id");
+        User user = userService.findOne(id);
+        model.addAttribute("loginId", user.getLoginId());
         if (Objects.isNull(session.getAttribute("Id"))){
             return "redirect:/";
         }
-        if (!articleRepository.findByTitle(form.getTitle()).isEmpty()) {
-            result.rejectValue("title", "sameTitle");
-        }
-        if (form.getTitle().isBlank()) {
+        if (form.getTitle() == null || form.getTitle().isEmpty()) {
             result.rejectValue("title", "required");
         }
-        if (form.getBody().isBlank()) {
+        if (form.getBody().isEmpty() || form.getBody() == null) {
             result.rejectValue("body", "required");
         }
         if (form.getCategory() == null) {
@@ -66,8 +65,10 @@ public class ArticleController {
         if (result.hasErrors()) {
             return "/article/write";
         }
-
-        Long id = (Long) session.getAttribute("Id");
+        if (!articleRepository.findByTitle(form.getTitle()).isEmpty()) {
+            result.rejectValue("title", "sameTitle");
+            return "/article/write";
+        }
 
         ArticleStatus articleStatus;
         if (form.getStatus()) {
@@ -75,13 +76,13 @@ public class ArticleController {
         } else {
             articleStatus = ArticleStatus.PUBLIC;
         }
-        User user = userService.findOne(id);
+        User intoArt = userService.findOne(id);
         Article article = Article.builder()
                 .title(form.getTitle())
                 .body(form.getBody())
                 .status(articleStatus)
                 .category(form.getCategory())
-                .user(user)
+                .user(intoArt)
                 .regDate(LocalDateTime.now())
                 .build();
         articleService.save(article);
@@ -96,9 +97,13 @@ public class ArticleController {
     }
 
     @PostMapping("/article/articleList")
-    public String articleList(@ModelAttribute ArticleListForm form, Model model) {
+    public String articleList(@ModelAttribute ArticleListForm form, Model model,
+                              HttpServletRequest request) {
         int nullCheck = 0;
         List<Article> findList = null;
+        HttpSession session = request.getSession();
+        Long userId = (Long) session.getAttribute("Id");
+        User user = userService.findOne(userId);
 
         if (form.getTitle()) {
             nullCheck += 1;
@@ -108,7 +113,11 @@ public class ArticleController {
             nullCheck += 1;
             findList = articleService.findByBody(form.getSearch());
         }
-        if (nullCheck >= 2 || nullCheck <= 0) {
+        if (form.getMyPage()) {
+            nullCheck += 1;
+            findList = articleService.findByLoginId(user.getLoginId());
+        }
+        if (nullCheck >= 3 || nullCheck <= 0) {
              findList = articleService.findAll();
         }
 
@@ -125,6 +134,7 @@ public class ArticleController {
             model.addAttribute("articles", article);
         }
         model.addAttribute("articleList", new ArticleListForm());
+        model.addAttribute("user", user);
         return "article/articleList";
     }
 
@@ -133,6 +143,70 @@ public class ArticleController {
         Article article = articleService.findOne(articleId);
         model.addAttribute("article", article);
         return "article/ArticlePage";
+    }
+
+    @GetMapping("/article/articlePage/{articleId}/update")
+    public String articleUpdateForm(@PathVariable("articleId") Long articleId, Model model) {
+        Article article = articleService.findOne(articleId);
+        ArticleUpdateForm form = ArticleUpdateForm.builder()
+                .id(articleId)
+                .originTitle(article.getTitle())
+                .originBody(article.getBody())
+                .build();
+        log.info("TITLE = {}", article.getTitle());
+        model.addAttribute("originForm", form);
+        return "article/ArticleUpdate";
+    }
+
+    @PostMapping("/article/articlePage/{originFormId}/update")
+    public String articleUpdate(@PathVariable("originFormId") Long articleId,
+                                @ModelAttribute ArticleUpdateForm form, BindingResult result,
+                                HttpServletRequest request,
+                                Model model) {
+        List<Article> compareArt = articleService.findByTitle(form.getUpdateTitle());
+        if (!compareArt.isEmpty()) {
+            result.rejectValue("updateTitle", "sameTitle");
+            Article article = articleService.findOne(articleId);
+            ArticleUpdateForm articleUpdateForm = ArticleUpdateForm.builder()
+                    .id(articleId)
+                    .originTitle(article.getTitle())
+                    .originBody(article.getBody())
+                    .build();
+
+            model.addAttribute("originForm", articleUpdateForm);
+        }
+        if (result.hasErrors()){
+            return "article/ArticleUpdate";
+        }
+        HttpSession session = request.getSession();
+        Long userId = (Long) session.getAttribute("Id");
+        User user = userService.findOne(userId);
+
+        Article checkArt = articleService.findOne(articleId);
+        if (!checkArt.getWriteUser().equals(user.getLoginId())) {
+            return "redirect:/";
+        }
+        ArticleStatus status;
+        if (form.getStatus()) {
+            status = ArticleStatus.PRIVATE;
+        } else {
+            status = ArticleStatus.PUBLIC;
+        }
+
+        Article article = Article.builder()
+                .id(articleId)
+                .title(form.getUpdateTitle())
+                .body(form.getUpdateBody())
+                .status(status)
+                .build();
+        articleService.updateArticle(article);
+
+        Article viewArt = articleService.findOne(articleId);
+        model.addAttribute("articles", viewArt);
+        model.addAttribute("user", user);
+        model.addAttribute("articleList", new ArticleListForm());
+
+        return "article/ArticleList";
     }
 }
 

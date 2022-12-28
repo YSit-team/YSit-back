@@ -20,6 +20,12 @@ public class ArticleRepository {
         return em.find(Article.class, id);
     }
 
+    public List<Article> findByLoginId(String loginId) {
+        return em.createQuery("select a from Article a where a.writeUser = :writeUser", Article.class)
+                .setParameter("writeUser", loginId)
+                .getResultList();
+    }
+
     public List<Article> findAll() {
         return em.createQuery("select a from Article a", Article.class)
                 .getResultList();

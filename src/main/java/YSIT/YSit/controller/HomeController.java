@@ -23,7 +23,7 @@ public class HomeController {
     private final UserService userService;
 
     @GetMapping("/")
-    public String home(HttpServletRequest request) {
+    public String home(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         if (Objects.isNull(session.getAttribute("Id"))){
             return "Home";
@@ -31,7 +31,7 @@ public class HomeController {
         Long id = (Long) session.getAttribute("Id");
         User user = userService.findOne(id);
         log.info("LoginID = {}", user.getLoginId());
-        session.setAttribute("loginId", user.getLoginId());
+        model.addAttribute("user", user);
 
         return "LoginHome";
     }

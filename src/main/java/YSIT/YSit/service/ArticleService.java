@@ -1,6 +1,7 @@
 package YSIT.YSit.service;
 
 import YSIT.YSit.domain.Article;
+import YSIT.YSit.domain.User;
 import YSIT.YSit.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,13 +23,30 @@ public class ArticleService {
         articleRepository.save(article);
         return article.getId();
     }
+
+    @Transactional(readOnly = false) // Dirty Check
+    public void updateArticle(Article updateData) {
+        Article article = articleRepository.findOne(updateData.getId());
+        if (updateData.getTitle() != null) {
+            article.changeTitle(updateData.getTitle());
+        }
+        if (updateData.getBody() != null) {
+            article.changeBody(updateData.getBody());
+        }
+        if (updateData.getStatus() != null) {
+            article.changeStatus(updateData.getStatus());
+        }
+    }
+
     public List<Article> findAll() {
         return articleRepository.findAll();
     }
     public List<Article> findByTitle(String title) {
         return articleRepository.findByTitle(title);
     }
-
+    public List<Article> findByLoginId(String loginId) {
+        return articleRepository.findByLoginId(loginId);
+    }
     public List<Article> findByBody(String body) {
         return articleRepository.findByBody(body);
     }

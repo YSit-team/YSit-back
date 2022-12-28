@@ -31,13 +31,26 @@ public class Article {
     private LocalDateTime regDate;
 
     @Builder
-    public Article (String title, String body, Board category, User user, ArticleStatus status, LocalDateTime regDate) {
+    public Article (Long id, String title, String body, Board category, User user, ArticleStatus status, LocalDateTime regDate) {
+        this.id = id;
         this.title = title;
         this.body = body;
         this.category = category;
         this.user = user;
-        this.writeUser = user.getLoginId();
+        if (user != null) {
+            this.writeUser = user.getLoginId();
+        }
         this.status = status;
         this.regDate = regDate;
+    }
+
+    public void changeTitle(String title) {
+        this.title = title;
+    }
+    public void changeBody(String body) {
+        this.body = body;
+    }
+    public void changeStatus(ArticleStatus status) {
+        this.status = status;
     }
 }

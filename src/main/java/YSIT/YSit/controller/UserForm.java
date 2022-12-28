@@ -9,11 +9,11 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class UserForm {
     private Long id;
-    @NotBlank(message = "아이디를 입력해주세요")
+    @NotBlank
     private String LoginId;
-    @NotBlank(message = "비밀번호를 입력해주세요")
+    @NotBlank
     private String LoginPw;
-    @NotBlank(message = "이름을 입력해주세요")
+    @NotBlank
     private String name;
 
     private LocalDateTime regDate;
