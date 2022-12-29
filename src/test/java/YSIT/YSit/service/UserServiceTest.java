@@ -139,24 +139,11 @@ class UserServiceTest {
 
     @Test
     public void updateUserTest() {
-        String name = "Test";
-        String loginId = "Test";
-        String loginPw = "Test";
-        User user1 = User.builder()
-                .name(name)
-                .loginId(loginId)
-                .loginPw(userRepository.encryption(loginPw))
-                .build();
-        userService.register(user1);
-        String name2 = "Complete";
-        String loginId2 = "Complete";
-        User user = User.builder()
-                .id(user1.getId())
-                .name(name2)
-                .loginId(loginId2)
-                .loginPw(userRepository.encryption(loginPw))
-                .build();
-        userService.updateUser(user);
+        User user = createUser("Test","Test","Test");
+        User user1 = userService.findOne(user.getId());
+        String name2 = "Com";
+        User user2 = createUser(name2,"Com","Com");
+        userService.updateUser(user2);
         em.flush();
         User result = userRepository.findOne(user1.getId());
         if (result.getName() == name2) {
@@ -171,20 +158,21 @@ class UserServiceTest {
 
     @Test
     public void deleteTest() {
-        String name = "Test";
-        String loginId = "Test";
-        String loginPw = "Test";
+        User user1 = createUser("Test","Test","Test");
+        userService.deleteById(user1.getId());
+        User user = userRepository.findOne(user1.getId());
+        if (!Objects.isNull(user)){
+            fail("실패");
+        }
+    }
+
+    public User createUser(String name, String loginId, String loginPw) {
         User user1 = User.builder()
                 .name(name)
                 .loginId(loginId)
                 .loginPw(userRepository.encryption(loginPw))
                 .build();
         userService.register(user1);
-        Long Id = user1.getId();
-        userService.deleteById(Id);
-        User user = userRepository.findOne(Id);
-        if (!Objects.isNull(user)){
-            fail("실패");
-        }
+        return user1;
     }
 }

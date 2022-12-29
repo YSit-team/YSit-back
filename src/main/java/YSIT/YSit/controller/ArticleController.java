@@ -2,9 +2,11 @@ package YSIT.YSit.controller;
 
 import YSIT.YSit.domain.Article;
 import YSIT.YSit.domain.ArticleStatus;
+import YSIT.YSit.domain.Comment;
 import YSIT.YSit.domain.User;
 import YSIT.YSit.repository.ArticleRepository;
 import YSIT.YSit.service.ArticleService;
+import YSIT.YSit.service.CommentService;
 import YSIT.YSit.service.UserService;
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,6 +32,7 @@ public class ArticleController {
     private final ArticleRepository articleRepository;
     private final ArticleService articleService;
     private final EntityManager em;
+    private final CommentService commentService;
 
     @GetMapping("/article/write")
     public String writeForm(Model model, HttpServletRequest request) {
@@ -149,7 +152,10 @@ public class ArticleController {
     @GetMapping("/article/articlePage/{articleId}/view")
     public String articlePageForm(@PathVariable("articleId") Long articleId, Model model) {
         Article article = articleService.findOne(articleId);
+        List<Comment> comments = commentService.findByArt(articleId);
         model.addAttribute("article", article);
+        model.addAttribute("commentForm", new CommentForm());
+        model.addAttribute("comments", comments);
         return "article/ArticlePage";
     }
 

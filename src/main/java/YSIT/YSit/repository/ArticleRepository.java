@@ -21,26 +21,26 @@ public class ArticleRepository {
     }
 
     public List<Article> findByLoginId(String loginId) {
-        return em.createQuery("select a from Article a where a.writeUser = :writeUser", Article.class)
+        return em.createQuery("select a from Article a where a.writeUser = :writeUser order by a.id desc", Article.class)
                 .setParameter("writeUser", loginId)
                 .getResultList();
     }
 
     public List<Article> findAll() {
-        return em.createQuery("select a from Article a", Article.class)
+        return em.createQuery("select a from Article a order by a.id desc", Article.class)
                 .getResultList();
     }
 
     public List<Article> findByTitle(String title) {
         String paramTitle = "%"+title+"%";
-        return em.createQuery("select a from Article a where a.title like :title", Article.class)
+        return em.createQuery("select a from Article a where a.title like :title order by a.id desc", Article.class)
                 .setParameter("title", paramTitle)
                 .getResultList();
     }
 
     public List<Article> findByBody(String body) {
         String paramBody = "%"+body+"%";
-        return em.createQuery("select a from Article a where a.body like :body", Article.class)
+        return em.createQuery("select a from Article a where a.body like :body order by a.id desc", Article.class)
                 .setParameter("body", paramBody)
                 .getResultList();
     }

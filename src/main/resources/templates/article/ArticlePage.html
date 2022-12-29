@@ -14,5 +14,64 @@
     </div>
   </div>
 </div> <!-- /container -->
+
+<form role="form" action="/comment/write" th:object="${commentForm}"
+      method="POST">
+
+  <div class="form-group">
+    <label th:for="body">내용</label>
+    <input type="text" th:field="*{body}" class="form-control"
+           placeholder="제목을 입력하세요">
+  </div>
+  <div class="invalid-feedback-title" th:errors="*{body}" style="display:block;">
+    Please select a valid state.
+  </div>
+
+  <div>
+    <input type="hidden" th:id="articleId" th:name="articleId"
+           th:value="${article.id}" class="form-control">
+    <p th:text="${article.id}"></p>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<div class="comments">
+  <div>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>내용</th>
+        <th>작성자</th>
+        <th>등록일</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="comment : ${comments}">
+        <form method="post" action="/comment/nestedReply" th:object="${commentForm}">
+          <td th:if="${comment.step >= 1}">
+            ㄴ
+          </td>
+          <td>
+            <input type="hidden" th:value="${comment.id}" th:name="*{parentId}">
+            <input type="hidden" th:value="${comment.articleId}" th:name="*{articleId}">
+          </td>
+          <td th:text="${comment.body}"></td>
+          <td th:text="${comment.writeUser}"></td>
+          <td th:text="${comment.regDate}"></td>
+          <td>
+            <label th:for="body">답글</label>
+            <input type="text" th:field="*{body}" class="form-control"
+                   placeholder="제목을 입력하세요">
+          </td>
+          <td>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </td>
+        </form>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div> <!-- /container -->
 </body>
 </html>

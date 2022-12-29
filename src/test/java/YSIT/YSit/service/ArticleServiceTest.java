@@ -158,4 +158,16 @@ public class ArticleServiceTest {
             fail("실패");
         }
     }
+
+    public Article createArt(String title, String body, Board category, User user, ArticleStatus status) {
+        Article article = Article.builder()
+                .title(title)
+                .body(body)
+                .category(category)
+                .user(user)
+                .status(status)
+                .build();
+        articleService.save(article);
+        return article;
+    }
 }
