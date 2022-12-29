@@ -29,4 +29,7 @@ public class CommentService {
     public Comment findOne(Long comId) {
         return commentRepository.findOne(comId);
     }
+    public Comment findByRefOrder(Long refOrder) {
+        return commentRepository.findByRefOrder(refOrder);
+    }
 }

@@ -85,11 +85,11 @@ public class CommentServiceTest {
                 .status(ArticleStatus.PUBLIC)
                 .build();
         articleService.save(article);
-        Comment comment = createCom(5L,0L,0L,0L,"Test",article.getId(),user.getLoginId());
+        Comment comment = createCom(0L,0L,0L,0L,"Test",article.getId(),user.getLoginId());
         commentService.save(comment);
 
         Long maxRef = commentService.getMaxRef();
-        if (maxRef != 5L) {
+        if (maxRef != 0L) {
             fail("실패");
         }
     }

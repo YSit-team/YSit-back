@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
@@ -44,14 +45,59 @@ public class CommentController {
         HttpSession session = request.getSession();
         Long userId = (Long) session.getAttribute("Id");
         User user = userService.findOne(userId);
+        Long maxRef = commentService.getMaxRef();
+        log.info("MaxRef = {}", maxRef);
+        maxRef += 1;
         Comment comment = Comment.builder()
-                .ref(commentService.getMaxRef() + 1L)
+                .ref(maxRef)
                 .articleId(form.getArticleId())
                 .writeUser(user.getLoginId())
                 .body(form.getBody())
                 .build();
         commentService.save(comment);
         log.info("ArticleID = {}", form.getArticleId());
+        log.info("CommentREF = {}", comment.getRef());
+        Article article = articleService.findOne(form.getArticleId());
+        List<Comment> comments = commentService.findByArt(form.getArticleId());
+        model.addAttribute("article", article);
+        model.addAttribute("commentForm", new CommentForm());
+        model.addAttribute("comments", comments);
+
+        return "article/ArticlePage";
+    }
+
+    @PostMapping("/comment/nestedReply")
+    public String nestedReply(@ModelAttribute CommentForm form,
+                              BindingResult result,
+                              HttpServletRequest request,
+                              Model model) {
+        HttpSession session = request.getSession();
+        Long userId = (Long) session.getAttribute("Id");
+        User user = userService.findOne(userId);
+        Comment parentCom = commentService.findOne(form.getParentId());
+
+        Comment refOrderEmptyCheck = commentService.findByRefOrder(parentCom.getRefOrder() + 1);
+        if (!Objects.isNull(refOrderEmptyCheck)) {
+            Long plussedRefOrder = refOrderEmptyCheck.getRefOrder() + 1;
+            refOrderEmptyCheck.changeRefOrder(plussedRefOrder);
+            while (!Objects.isNull(commentService.findByRefOrder(plussedRefOrder))) {
+                Comment loopEmptyCheck = commentService.findByRefOrder(plussedRefOrder);
+                plussedRefOrder += 1;
+                loopEmptyCheck.changeRefOrder(plussedRefOrder);
+            }
+        }
+
+        Comment comment = Comment.builder()
+                .articleId(form.getArticleId())
+                .writeUser(user.getLoginId())
+                .parentId(form.getParentId()) //
+                .body(form.getBody())
+                .ref(parentCom.getRef()) //
+                .step(parentCom.getStep() + 1) //
+                .refOrder(parentCom.getRefOrder() + 1) //
+                .build();
+        commentService.save(comment);
+
         Article article = articleService.findOne(form.getArticleId());
         List<Comment> comments = commentService.findByArt(form.getArticleId());
         model.addAttribute("article", article);

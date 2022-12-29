@@ -2,7 +2,7 @@ package YSIT.YSit.repository;
 
 import YSIT.YSit.domain.Comment;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
+import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -18,9 +18,17 @@ public class CommentRepository {
     }
 
     public Long maxRef() {
-        int maxRef = em.createQuery("select max(c.ref) from Comment c")
-                .getMaxResults();
-        return (long) maxRef;
+        List<Comment> comments = em.createQuery("select c from Comment c", Comment.class)
+                .getResultList();
+
+        Long maxRef = 0L;
+        for (Comment comment : comments) {
+            if (maxRef < comment.getRef()) {
+                maxRef = comment.getRef();
+            }
+        }
+        System.out.println("maxRef = " + maxRef);
+        return maxRef;
     }
 
     public Comment findOne(Long id) {
@@ -32,4 +40,14 @@ public class CommentRepository {
                 .getResultList();
     }
 
+    public Comment findByRefOrder(Long refOrder) {
+        List<Comment> finds = em.createQuery("select c from Comment c where c.refOrder = :refOrder", Comment.class)
+                .setParameter("refOrder", refOrder)
+                .getResultList();
+        Comment findRefOrder = null;
+        if (finds.size() != 0) {
+            findRefOrder = finds.get(0);
+        }
+        return findRefOrder;
+    }
 }

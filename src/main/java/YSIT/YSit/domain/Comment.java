@@ -3,12 +3,14 @@ package YSIT.YSit.domain;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Comment {
     @Id @GeneratedValue
     private Long id;
@@ -41,5 +43,9 @@ public class Comment {
         this.refOrder = refOrder;
         this.parentId = parentId;
         this.regDate = regDate;
+    }
+
+    public void changeRefOrder(Long refOrder) {
+        this.refOrder = refOrder;
     }
 }
