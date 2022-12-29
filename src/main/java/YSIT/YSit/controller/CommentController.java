@@ -6,6 +6,7 @@ import YSIT.YSit.domain.User;
 import YSIT.YSit.service.ArticleService;
 import YSIT.YSit.service.CommentService;
 import YSIT.YSit.service.UserService;
+import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.LocalDateTime;
+import javax.swing.text.html.parser.Entity;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,6 +28,7 @@ public class CommentController {
     private final CommentService commentService;
     private final ArticleService articleService;
     private final UserService userService;
+    private final EntityManager em;
     @PostMapping("/comment/write")
     public String writeComment(HttpServletRequest request,
                              @ModelAttribute CommentForm form,
@@ -34,19 +36,14 @@ public class CommentController {
         if (form.getBody().isEmpty()) {
             result.rejectValue("body", "required");
 
-            Article article = articleService.findOne(form.getArticleId());
-            List<Comment> comments = commentService.findByArt(article.getId());
-            model.addAttribute("article", article);
-            model.addAttribute("commentForm", new CommentForm());
-            model.addAttribute("comments", comments);
-            return "article/ArticlePage";
+            return returnPage(form.getArticleId(), model);
         }
 
         HttpSession session = request.getSession();
         Long userId = (Long) session.getAttribute("Id");
         User user = userService.findOne(userId);
         Long maxRef = commentService.getMaxRef();
-        log.info("MaxRef = {}", maxRef);
+
         maxRef += 1;
         Comment comment = Comment.builder()
                 .ref(maxRef)
@@ -55,15 +52,8 @@ public class CommentController {
                 .body(form.getBody())
                 .build();
         commentService.save(comment);
-        log.info("ArticleID = {}", form.getArticleId());
-        log.info("CommentREF = {}", comment.getRef());
-        Article article = articleService.findOne(form.getArticleId());
-        List<Comment> comments = commentService.findByArt(form.getArticleId());
-        model.addAttribute("article", article);
-        model.addAttribute("commentForm", new CommentForm());
-        model.addAttribute("comments", comments);
 
-        return "article/ArticlePage";
+        return returnPage(form.getArticleId(), model);
     }
 
     @PostMapping("/comment/nestedReply")
@@ -71,6 +61,11 @@ public class CommentController {
                               BindingResult result,
                               HttpServletRequest request,
                               Model model) {
+        if (form.getBody().isEmpty()) {
+            result.rejectValue("body", "required");
+            return returnPage(form.getArticleId(), model);
+        }
+
         HttpSession session = request.getSession();
         Long userId = (Long) session.getAttribute("Id");
         User user = userService.findOne(userId);
@@ -98,12 +93,23 @@ public class CommentController {
                 .build();
         commentService.save(comment);
 
-        Article article = articleService.findOne(form.getArticleId());
-        List<Comment> comments = commentService.findByArt(form.getArticleId());
+        return returnPage(form.getArticleId(), model);
+    }
+
+    @PostMapping("/comment/delComment")
+    public String delComment(@ModelAttribute CommentForm form,
+                             Model model) {
+        commentService.delComment(form.getId());
+        em.flush();
+        return returnPage(form.getArticleId(), model);
+    }
+
+    public String returnPage(Long articleId, Model model) {
+        Article article = articleService.findOne(articleId);
+        List<Comment> comments = commentService.findByArt(articleId);
         model.addAttribute("article", article);
         model.addAttribute("commentForm", new CommentForm());
         model.addAttribute("comments", comments);
-
-        return "article/ArticlePage";
+        return "redirect:/article/articlePage/" + articleId.toString() + "/view";
     }
 }

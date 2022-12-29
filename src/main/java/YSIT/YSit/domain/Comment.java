@@ -48,4 +48,7 @@ public class Comment {
     public void changeRefOrder(Long refOrder) {
         this.refOrder = refOrder;
     }
+    public void changeBody (String body) {
+        this.body = body;
+    }
 }

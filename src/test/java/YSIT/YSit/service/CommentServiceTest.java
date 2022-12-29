@@ -31,6 +31,8 @@ public class CommentServiceTest {
     private ArticleService articleService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private EntityManager em;
 
 
     public Comment createCom(Long ref, Long step, Long refOrder, Long parentId, String body, Long articleId, String writeUser) {
@@ -90,6 +92,31 @@ public class CommentServiceTest {
 
         Long maxRef = commentService.getMaxRef();
         if (maxRef != 0L) {
+            fail("실패");
+        }
+    }
+
+    @Test
+    public void deleteComment() {
+        User user = User.builder()
+                .name("TEST")
+                .loginId("TEST")
+                .loginPw(userRepository.encryption("TEST"))
+                .build();
+        userService.register(user);
+        Article article = Article.builder()
+                .title("TEST")
+                .body("TEST")
+                .category(Board.자유)
+                .user(user)
+                .status(ArticleStatus.PUBLIC)
+                .build();
+        articleService.save(article);
+        Comment comment = createCom(0L,0L,0L,0L,"Test",article.getId(),user.getLoginId());
+        commentService.save(comment);
+        commentService.delComment(comment.getId());
+        em.flush();
+        if (comment.getBody() != "삭제되었습니다") {
             fail("실패");
         }
     }
