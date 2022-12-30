@@ -4,7 +4,6 @@ import YSIT.YSit.controller.form.CommentForm;
 import YSIT.YSit.domain.Admins;
 import YSIT.YSit.domain.Article;
 import YSIT.YSit.domain.Comment;
-import YSIT.YSit.domain.User;
 import YSIT.YSit.service.AdminService;
 import YSIT.YSit.service.ArticleService;
 import YSIT.YSit.service.CommentService;
@@ -26,7 +25,7 @@ import java.util.Objects;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
-public class CommentController {
+public class AdminCommentController {
     private final CommentService commentService;
     private final ArticleService articleService;
     private final UserService userService;
@@ -68,7 +67,7 @@ public class CommentController {
         model.addAttribute("article", article);
         model.addAttribute("commentForm", new CommentForm());
         model.addAttribute("comments", comments);
-        return "redirect:/article/articlePage/" + articleId.toString() + "/view";
+        return "redirect:/admin/article/articlePage/" + articleId.toString() + "/view";
     }
 
     @PostMapping("/admin/comment/nestedReply")

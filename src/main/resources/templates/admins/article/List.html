@@ -49,7 +49,7 @@
       <tr th:each="article : ${articles}">
         <td th:text="${article.id}"></td>
         <td>
-          <a href="#" th:href="@{/admin/article/articlePage/{id}/view/ (id=${article.id})}" th:text="${article.title}"></a>
+          <a href="#" th:href="@{/admin/article/articlePage/{id}/view (id=${article.id})}" th:text="${article.title}"></a>
         </td>
         <td th:text="${article.writeUser}"></td>
         <td th:text="${article.category}"></td>

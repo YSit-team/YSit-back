@@ -29,7 +29,7 @@ import java.util.Objects;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
-public class ArticleController {
+public class AdminArticleController {
     private final AdminService adminService;
     private final UserService userService;
     private final ArticleRepository articleRepository;
@@ -67,11 +67,11 @@ public class ArticleController {
             result.rejectValue("body", "required");
         }
         if (result.hasErrors()) {
-            return "admins/article/write";
+            return "admins/article/Write";
         }
         if (!articleRepository.findByTitle(form.getTitle()).isEmpty()) {
             result.rejectValue("title", "sameTitle");
-            return "admins/article/write";
+            return "admins/article/Write";
         }
 
         ArticleStatus articleStatus;
@@ -94,16 +94,16 @@ public class ArticleController {
         return "redirect:/";
     }
 
-    @GetMapping("/article/articleList")
+    @GetMapping("/admin/article/articleList")
     public String articleListForm(Model model, HttpServletRequest request) {
         List<Article> articles = articleService.findAll();
         model.addAttribute("articles", articles);
         model.addAttribute("articleList", new ArticleListForm());
 
-        return "admins/article/ArticleList";
+        return "admins/article/List";
     }
 
-    @PostMapping("/admin/article/articleList")
+    @PostMapping("/admin/article/article]List")
     public String articleList(@ModelAttribute ArticleListForm form, Model model,
                               HttpServletRequest request) {
         int nullCheck = 0;
@@ -142,7 +142,7 @@ public class ArticleController {
             model.addAttribute("articles", article);
         }
         model.addAttribute("articleList", new ArticleListForm());
-        return "admins/article/articleList";
+        return "admins/article/List";
     }
 
     @GetMapping("/admin/article/articlePage/{articleId}/view")
@@ -157,6 +157,6 @@ public class ArticleController {
         model.addAttribute("comments", comments);
         model.addAttribute("article", article);
         model.addAttribute("commentForm", new CommentForm());
-        return "users/article/ArticlePage";
+        return "/admins/article/Page";
     }
 }

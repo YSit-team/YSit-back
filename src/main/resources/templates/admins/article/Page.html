@@ -50,7 +50,7 @@
       </thead>
       <tbody>
       <tr th:each="comment : ${comments}">
-        <form method="post" action="/comment/nestedReply" th:object="${commentForm}">
+        <form method="post" action="/admin/comment/nestedReply" th:object="${commentForm}">
           <td th:if="${comment.step >= 1}">
             ㄴ
           </td>
@@ -72,7 +72,7 @@
             <button type="submit" class="btn btn-primary">Submit</button>
           </td>
           <td>
-            <div th:if="${admin.name == comment.writeUser}">
+            <div>
               <form method="post" action="/admin/comment/delComment" th:object="${commentForm}">
                 <input type="hidden" th:value="${comment.id}"
                        th:id="commentId" th:name="commentId">
