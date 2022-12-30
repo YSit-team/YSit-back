@@ -31,7 +31,7 @@ public class Article {
     private LocalDateTime regDate;
 
     @Builder
-    public Article (Long id, String title, String body, Board category, User user, ArticleStatus status, LocalDateTime regDate) {
+    public Article (Long id, String title, String body, Board category, User user, ArticleStatus status, LocalDateTime regDate, String adminName) {
         this.id = id;
         this.title = title;
         this.body = body;
@@ -39,6 +39,8 @@ public class Article {
         this.user = user;
         if (user != null) {
             this.writeUser = user.getLoginId();
+        } else {
+            this.writeUser = adminName;
         }
         this.status = status;
         this.regDate = regDate;

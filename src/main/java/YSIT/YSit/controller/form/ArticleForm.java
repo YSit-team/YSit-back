@@ -1,4 +1,4 @@
-package YSIT.YSit.controller;
+package YSIT.YSit.controller.form;
 
 import YSIT.YSit.domain.ArticleStatus;
 import YSIT.YSit.domain.Board;

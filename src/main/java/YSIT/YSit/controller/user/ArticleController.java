@@ -1,5 +1,9 @@
-package YSIT.YSit.controller;
+package YSIT.YSit.controller.user;
 
+import YSIT.YSit.controller.form.ArticleForm;
+import YSIT.YSit.controller.form.ArticleListForm;
+import YSIT.YSit.controller.form.ArticleUpdateForm;
+import YSIT.YSit.controller.form.CommentForm;
 import YSIT.YSit.domain.Article;
 import YSIT.YSit.domain.ArticleStatus;
 import YSIT.YSit.domain.Comment;
@@ -12,7 +16,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -44,7 +47,7 @@ public class ArticleController {
         User user = userService.findOne(id);
         model.addAttribute("loginId", user.getLoginId());
         model.addAttribute("articleForm", new ArticleForm());
-        return "/article/Write";
+        return "users/article/Write";
     }
 
     @PostMapping("/article/write")
@@ -67,11 +70,11 @@ public class ArticleController {
             result.rejectValue("category", "required");
         }
         if (result.hasErrors()) {
-            return "/article/write";
+            return "users/article/write";
         }
         if (!articleRepository.findByTitle(form.getTitle()).isEmpty()) {
             result.rejectValue("title", "sameTitle");
-            return "/article/write";
+            return "users/article/write";
         }
 
         ArticleStatus articleStatus;
@@ -104,7 +107,7 @@ public class ArticleController {
         model.addAttribute("articles", articles);
         model.addAttribute("articleList", new ArticleListForm());
 
-        return "article/ArticleList";
+        return "users/article/ArticleList";
     }
 
     @PostMapping("/article/articleList")
@@ -126,7 +129,7 @@ public class ArticleController {
         }
         if (form.getMyPage()) {
             nullCheck += 1;
-            findList = articleService.findByLoginId(user.getLoginId());
+            findList = articleService.findByWriteUser(user.getLoginId());
         }
         if (nullCheck >= 3 || nullCheck <= 0) {
              findList = articleService.findAll();
@@ -146,17 +149,22 @@ public class ArticleController {
         }
         model.addAttribute("articleList", new ArticleListForm());
         model.addAttribute("user", user);
-        return "article/articleList";
+        return "users/article/articleList";
     }
 
     @GetMapping("/article/articlePage/{articleId}/view")
-    public String articlePageForm(@PathVariable("articleId") Long articleId, Model model) {
+    public String articlePageForm(@PathVariable("articleId") Long articleId, Model model,
+                                  HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Long userId = (Long) session.getAttribute("Id");
+        User user = userService.findOne(userId);
         Article article = articleService.findOne(articleId);
         List<Comment> comments = commentService.findByArt(articleId);
+        model.addAttribute("user", user);
+        model.addAttribute("comments", comments);
         model.addAttribute("article", article);
         model.addAttribute("commentForm", new CommentForm());
-        model.addAttribute("comments", comments);
-        return "article/ArticlePage";
+        return "users/article/ArticlePage";
     }
 
     @GetMapping("/article/articlePage/{articleId}/update")
@@ -167,9 +175,9 @@ public class ArticleController {
                 .originTitle(article.getTitle())
                 .originBody(article.getBody())
                 .build();
-        log.info("TITLE = {}", article.getTitle());
+
         model.addAttribute("updateForm", form);
-        return "article/ArticleUpdate";
+        return "users/article/ArticleUpdate";
     }
 
     @PostMapping("/article/articlePage/{originFormId}/update")
@@ -190,7 +198,7 @@ public class ArticleController {
             model.addAttribute("updateForm", articleUpdateForm);
             result.rejectValue("updateTitle", "sameTitle");
             log.info("errorCode = {}", result);
-            return "article/ArticleUpdate";
+            return "users/article/ArticleUpdate";
         }
         HttpSession session = request.getSession();
         Long userId = (Long) session.getAttribute("Id");
@@ -220,7 +228,7 @@ public class ArticleController {
         model.addAttribute("user", user);
         model.addAttribute("articleList", new ArticleListForm());
 
-        return "article/ArticleList";
+        return "users/article/ArticleList";
     }
 }
 

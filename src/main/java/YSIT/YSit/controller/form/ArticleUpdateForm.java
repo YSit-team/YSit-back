@@ -1,4 +1,4 @@
-package YSIT.YSit.controller;
+package YSIT.YSit.controller.form;
 
 import jakarta.validation.constraints.Size;
 import lombok.Builder;

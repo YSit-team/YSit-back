@@ -1,19 +1,18 @@
-package YSIT.YSit.controller;
+package YSIT.YSit.controller.user;
 
+import YSIT.YSit.controller.form.UserForm;
+import YSIT.YSit.controller.form.UserListForm;
 import YSIT.YSit.domain.SchoolCategory;
 import YSIT.YSit.domain.User;
 import YSIT.YSit.repository.UserRepository;
 import YSIT.YSit.service.UserService;
 import jakarta.persistence.EntityManager;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +32,7 @@ public class UserController {
     @GetMapping("/user/register") // 회원가입 진입
     public String registerForm(Model model) {
         model.addAttribute("userForm", new UserForm());
-        return "user/Register";
+        return "users/user/Register";
     }
 
     @PostMapping("/user/register") // 회원가입 기능
@@ -42,7 +41,7 @@ public class UserController {
         if(!tempUser.isEmpty()){
             result.rejectValue("loginId", "sameId");
             log.info("errorCode = {}", result);
-            return "/user/Register";
+            return "users/user/Register";
         }
         if(form.getLoginId().isBlank()){
             result.rejectValue("loginId", "required");
@@ -54,7 +53,7 @@ public class UserController {
             result.rejectValue("name","required");
         }
         if (result.hasErrors()) {
-            return "/user/Register";
+            return "users/user/Register";
         }
 
         SchoolCategory schoolCategory;
@@ -80,7 +79,7 @@ public class UserController {
     @GetMapping("/user/login") // 로그인 진입
     public String loginForm(Model model) {
         model.addAttribute("userForm", new UserForm());
-        return "user/Login";
+        return "users/user/Login";
     }
     @PostMapping("/user/login") // 로그인 기능
     public String login(@ModelAttribute UserForm form, BindingResult result,
@@ -98,7 +97,7 @@ public class UserController {
         if (matchLogins.isEmpty()) {
             result.rejectValue("loginPw", "validLogin");
 
-            return "user/Login";
+            return "users/user/Login";
         }
 
         User user = matchLogins.get(0);
@@ -109,14 +108,12 @@ public class UserController {
         return "redirect:/";
     }
 
-    public class SessionConst {
-        public static final String LOGIN_USER = "loginUser";
-    };
-
     @GetMapping("/user/userList") // 회원 목록
     public String userListForm(Model model) {
+        List<User> users = userService.findUserAll();
+        model.addAttribute("users", users);
         model.addAttribute("userList", new UserListForm());
-        return "user/UserList";
+        return "users/user/UserList";
     }
 
     @PostMapping("/user/userList")
@@ -149,20 +146,20 @@ public class UserController {
             model.addAttribute("users", user);
         }
         model.addAttribute("userList", new UserListForm());
-        return "user/UserList";
+        return "users/user/UserList";
     }
 
     @GetMapping("/user/userUpdate")
-    public String updatePage(Model model,HttpServletRequest request) {
+    public String updatePageForm(Model model,HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if (Objects.isNull(session.getAttribute("Id"))){
+        Long userId = (Long) session.getAttribute("Id");
+        User user = userService.findOne(userId);
+        if (Objects.isNull(user)){
             return "redirect:/";
         }
-        Long id = (Long) session.getAttribute("Id");
-        User user = userService.findOne(id);
         model.addAttribute("loginId", user.getLoginId());
         model.addAttribute("updateForm", new UserForm());
-        return "user/UserUpdate";
+        return "users/user/UserUpdate";
     }
     @PostMapping("/user/userUpdate")
     public String userUpdate(@ModelAttribute UserForm form, HttpServletRequest request) {
@@ -180,7 +177,7 @@ public class UserController {
     }
 
     @GetMapping("/user/logout")
-    public String logoutPage(HttpServletRequest request) {
+    public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.invalidate();
 

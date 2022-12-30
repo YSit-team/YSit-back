@@ -15,7 +15,7 @@
   </div>
 </div> <!-- /container -->
 <div class="container2">
-  <form role="form" action="/comment/write" th:object="${commentForm}"
+  <form role="form" action="/admin/comment/write" th:object="${commentForm}"
         method="POST">
 
     <div class="form-group">
@@ -72,13 +72,15 @@
             <button type="submit" class="btn btn-primary">Submit</button>
           </td>
           <td>
-            <form method="post" action="/comment/delComment" th:object="${commentForm}">
-              <input type="hidden" th:value="${comment.id}"
-                     th:id="commentId" th:name="commentId">
-              <input type="hidden" th:value="${article.id}"
-                     th:id="articleId" th:name="articleId">
-              <button type="submit" class="btn btn-primary">댓글삭제</button>
-            </form>
+            <div th:if="${admin.name == comment.writeUser}">
+              <form method="post" action="/admin/comment/delComment" th:object="${commentForm}">
+                <input type="hidden" th:value="${comment.id}"
+                       th:id="commentId" th:name="commentId">
+                <input type="hidden" th:value="${article.id}"
+                       th:id="articleId" th:name="articleId">
+                <button type="submit" class="btn btn-primary">댓글삭제</button>
+              </form>
+            </div>
           </td>
         </form>
       </tr>

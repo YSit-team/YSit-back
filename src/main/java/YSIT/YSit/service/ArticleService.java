@@ -44,8 +44,8 @@ public class ArticleService {
     public List<Article> findByTitle(String title) {
         return articleRepository.findByTitle(title);
     }
-    public List<Article> findByLoginId(String loginId) {
-        return articleRepository.findByLoginId(loginId);
+    public List<Article> findByWriteUser(String loginId) {
+        return articleRepository.findByWriteUser(loginId);
     }
     public List<Article> findByBody(String body) {
         return articleRepository.findByBody(body);

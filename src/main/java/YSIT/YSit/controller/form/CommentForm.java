@@ -1,4 +1,4 @@
-package YSIT.YSit.controller;
+package YSIT.YSit.controller.form;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -19,11 +19,11 @@ public class QAdmins extends EntityPathBase<Admins> {
 
     public static final QAdmins admins = new QAdmins("admins");
 
-    public final StringPath ad_name = createString("ad_name");
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final StringPath logincode = createString("logincode");
+    public final StringPath loginCode = createString("loginCode");
+
+    public final StringPath name = createString("name");
 
     public final DateTimePath<java.time.LocalDateTime> regDate = createDateTime("regDate", java.time.LocalDateTime.class);
 

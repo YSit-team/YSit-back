@@ -20,7 +20,7 @@ public class ArticleRepository {
         return em.find(Article.class, id);
     }
 
-    public List<Article> findByLoginId(String loginId) {
+    public List<Article> findByWriteUser(String loginId) {
         return em.createQuery("select a from Article a where a.writeUser = :writeUser order by a.id desc", Article.class)
                 .setParameter("writeUser", loginId)
                 .getResultList();

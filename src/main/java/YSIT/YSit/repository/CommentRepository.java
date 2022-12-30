@@ -27,7 +27,6 @@ public class CommentRepository {
                 maxRef = comment.getRef();
             }
         }
-        System.out.println("maxRef = " + maxRef);
         return maxRef;
     }
 
