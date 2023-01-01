@@ -7,34 +7,52 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QVideotool is a Querydsl query type for Videotool
+ * QVideoTool is a Querydsl query type for VideoTool
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QVideotool extends EntityPathBase<Videotool> {
+public class QVideoTool extends EntityPathBase<VideoTool> {
 
-    private static final long serialVersionUID = -1281841815L;
+    private static final long serialVersionUID = -1282795127L;
 
-    public static final QVideotool videotool = new QVideotool("videotool");
+    private static final PathInits INITS = PathInits.DIRECT2;
+
+    public static final QVideoTool videoTool = new QVideoTool("videoTool");
+
+    public final QAdmins admins;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final NumberPath<Integer> max_quantity = createNumber("max_quantity", Integer.class);
+    public final NumberPath<Integer> maxQuantity = createNumber("maxQuantity", Integer.class);
 
-    public final StringPath vt_name = createString("vt_name");
+    public final StringPath name = createString("name");
 
-    public QVideotool(String variable) {
-        super(Videotool.class, forVariable(variable));
+    public final NumberPath<Integer> quantity = createNumber("quantity", Integer.class);
+
+    public final DateTimePath<java.time.LocalDateTime> regDate = createDateTime("regDate", java.time.LocalDateTime.class);
+
+    public QVideoTool(String variable) {
+        this(VideoTool.class, forVariable(variable), INITS);
     }
 
-    public QVideotool(Path<? extends Videotool> path) {
-        super(path.getType(), path.getMetadata());
+    public QVideoTool(Path<? extends VideoTool> path) {
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QVideotool(PathMetadata metadata) {
-        super(Videotool.class, metadata);
+    public QVideoTool(PathMetadata metadata) {
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QVideoTool(PathMetadata metadata, PathInits inits) {
+        this(VideoTool.class, metadata, inits);
+    }
+
+    public QVideoTool(Class<? extends VideoTool> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.admins = inits.isInitialized("admins") ? new QAdmins(forProperty("admins")) : null;
     }
 
 }

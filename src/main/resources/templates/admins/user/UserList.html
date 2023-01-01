@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 <div class="requests">
-    <form role="form" action="/admin/userList" th:object="${userList}"
+    <form role="form" action="/user/userList" th:object="${userList}"
           method="POST">
         <div class="form-group">
             <label th:for="student">학생만 보기</label>
@@ -41,6 +41,9 @@
                 <td th:text="${user.regDate}"></td>
                 <td>
                     <a href="#" th:href="@{/admin/userUpdate/{id} (id=${user.id})}">수정하기</a>
+                </td>
+                <td>
+                    <a href="#" th:href="@{/admin/userDelete/{id} (id=${user.id})}">삭제하기</a>
                 </td>
             </tr>
             </tbody>

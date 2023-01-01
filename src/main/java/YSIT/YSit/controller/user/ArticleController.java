@@ -4,10 +4,7 @@ import YSIT.YSit.controller.form.ArticleForm;
 import YSIT.YSit.controller.form.ArticleListForm;
 import YSIT.YSit.controller.form.ArticleUpdateForm;
 import YSIT.YSit.controller.form.CommentForm;
-import YSIT.YSit.domain.Article;
-import YSIT.YSit.domain.ArticleStatus;
-import YSIT.YSit.domain.Comment;
-import YSIT.YSit.domain.User;
+import YSIT.YSit.domain.*;
 import YSIT.YSit.repository.ArticleRepository;
 import YSIT.YSit.service.ArticleService;
 import YSIT.YSit.service.CommentService;
@@ -56,6 +53,7 @@ public class ArticleController {
         HttpSession session = request.getSession();
         Long id = (Long) session.getAttribute("Id");
         User user = userService.findOne(id);
+
         model.addAttribute("loginId", user.getLoginId());
         if (Objects.isNull(session.getAttribute("Id"))){
             return "redirect:/";
@@ -68,6 +66,8 @@ public class ArticleController {
         }
         if (form.getCategory() == null) {
             result.rejectValue("category", "required");
+        } else if (form.getCategory() == Board.공지 && user.getSchoolCategory() == SchoolCategory.STUDENT) {
+            result.rejectValue("category", "studentCantSetNotice");
         }
         if (result.hasErrors()) {
             return "users/article/write";
@@ -103,6 +103,8 @@ public class ArticleController {
         Long id = (Long)session.getAttribute("Id");
         User user = userService.findOne(id);
         List<Article> articles = articleService.findAll();
+
+        model.addAttribute("modal", false);
         model.addAttribute("user", user);
         model.addAttribute("articles", articles);
         model.addAttribute("articleList", new ArticleListForm());
@@ -147,6 +149,7 @@ public class ArticleController {
                     .build();
             model.addAttribute("articles", article);
         }
+        model.addAttribute("modal", false);
         model.addAttribute("articleList", new ArticleListForm());
         model.addAttribute("user", user);
         return "users/article/articleList";
@@ -159,6 +162,20 @@ public class ArticleController {
         Long userId = (Long) session.getAttribute("Id");
         User user = userService.findOne(userId);
         Article article = articleService.findOne(articleId);
+
+        if (article.getStatus() == ArticleStatus.PRIVATE) {
+            if (user.getSchoolCategory() == SchoolCategory.STUDENT) {
+                if (user.getLoginId() != article.getWriteUser() && !Objects.isNull(article.getUser())) {
+                    List<Article> articles = articleService.findAll();
+                    model.addAttribute("articles", articles);
+                    model.addAttribute("modal", true);
+                    model.addAttribute("articleList", new ArticleListForm());
+                    model.addAttribute("user", user);
+                    return "users/article/ArticleList";
+                }
+            }
+        }
+
         List<Comment> comments = commentService.findByArt(articleId);
         model.addAttribute("user", user);
         model.addAttribute("comments", comments);
@@ -175,31 +192,23 @@ public class ArticleController {
                 .originTitle(article.getTitle())
                 .originBody(article.getBody())
                 .build();
-
-        model.addAttribute("updateForm", form);
+        model.addAttribute("articleUpdateForm", form);
+        model.addAttribute("articleId", articleId);
         return "users/article/ArticleUpdate";
     }
 
-    @PostMapping("/article/articlePage/{originFormId}/update")
-    public String articleUpdate(@PathVariable("originFormId") Long articleId,
+    @PostMapping("/article/articlePage/{articleUpdateFormId}/update")
+    public String articleUpdate(@PathVariable("articleUpdateFormId") Long articleId,
                                 @Valid @ModelAttribute ArticleUpdateForm form,
                                 BindingResult result,
                                 HttpServletRequest request,
                                 Model model) {
         List<Article> compareArt = articleService.findByTitle(form.getUpdateTitle());
         if (!compareArt.isEmpty()) {
-            Article article = articleService.findOne(articleId);
-            ArticleUpdateForm articleUpdateForm = ArticleUpdateForm.builder()
-                    .id(articleId)
-                    .originTitle(article.getTitle())
-                    .originBody(article.getBody())
-                    .build();
-
-            model.addAttribute("updateForm", articleUpdateForm);
             result.rejectValue("updateTitle", "sameTitle");
-            log.info("errorCode = {}", result);
             return "users/article/ArticleUpdate";
         }
+
         HttpSession session = request.getSession();
         Long userId = (Long) session.getAttribute("Id");
         User user = userService.findOne(userId);
@@ -208,6 +217,7 @@ public class ArticleController {
         if (!checkArt.getWriteUser().equals(user.getLoginId())) {
             return "redirect:/";
         }
+
         ArticleStatus status;
         if (form.getStatus()) {
             status = ArticleStatus.PRIVATE;
@@ -223,12 +233,7 @@ public class ArticleController {
                 .build();
         articleService.updateArticle(article);
 
-        Article viewArt = articleService.findOne(articleId);
-        model.addAttribute("articles", viewArt);
-        model.addAttribute("user", user);
-        model.addAttribute("articleList", new ArticleListForm());
-
-        return "users/article/ArticleList";
+        return "redirect:/article/articlePage/" + article.getId().toString() + "/view";
     }
 }
 

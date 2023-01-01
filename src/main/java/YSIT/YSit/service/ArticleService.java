@@ -37,6 +37,10 @@ public class ArticleService {
             article.changeStatus(updateData.getStatus());
         }
     }
+    @Transactional(readOnly = false)
+    public void deleteById(Long Id) {
+        articleRepository.deleteById(Id);
+    }
 
     public List<Article> findAll() {
         return articleRepository.findAll();

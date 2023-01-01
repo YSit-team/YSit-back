@@ -9,11 +9,8 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class UserForm {
     private Long id;
-    @NotBlank
     private String LoginId;
-    @NotBlank
     private String LoginPw;
-    @NotBlank
     private String name;
 
     private LocalDateTime regDate;

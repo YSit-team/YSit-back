@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Objects;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.fail;
+
 @SpringBootTest
 @Transactional
 @RunWith(SpringRunner.class)
@@ -153,7 +155,7 @@ public class ArticleServiceTest {
                 .build();
         articleService.save(article);
 
-        List<Article> articleList = articleRepository.findByLoginId(user.getLoginId());
+        List<Article> articleList = articleRepository.findByWriteUser(user.getLoginId());
         if (articleList.isEmpty()) {
             fail("실패");
         }
@@ -169,5 +171,33 @@ public class ArticleServiceTest {
                 .build();
         articleService.save(article);
         return article;
+    }
+
+    @Test
+    public void deleteTest() {
+        String title = "게시물1";
+        String body = "내용1";
+        Board category = Board.자유;
+        ArticleStatus status = ArticleStatus.PUBLIC;
+        User user = User.builder()
+                .name("TEST")
+                .loginId("TEST")
+                .loginPw("TEST")
+                .build();
+        userService.register(user);
+        Article article = Article.builder()
+                .title(title)
+                .body(body)
+                .category(category)
+                .user(user)
+                .status(status)
+                .build();
+        articleService.save(article);
+
+        articleService.deleteById(article.getId());
+        Article art = articleService.findOne(article.getId());
+        if (!Objects.isNull(art)){
+            fail("실패");
+        }
     }
 }

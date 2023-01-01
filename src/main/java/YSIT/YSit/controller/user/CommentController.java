@@ -102,10 +102,15 @@ public class CommentController {
     @PostMapping("/comment/delComment")
     public String delete(@ModelAttribute CommentForm form,
                              Model model, HttpServletRequest request) {
+        log.info("\n통과");
         HttpSession session = request.getSession();
         Long userId = (Long) session.getAttribute("Id");
-        commentService.delComment(form.getId());
-        em.flush();
+        Comment comment = commentService.findOne(form.getId());
+        commentService.delCommentByUser(comment);
+
+        Comment check = commentService.findOne(form.getId());
+        log.info("\nCommentBody = {}", check.getBody());
+
         return returnPage(userId, form.getArticleId(), model);
     }
 

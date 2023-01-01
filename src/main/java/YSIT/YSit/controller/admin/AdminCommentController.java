@@ -110,4 +110,19 @@ public class AdminCommentController {
 
         return returnPage(adminId, form.getArticleId(), model);
     }
+
+    @PostMapping("/admin/comment/delComment")
+    public String delete(@ModelAttribute CommentForm form,
+                         Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Long adminId = (Long) session.getAttribute("adminId");
+
+        Comment comment = commentService.findOne(form.getId());
+        commentService.delCommentByAdmin(comment);
+
+        Comment check = commentService.findOne(form.getId());
+        log.info("\nCommentBody = {}", check.getBody());
+
+        return returnPage(adminId, form.getArticleId(), model);
+    }
 }

@@ -1,6 +1,7 @@
 package YSIT.YSit.repository;
 
 import YSIT.YSit.domain.Article;
+import YSIT.YSit.domain.User;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -43,5 +44,9 @@ public class ArticleRepository {
         return em.createQuery("select a from Article a where a.body like :body order by a.id desc", Article.class)
                 .setParameter("body", paramBody)
                 .getResultList();
+    }
+    public void deleteById(Long Id) {
+        Article art = em.find(Article.class, Id);
+        em.remove(art);
     }
 }

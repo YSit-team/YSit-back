@@ -103,7 +103,7 @@ public class AdminArticleController {
         return "admins/article/List";
     }
 
-    @PostMapping("/admin/article/article]List")
+    @PostMapping("/admin/article/articleList")
     public String articleList(@ModelAttribute ArticleListForm form, Model model,
                               HttpServletRequest request) {
         int nullCheck = 0;
@@ -158,5 +158,12 @@ public class AdminArticleController {
         model.addAttribute("article", article);
         model.addAttribute("commentForm", new CommentForm());
         return "/admins/article/Page";
+    }
+
+    @GetMapping("/admin/articleDelete/{articleId}")
+    public String articleDelete(@PathVariable("articleId") Long articleId) {
+        articleService.deleteById(articleId);
+
+        return "redirect:/admin/article/articleList";
     }
 }

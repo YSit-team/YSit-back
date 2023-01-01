@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -37,28 +38,29 @@ public class UserController {
 
     @PostMapping("/user/register") // 회원가입 기능
     public String register(@Valid @ModelAttribute UserForm form, BindingResult result) {
+
+        if(form.getLoginId().isBlank()){
+            result.rejectValue("loginId", "required");
+            return "users/user/Register";
+        }
         List<User> tempUser = userService.doublecheckLoginId(form.getLoginId());
         if(!tempUser.isEmpty()){
             result.rejectValue("loginId", "sameId");
             log.info("errorCode = {}", result);
             return "users/user/Register";
         }
-        if(form.getLoginId().isBlank()){
-            result.rejectValue("loginId", "required");
-        }
         if(form.getLoginPw().isBlank()) {
             result.rejectValue("loginPw", "required");
+            return "users/user/Register";
         }
         if(form.getName().isBlank()){
             result.rejectValue("name","required");
-        }
-        if (result.hasErrors()) {
             return "users/user/Register";
         }
 
         SchoolCategory schoolCategory;
 
-        if (form.getRank()){
+        if (!form.getRank()){
             schoolCategory = SchoolCategory.STUDENT;
         } else {
             schoolCategory = SchoolCategory.TEACHER;
@@ -86,18 +88,18 @@ public class UserController {
                         HttpServletRequest request) {
         if(form.getLoginId().isBlank()){
             result.rejectValue("loginId", "required");
-            return "user/Login";
+            return "/users/user/Login";
         }
         if(form.getLoginPw().isBlank()){
             result.rejectValue("loginPw", "required");
-            return "user/Login";
+            return "/users/user/Login";
         }
 
         List<User> matchLogins = userService.matchLogins(form.getLoginId(), form.getLoginPw());
         if (matchLogins.isEmpty()) {
             result.rejectValue("loginPw", "validLogin");
 
-            return "users/user/Login";
+            return "/users/user/Login";
         }
 
         User user = matchLogins.get(0);
@@ -150,21 +152,29 @@ public class UserController {
     }
 
     @GetMapping("/user/userUpdate")
-    public String updatePageForm(Model model,HttpServletRequest request) {
+    public String updatePageForm(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        Long userId = (Long) session.getAttribute("Id");
-        User user = userService.findOne(userId);
-        if (Objects.isNull(user)){
-            return "redirect:/";
-        }
-        model.addAttribute("loginId", user.getLoginId());
-        model.addAttribute("updateForm", new UserForm());
+        Long id = (Long) session.getAttribute("Id");
+        User user = userService.findOne(id);
+
+        model.addAttribute("user", user);
+        model.addAttribute("userForm", new UserForm());
         return "users/user/UserUpdate";
     }
     @PostMapping("/user/userUpdate")
-    public String userUpdate(@ModelAttribute UserForm form, HttpServletRequest request) {
+    public String userUpdate(@Valid @ModelAttribute UserForm form, BindingResult result,
+                             Model model, HttpServletRequest request) {
+        List<User> valid = userService.findLoginId(form.getLoginId());
         HttpSession session = request.getSession();
         Long id = (Long) session.getAttribute("Id");
+        User user = userService.findOne(id);
+
+        if (!valid.isEmpty()) {
+            result.rejectValue("loginId", "sameId");
+            model.addAttribute("user", user);
+            return "users/user/UserUpdate";
+        }
+
         User user2 = User.builder()
                 .id(id)
                 .name(form.getName())

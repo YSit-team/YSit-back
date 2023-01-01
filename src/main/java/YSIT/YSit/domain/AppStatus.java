@@ -1,5 +1,5 @@
 package YSIT.YSit.domain;
 
 public enum AppStatus {
-    WAIT, IN_USE, END
+    대기, 사용중, 종료, 거절
 }

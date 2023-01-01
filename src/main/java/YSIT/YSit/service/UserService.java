@@ -49,6 +49,8 @@ public class UserService {
             user1.changeSchoolCategory(updateData.getSchoolCategory());
         }
     }
+
+    @Transactional(readOnly = false)
     public void deleteById(Long Id) {
         userRepository.deleteById(Id);
     }

@@ -71,18 +71,18 @@
           <td>
             <button type="submit" class="btn btn-primary">Submit</button>
           </td>
+        </form>
           <td>
             <div>
               <form method="post" action="/admin/comment/delComment" th:object="${commentForm}">
                 <input type="hidden" th:value="${comment.id}"
-                       th:id="commentId" th:name="commentId">
+                       th:id="id" th:name="id">
                 <input type="hidden" th:value="${article.id}"
                        th:id="articleId" th:name="articleId">
                 <button type="submit" class="btn btn-primary">댓글삭제</button>
               </form>
             </div>
           </td>
-        </form>
       </tr>
       </tbody>
     </table>

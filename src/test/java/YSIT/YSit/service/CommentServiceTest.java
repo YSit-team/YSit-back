@@ -4,6 +4,7 @@ import YSIT.YSit.domain.*;
 import YSIT.YSit.repository.CommentRepository;
 import YSIT.YSit.repository.UserRepository;
 import jakarta.persistence.EntityManager;
+import jakarta.validation.constraints.Size;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,9 +115,11 @@ public class CommentServiceTest {
         articleService.save(article);
         Comment comment = createCom(0L,0L,0L,0L,"Test",article.getId(),user.getLoginId());
         commentService.save(comment);
-        commentService.delComment(comment.getId());
+        commentService.delCommentByUser(comment);
         em.flush();
-        if (comment.getBody() != "삭제되었습니다") {
+
+        Comment check = commentService.findOne(comment.getId());
+        if (!Objects.equals(check.getBody(), "삭제되었습니다")) {
             fail("실패");
         }
     }

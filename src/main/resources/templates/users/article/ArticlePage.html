@@ -71,18 +71,20 @@
           <td>
             <button type="submit" class="btn btn-primary">Submit</button>
           </td>
+        </form>
           <td>
-            <div th:if="${user.loginId == comment.writeUser}">
-              <form method="post" action="/comment/delComment" th:object="${commentForm}">
-                <input type="hidden" th:value="${comment.id}"
-                       th:id="commentId" th:name="commentId">
-                <input type="hidden" th:value="${article.id}"
-                       th:id="articleId" th:name="articleId">
-                <button type="submit" class="btn btn-primary">댓글삭제</button>
-              </form>
+            <div class="delete">
+              <div th:if="${user.loginId == comment.writeUser}">
+                <form method="post" action="/comment/delComment" th:object="${commentForm}">
+                  <input type="hidden" th:value="${comment.id}"
+                         th:id="id" th:name="id">
+                  <input type="hidden" th:value="${article.id}"
+                         th:id="articleId" th:name="articleId">
+                  <button type="submit" class="btn btn-primary">댓글삭제</button>
+                </form>
+              </div>
             </div>
           </td>
-        </form>
       </tr>
       </tbody>
     </table>

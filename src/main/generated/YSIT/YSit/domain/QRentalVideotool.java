@@ -11,22 +11,24 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QRentalVideotool is a Querydsl query type for RentalVideotool
+ * QRentalVideoTool is a Querydsl query type for RentalVideoTool
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QRentalVideotool extends EntityPathBase<RentalVideotool> {
+public class QRentalVideoTool extends EntityPathBase<RentalVideoTool> {
 
-    private static final long serialVersionUID = -393193435L;
+    private static final long serialVersionUID = -394146747L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QRentalVideotool rentalVideotool = new QRentalVideotool("rentalVideotool");
+    public static final QRentalVideoTool rentalVideoTool = new QRentalVideoTool("rentalVideoTool");
 
     public final EnumPath<AppStatus> appStatus = createEnum("appStatus", AppStatus.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath reason = createString("reason");
+
+    public final NumberPath<Long> ref = createNumber("ref", Long.class);
 
     public final DateTimePath<java.time.LocalDateTime> regDate = createDateTime("regDate", java.time.LocalDateTime.class);
 
@@ -36,28 +38,28 @@ public class QRentalVideotool extends EntityPathBase<RentalVideotool> {
 
     public final QUser student;
 
-    public final QVideotool videotool;
+    public final QVideoTool videoTool;
 
-    public QRentalVideotool(String variable) {
-        this(RentalVideotool.class, forVariable(variable), INITS);
+    public QRentalVideoTool(String variable) {
+        this(RentalVideoTool.class, forVariable(variable), INITS);
     }
 
-    public QRentalVideotool(Path<? extends RentalVideotool> path) {
+    public QRentalVideoTool(Path<? extends RentalVideoTool> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QRentalVideotool(PathMetadata metadata) {
+    public QRentalVideoTool(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QRentalVideotool(PathMetadata metadata, PathInits inits) {
-        this(RentalVideotool.class, metadata, inits);
+    public QRentalVideoTool(PathMetadata metadata, PathInits inits) {
+        this(RentalVideoTool.class, metadata, inits);
     }
 
-    public QRentalVideotool(Class<? extends RentalVideotool> type, PathMetadata metadata, PathInits inits) {
+    public QRentalVideoTool(Class<? extends RentalVideoTool> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.student = inits.isInitialized("student") ? new QUser(forProperty("student")) : null;
-        this.videotool = inits.isInitialized("videotool") ? new QVideotool(forProperty("videotool")) : null;
+        this.videoTool = inits.isInitialized("videoTool") ? new QVideoTool(forProperty("videoTool"), inits.get("videoTool")) : null;
     }
 
 }

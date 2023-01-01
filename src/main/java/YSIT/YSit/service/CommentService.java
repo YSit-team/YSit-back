@@ -36,10 +36,15 @@ public class CommentService {
     }
 
     @Transactional(readOnly = false)
-    public void delComment(Long commentId) {
-        Comment comment = commentRepository.findOne(commentId);
-        log.info("CommentBody = {}", comment.getBody());
+    public void delCommentByUser(Comment delCom) {
+        Comment comment = commentRepository.findOne(delCom.getId());
         String deleteMention = "삭제되었습니다";
+        comment.changeBody(deleteMention);
+    }
+    @Transactional(readOnly = false)
+    public void delCommentByAdmin(Comment delCom) {
+        Comment comment = commentRepository.findOne(delCom.getId());
+        String deleteMention = "관리자에 의해 삭제되었습니다";
         comment.changeBody(deleteMention);
     }
 }

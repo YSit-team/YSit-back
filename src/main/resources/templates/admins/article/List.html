@@ -54,6 +54,10 @@
         <td th:text="${article.writeUser}"></td>
         <td th:text="${article.category}"></td>
         <td th:text="${article.regDate}"></td>
+        <td>
+        <a href="#"
+           th:href="@{/admin/articleDelete/{id} (id=${article.id})}">삭제하기</a>
+        </td>
       </tr>
       </tbody>
     </table>

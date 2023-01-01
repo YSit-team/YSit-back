@@ -6,7 +6,7 @@
  }
 </style>
 <body>
-<form role="form" th:action="@{/article/articlePage/{id}/update (id=${updateForm.id})}" th:object="${updateForm}"
+<form role="form" th:action="@{/article/articlePage/{id}/update (id=${articleId})}" th:object="${articleUpdateForm}"
       method="post">
 
   <div class="form-group">

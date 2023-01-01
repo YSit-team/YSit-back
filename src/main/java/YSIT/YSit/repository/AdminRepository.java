@@ -26,6 +26,7 @@ public class AdminRepository {
                 .setParameter("loginCode", loginCode)
                 .getResultList();
     }
+
     public List<Admins> findByName(String name) {
         return em.createQuery("select a from Admins a where a.name = :name", Admins.class)
                 .setParameter("name", name)

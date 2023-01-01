@@ -160,6 +160,7 @@ class UserServiceTest {
     public void deleteTest() {
         User user1 = createUser("Test","Test","Test");
         userService.deleteById(user1.getId());
+        em.flush();
         User user = userRepository.findOne(user1.getId());
         if (!Objects.isNull(user)){
             fail("실패");
