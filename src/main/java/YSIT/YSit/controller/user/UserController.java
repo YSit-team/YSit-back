@@ -1,5 +1,6 @@
 package YSIT.YSit.controller.user;
 
+import YSIT.YSit.Exception.BusinessException;
 import YSIT.YSit.controller.form.UserForm;
 import YSIT.YSit.controller.form.UserListForm;
 import YSIT.YSit.domain.SchoolCategory;
@@ -12,6 +13,8 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,11 +27,12 @@ import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
+//@RequestMapping("/api")
 @Slf4j
+//@CrossOrigin
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
-    private final EntityManager em;
 
     @GetMapping("/user/register") // 회원가입 진입
     public String registerForm(Model model) {
@@ -77,29 +81,31 @@ public class UserController {
 
         return "redirect:/";
     }
-
     @GetMapping("/user/login") // 로그인 진입
     public String loginForm(Model model) {
         model.addAttribute("userForm", new UserForm());
         return "users/user/Login";
     }
     @PostMapping("/user/login") // 로그인 기능
-    public String login(@ModelAttribute UserForm form, BindingResult result,
-                        HttpServletRequest request) {
+    public String login(
+            @ModelAttribute UserForm form, BindingResult result,
+                                HttpServletRequest request) {
         if(form.getLoginId().isBlank()){
             result.rejectValue("loginId", "required");
             return "/users/user/Login";
+//            throw new BusinessException("값이 없습니다.");
         }
         if(form.getLoginPw().isBlank()){
             result.rejectValue("loginPw", "required");
             return "/users/user/Login";
+//            throw new BusinessException("값이 없습니다.");
         }
 
         List<User> matchLogins = userService.matchLogins(form.getLoginId(), form.getLoginPw());
         if (matchLogins.isEmpty()) {
             result.rejectValue("loginPw", "validLogin");
-
             return "/users/user/Login";
+//            throw new BusinessException("암호가 일치하지 않습니다");
         }
 
         User user = matchLogins.get(0);
@@ -162,7 +168,7 @@ public class UserController {
         return "users/user/UserUpdate";
     }
     @PostMapping("/user/userUpdate")
-    public String userUpdate(@Valid @ModelAttribute UserForm form, BindingResult result,
+    public String userUpdate(@ModelAttribute UserForm form, BindingResult result,
                              Model model, HttpServletRequest request) {
         List<User> valid = userService.findLoginId(form.getLoginId());
         HttpSession session = request.getSession();

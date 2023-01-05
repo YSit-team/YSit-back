@@ -27,11 +27,6 @@ public class AdminServiceTest {
                 .name("test")
                 .build();
         adminService.save(admin1);
-        Admins admin2 = Admins.builder()
-                .loginCode("test")
-                .name("test")
-                .build();
-        adminService.save(admin2);
         Admins adminTest = adminService.findOne(admin1.getId());
         if (Objects.isNull(adminTest)){
             fail("실패");
@@ -47,11 +42,6 @@ public class AdminServiceTest {
                 .name("test")
                 .build();
         adminService.save(admin1);
-        Admins admin2 = Admins.builder()
-                .loginCode("test")
-                .name("test")
-                .build();
-        adminService.save(admin2);
         List<Admins> adminTest = adminService.findByLoginCode(admin1.getLoginCode());
         if (Objects.isNull(adminTest)){
             fail("실패");
