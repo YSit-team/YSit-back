@@ -9,14 +9,14 @@ import java.time.LocalDateTime;
 @Getter
 public class AfterClassStudent {
     @GeneratedValue @Id
-    @Column(name = "afterclass_student_id")
+    @Column(name = "afterClass_student_id")
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
     @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY,targetEntity = AfterClass.class)
-    @JoinColumn(name = "afterclass_id")
+    @JoinColumn(name = "afterClass_id")
     private AfterClass afterClass;
 
     private String start_time;

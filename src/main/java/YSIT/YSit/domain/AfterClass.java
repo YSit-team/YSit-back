@@ -11,13 +11,11 @@ import java.util.List;
 @Getter
 public class AfterClass {
     @GeneratedValue @Id
-    @Column(name = "afterclass_id")
+    @Column(name = "afterClass_id")
     private Long id;
 
-    @Column(name = "ac_name")
     private String name;
     @Enumerated(EnumType.STRING)
-    @Column(name = "ac_status")
     private AppStatus status;
 
     @OneToMany(mappedBy = "afterClass", cascade = CascadeType.ALL)
