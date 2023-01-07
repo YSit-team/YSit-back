@@ -30,7 +30,8 @@ public class UserService {
     }
 
     public List<User> matchLogins(String loginId, String loginPw) { //
-        return userRepository.findLoginIdAndPw(loginId, userRepository.encryption(loginPw));
+        List<User> users =  userRepository.findLoginIdAndPw(loginId, userRepository.encryption(loginPw));
+        return users;
     }
 
     @Transactional(readOnly = false) // Dirty Check

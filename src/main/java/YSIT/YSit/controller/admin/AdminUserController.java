@@ -24,74 +24,74 @@ public class AdminUserController {
     private final UserService userService;
     private final EntityManager em;
 
-    @GetMapping("/admin/userList")
-    public String userListForm(Model model) {
-        model.addAttribute("userList", new UserListForm());
-        return "admins/user/UserList";
-    }
-    @PostMapping("/admin/userList")
-    public String userList(@ModelAttribute UserListForm form,
-                           Model model) {
-        int check_bool = 0;
-        List<User> findList = null;
+//    @GetMapping("/admin/userList")
+//    public String userListForm(Model model) {
+//        model.addAttribute("userList", new UserListForm());
+//        return "admins/user/UserList";
+//    }
+//    @PostMapping("/admin/userList")
+//    public String userList(@ModelAttribute UserListForm form,
+//                           Model model) {
+//        int check_bool = 0;
+//        List<User> findList = null;
+//
+//        if (form.getStudent()) {
+//            findList = userService.findStudentAll();
+//            check_bool += 1;
+//        }
+//        if (form.getTeacher()) {
+//            findList = userService.findTeacherAll();
+//            check_bool += 1;
+//        }
+//        if (check_bool >= 2 || check_bool <= 0) {
+//            findList = userService.findUserAll();
+//        }
+//
+//        if (findList != null) {
+//            model.addAttribute("users", findList);
+//        } else {
+//            User user = User.builder()
+//                    .name(null)
+//                    .loginId(null)
+//                    .loginPw(null)
+//                    .schoolCategory(null)
+//                    .regDate(null)
+//                    .build();
+//            model.addAttribute("users", user);
+//        }
+//        model.addAttribute("userList", new UserListForm());
+//        return "admins/user/UserList";
+//    }
 
-        if (form.getStudent()) {
-            findList = userService.findStudentAll();
-            check_bool += 1;
-        }
-        if (form.getTeacher()) {
-            findList = userService.findTeacherAll();
-            check_bool += 1;
-        }
-        if (check_bool >= 2 || check_bool <= 0) {
-            findList = userService.findUserAll();
-        }
+//    @GetMapping("/admin/userUpdate/{userId}")
+//    public String updateForm(Model model,
+//                             @PathVariable("userId") Long userId) {
+//        User user = userService.findOne(userId);
+//        if (Objects.isNull(user)){
+//            return "redirect:/";
+//        }
+//        model.addAttribute("user", user);
+//        model.addAttribute("updateForm", new UserForm());
+//        return "admins/user/UserUpdate";
+//    }
 
-        if (findList != null) {
-            model.addAttribute("users", findList);
-        } else {
-            User user = User.builder()
-                    .name(null)
-                    .loginId(null)
-                    .loginPw(null)
-                    .schoolCategory(null)
-                    .regDate(null)
-                    .build();
-            model.addAttribute("users", user);
-        }
-        model.addAttribute("userList", new UserListForm());
-        return "admins/user/UserList";
-    }
-
-    @GetMapping("/admin/userUpdate/{userId}")
-    public String updateForm(Model model,
-                             @PathVariable("userId") Long userId) {
-        User user = userService.findOne(userId);
-        if (Objects.isNull(user)){
-            return "redirect:/";
-        }
-        model.addAttribute("user", user);
-        model.addAttribute("updateForm", new UserForm());
-        return "admins/user/UserUpdate";
-    }
-
-    @PostMapping("/admin/userUpdate/{userId}")
-    public String userUpdate(@ModelAttribute UserForm form,
-                             @PathVariable("userId") Long userId) {
-        User user2 = User.builder()
-                .id(userId)
-                .name(form.getName())
-                .loginId(form.getLoginId())
-                .loginPw(form.getLoginPw())
-                .build();
-        userService.updateUser(user2);
-
-        return "redirect:/";
-    }
-
-    @GetMapping("/admin/userDelete/{userId}")
-    public String userDelete(@PathVariable("userId") Long userId) {
-        userService.deleteById(userId);
-        return "redirect:/admin/userList";
-    }
+//    @PostMapping("/admin/userUpdate/{userId}")
+//    public String userUpdate(@ModelAttribute UserForm form,
+//                             @PathVariable("userId") Long userId) {
+//        User user2 = User.builder()
+//                .id(userId)
+//                .name(form.getName())
+//                .loginId(form.getLoginId())
+//                .loginPw(form.getLoginPw())
+//                .build();
+//        userService.updateUser(user2);
+//
+//        return "redirect:/";
+//    }
+//
+//    @GetMapping("/admin/userDelete/{userId}")
+//    public String userDelete(@PathVariable("userId") Long userId) {
+//        userService.deleteById(userId);
+//        return "redirect:/admin/userList";
+//    }
 }
