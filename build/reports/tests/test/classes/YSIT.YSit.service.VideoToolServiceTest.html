@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Class YSIT.YSit.service.VideoToolServiceTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class YSIT.YSit.service.VideoToolServiceTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/YSIT.YSit.service.html">YSIT.YSit.service</a> &gt; VideoToolServiceTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">2</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.027s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">findByNameTest</td>
+<td class="success">0.016s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">saveTest</td>
+<td class="success">0.011s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2023-01-06T01:59:13.198+09:00  INFO 19576 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [YSIT.YSit.service.VideoToolServiceTest]: VideoToolServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-01-06T01:59:13.199+09:00  INFO 19576 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration YSIT.YSit.YSitApplication for test class YSIT.YSit.service.VideoToolServiceTest
+2023-01-06T01:59:13.204+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        video_tool_seq for update
+Hibernate: 
+    select
+        next_val as id_val 
+    from
+        video_tool_seq for update
+2023-01-06T01:59:13.205+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    update
+        video_tool_seq 
+    set
+        next_val= ? 
+    where
+        next_val=?
+Hibernate: 
+    update
+        video_tool_seq 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-01-06T01:59:13.215+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        video_tool_seq for update
+Hibernate: 
+    select
+        next_val as id_val 
+    from
+        video_tool_seq for update
+2023-01-06T01:59:13.216+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    update
+        video_tool_seq 
+    set
+        next_val= ? 
+    where
+        next_val=?
+Hibernate: 
+    update
+        video_tool_seq 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-01-06T01:59:13.223+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        video_tool
+        (admin_id, max_quantity, name, quantity, reg_date, video_tool_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        video_tool
+        (admin_id, max_quantity, name, quantity, reg_date, video_tool_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+2023-01-06T01:59:13.225+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        v1_0.video_tool_id,
+        v1_0.admin_id,
+        v1_0.max_quantity,
+        v1_0.name,
+        v1_0.quantity,
+        v1_0.reg_date 
+    from
+        video_tool v1_0 
+    where
+        v1_0.name like ?
+Hibernate: 
+    select
+        v1_0.video_tool_id,
+        v1_0.admin_id,
+        v1_0.max_quantity,
+        v1_0.name,
+        v1_0.quantity,
+        v1_0.reg_date 
+    from
+        video_tool v1_0 
+    where
+        v1_0.name like ?
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 7.6</a> at 2023. 1. 6. 오전 1:59:13</p>
+</div>
+</div>
+</body>
+</html>

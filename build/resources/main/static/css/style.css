@@ -1,0 +1,85 @@
+#wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 150px;
+  }
+  
+  .title {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    /* font-weight: 700; */
+    font-size: 32px;
+    line-height: 46px;
+    text-align: center;
+    text-transform: capitalize;
+  }
+  
+  .subtitle {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    /* font-weight: 350; */
+    font-size: 20px;
+    line-height: 29px;
+    text-align: center;
+  
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  
+  }
+  
+  .Input-Id {
+    width: 380px;
+    height: 56px;
+    /* left: 706px;
+    top: 467px; */
+  
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 12px;
+  }
+  
+  .Input-Pw {
+    width: 380px;
+    height: 56px;
+    /* left: 706px;
+    top: 467px; */
+  
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 12px;
+  }
+  
+  #loginbutton {
+    width: 380px;
+    height: 56px;
+    /* left: 706px;
+    top: 670px; */
+  
+    background: #1E00D3;
+    border: 1px solid #E5E5E5;
+    border-radius: 12px;
+  
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+  
+    color: #FFFFFF;
+  }
+  
+  form i{
+    position: absolute;
+    left: 75%;
+    top: 27px;
+    color: orange;
+  }
+  
+  .fieldError {
+    border-color: #bd2130;
+  }

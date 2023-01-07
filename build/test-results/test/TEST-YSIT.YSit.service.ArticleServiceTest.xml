@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="YSIT.YSit.service.ArticleServiceTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-01-05T16:59:12" hostname="DESKTOP-LFB9EBL" time="0.117">
+  <properties/>
+  <testcase name="saveTest" classname="YSIT.YSit.service.ArticleServiceTest" time="0.042"/>
+  <testcase name="articleUpdateTest" classname="YSIT.YSit.service.ArticleServiceTest" time="0.028"/>
+  <testcase name="findByLoginIdTest" classname="YSIT.YSit.service.ArticleServiceTest" time="0.019"/>
+  <testcase name="findByTitle" classname="YSIT.YSit.service.ArticleServiceTest" time="0.015"/>
+  <testcase name="deleteTest" classname="YSIT.YSit.service.ArticleServiceTest" time="0.012"/>
+  <system-out><![CDATA[2023-01-06T01:59:12.986+09:00  INFO 19576 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [YSIT.YSit.service.ArticleServiceTest]: ArticleServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-01-06T01:59:12.988+09:00  INFO 19576 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration YSIT.YSit.YSitApplication for test class YSIT.YSit.service.ArticleServiceTest
+2023-01-06T01:59:12.998+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        u1_0.user_id,
+        u1_0.login_id,
+        u1_0.login_pw,
+        u1_0.name,
+        u1_0.reg_date,
+        u1_0.school_category 
+    from
+        users u1_0 
+    where
+        u1_0.login_id=?
+Hibernate: 
+    select
+        u1_0.user_id,
+        u1_0.login_id,
+        u1_0.login_pw,
+        u1_0.name,
+        u1_0.reg_date,
+        u1_0.school_category 
+    from
+        users u1_0 
+    where
+        u1_0.login_id=?
+2023-01-06T01:59:13.001+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        users_seq for update
+Hibernate: 
+    select
+        next_val as id_val 
+    from
+        users_seq for update
+2023-01-06T01:59:13.003+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    update
+        users_seq 
+    set
+        next_val= ? 
+    where
+        next_val=?
+Hibernate: 
+    update
+        users_seq 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-01-06T01:59:13.022+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        a1_0.article_id,
+        a1_0.body,
+        a1_0.category,
+        a1_0.reg_date,
+        a1_0.status,
+        a1_0.title,
+        a1_0.user_id,
+        a1_0.write_user 
+    from
+        article a1_0 
+    where
+        a1_0.title like ? 
+    order by
+        a1_0.article_id desc
+Hibernate: 
+    select
+        a1_0.article_id,
+        a1_0.body,
+        a1_0.category,
+        a1_0.reg_date,
+        a1_0.status,
+        a1_0.title,
+        a1_0.user_id,
+        a1_0.write_user 
+    from
+        article a1_0 
+    where
+        a1_0.title like ? 
+    order by
+        a1_0.article_id desc
+2023-01-06T01:59:13.026+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        article_seq for update
+Hibernate: 
+    select
+        next_val as id_val 
+    from
+        article_seq for update
+2023-01-06T01:59:13.028+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    update
+        article_seq 
+    set
+        next_val= ? 
+    where
+        next_val=?
+Hibernate: 
+    update
+        article_seq 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-01-06T01:59:13.037+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        u1_0.user_id,
+        u1_0.login_id,
+        u1_0.login_pw,
+        u1_0.name,
+        u1_0.reg_date,
+        u1_0.school_category 
+    from
+        users u1_0 
+    where
+        u1_0.login_id=?
+Hibernate: 
+    select
+        u1_0.user_id,
+        u1_0.login_id,
+        u1_0.login_pw,
+        u1_0.name,
+        u1_0.reg_date,
+        u1_0.school_category 
+    from
+        users u1_0 
+    where
+        u1_0.login_id=?
+2023-01-06T01:59:13.038+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        users_seq for update
+Hibernate: 
+    select
+        next_val as id_val 
+    from
+        users_seq for update
+2023-01-06T01:59:13.039+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    update
+        users_seq 
+    set
+        next_val= ? 
+    where
+        next_val=?
+Hibernate: 
+    update
+        users_seq 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-01-06T01:59:13.042+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        a1_0.article_id,
+        a1_0.body,
+        a1_0.category,
+        a1_0.reg_date,
+        a1_0.status,
+        a1_0.title,
+        a1_0.user_id,
+        a1_0.write_user 
+    from
+        article a1_0 
+    where
+        a1_0.title like ? 
+    order by
+        a1_0.article_id desc
+Hibernate: 
+    select
+        a1_0.article_id,
+        a1_0.body,
+        a1_0.category,
+        a1_0.reg_date,
+        a1_0.status,
+        a1_0.title,
+        a1_0.user_id,
+        a1_0.write_user 
+    from
+        article a1_0 
+    where
+        a1_0.title like ? 
+    order by
+        a1_0.article_id desc
+2023-01-06T01:59:13.044+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        article_seq for update
+Hibernate: 
+    select
+        next_val as id_val 
+    from
+        article_seq for update
+2023-01-06T01:59:13.045+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    update
+        article_seq 
+    set
+        next_val= ? 
+    where
+        next_val=?
+Hibernate: 
+    update
+        article_seq 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-01-06T01:59:13.050+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        users
+        (login_id, login_pw, name, reg_date, school_category, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        users
+        (login_id, login_pw, name, reg_date, school_category, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+2023-01-06T01:59:13.052+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        article
+        (body, category, reg_date, status, title, user_id, write_user, article_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        article
+        (body, category, reg_date, status, title, user_id, write_user, article_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+2023-01-06T01:59:13.055+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    update
+        article 
+    set
+        body=?,
+        category=?,
+        reg_date=?,
+        status=?,
+        title=?,
+        user_id=?,
+        write_user=? 
+    where
+        article_id=?
+Hibernate: 
+    update
+        article 
+    set
+        body=?,
+        category=?,
+        reg_date=?,
+        status=?,
+        title=?,
+        user_id=?,
+        write_user=? 
+    where
+        article_id=?
+2023-01-06T01:59:13.065+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        u1_0.user_id,
+        u1_0.login_id,
+        u1_0.login_pw,
+        u1_0.name,
+        u1_0.reg_date,
+        u1_0.school_category 
+    from
+        users u1_0 
+    where
+        u1_0.login_id=?
+Hibernate: 
+    select
+        u1_0.user_id,
+        u1_0.login_id,
+        u1_0.login_pw,
+        u1_0.name,
+        u1_0.reg_date,
+        u1_0.school_category 
+    from
+        users u1_0 
+    where
+        u1_0.login_id=?
+2023-01-06T01:59:13.067+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        a1_0.article_id,
+        a1_0.body,
+        a1_0.category,
+        a1_0.reg_date,
+        a1_0.status,
+        a1_0.title,
+        a1_0.user_id,
+        a1_0.write_user 
+    from
+        article a1_0 
+    where
+        a1_0.title like ? 
+    order by
+        a1_0.article_id desc
+Hibernate: 
+    select
+        a1_0.article_id,
+        a1_0.body,
+        a1_0.category,
+        a1_0.reg_date,
+        a1_0.status,
+        a1_0.title,
+        a1_0.user_id,
+        a1_0.write_user 
+    from
+        article a1_0 
+    where
+        a1_0.title like ? 
+    order by
+        a1_0.article_id desc
+2023-01-06T01:59:13.072+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        users
+        (login_id, login_pw, name, reg_date, school_category, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        users
+        (login_id, login_pw, name, reg_date, school_category, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+2023-01-06T01:59:13.074+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        article
+        (body, category, reg_date, status, title, user_id, write_user, article_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        article
+        (body, category, reg_date, status, title, user_id, write_user, article_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+2023-01-06T01:59:13.075+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        a1_0.article_id,
+        a1_0.body,
+        a1_0.category,
+        a1_0.reg_date,
+        a1_0.status,
+        a1_0.title,
+        a1_0.user_id,
+        a1_0.write_user 
+    from
+        article a1_0 
+    where
+        a1_0.write_user=? 
+    order by
+        a1_0.article_id desc
+Hibernate: 
+    select
+        a1_0.article_id,
+        a1_0.body,
+        a1_0.category,
+        a1_0.reg_date,
+        a1_0.status,
+        a1_0.title,
+        a1_0.user_id,
+        a1_0.write_user 
+    from
+        article a1_0 
+    where
+        a1_0.write_user=? 
+    order by
+        a1_0.article_id desc
+2023-01-06T01:59:13.085+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        u1_0.user_id,
+        u1_0.login_id,
+        u1_0.login_pw,
+        u1_0.name,
+        u1_0.reg_date,
+        u1_0.school_category 
+    from
+        users u1_0 
+    where
+        u1_0.login_id=?
+Hibernate: 
+    select
+        u1_0.user_id,
+        u1_0.login_id,
+        u1_0.login_pw,
+        u1_0.name,
+        u1_0.reg_date,
+        u1_0.school_category 
+    from
+        users u1_0 
+    where
+        u1_0.login_id=?
+2023-01-06T01:59:13.087+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        a1_0.article_id,
+        a1_0.body,
+        a1_0.category,
+        a1_0.reg_date,
+        a1_0.status,
+        a1_0.title,
+        a1_0.user_id,
+        a1_0.write_user 
+    from
+        article a1_0 
+    where
+        a1_0.title like ? 
+    order by
+        a1_0.article_id desc
+Hibernate: 
+    select
+        a1_0.article_id,
+        a1_0.body,
+        a1_0.category,
+        a1_0.reg_date,
+        a1_0.status,
+        a1_0.title,
+        a1_0.user_id,
+        a1_0.write_user 
+    from
+        article a1_0 
+    where
+        a1_0.title like ? 
+    order by
+        a1_0.article_id desc
+2023-01-06T01:59:13.090+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        users
+        (login_id, login_pw, name, reg_date, school_category, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        users
+        (login_id, login_pw, name, reg_date, school_category, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+2023-01-06T01:59:13.091+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        article
+        (body, category, reg_date, status, title, user_id, write_user, article_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        article
+        (body, category, reg_date, status, title, user_id, write_user, article_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+2023-01-06T01:59:13.093+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        a1_0.article_id,
+        a1_0.body,
+        a1_0.category,
+        a1_0.reg_date,
+        a1_0.status,
+        a1_0.title,
+        a1_0.user_id,
+        a1_0.write_user 
+    from
+        article a1_0 
+    where
+        a1_0.title like ? 
+    order by
+        a1_0.article_id desc
+Hibernate: 
+    select
+        a1_0.article_id,
+        a1_0.body,
+        a1_0.category,
+        a1_0.reg_date,
+        a1_0.status,
+        a1_0.title,
+        a1_0.user_id,
+        a1_0.write_user 
+    from
+        article a1_0 
+    where
+        a1_0.title like ? 
+    order by
+        a1_0.article_id desc
+2023-01-06T01:59:13.100+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        u1_0.user_id,
+        u1_0.login_id,
+        u1_0.login_pw,
+        u1_0.name,
+        u1_0.reg_date,
+        u1_0.school_category 
+    from
+        users u1_0 
+    where
+        u1_0.login_id=?
+Hibernate: 
+    select
+        u1_0.user_id,
+        u1_0.login_id,
+        u1_0.login_pw,
+        u1_0.name,
+        u1_0.reg_date,
+        u1_0.school_category 
+    from
+        users u1_0 
+    where
+        u1_0.login_id=?
+2023-01-06T01:59:13.102+09:00 DEBUG 19576 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        a1_0.article_id,
+        a1_0.body,
+        a1_0.category,
+        a1_0.reg_date,
+        a1_0.status,
+        a1_0.title,
+        a1_0.user_id,
+        a1_0.write_user 
+    from
+        article a1_0 
+    where
+        a1_0.title like ? 
+    order by
+        a1_0.article_id desc
+Hibernate: 
+    select
+        a1_0.article_id,
+        a1_0.body,
+        a1_0.category,
+        a1_0.reg_date,
+        a1_0.status,
+        a1_0.title,
+        a1_0.user_id,
+        a1_0.write_user 
+    from
+        article a1_0 
+    where
+        a1_0.title like ? 
+    order by
+        a1_0.article_id desc
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

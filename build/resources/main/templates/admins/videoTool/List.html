@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="requests">
+  <form role="form" action="/admin/videoTool/list" th:object="${vtListForm}"
+        method="POST">
+
+    <div class="form-group">
+      <label th:for="searchName">검색어</label>
+      <input type="text" class="form-check-name" id="searchName"
+             th:field="*{searchName}">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<div class="container">
+  <div>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>기자재명</th>
+        <th>현재수량</th>
+        <th>최대수량</th>
+        <th>등록일</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="vt : ${vts}">
+        <td th:text="${vt.id}"></td>
+        <td th:text="${vt.name}"></td>
+        <td th:text="${vt.quantity}"></td>
+        <td th:text="${vt.maxQuantity}"></td>
+        <td th:text="${vt.regDate}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div> <!-- /container -->
+</body>
+</html>
