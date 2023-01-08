@@ -22,11 +22,11 @@ public class QCounsel extends EntityPathBase<Counsel> {
 
     public static final QCounsel counsel = new QCounsel("counsel");
 
-    public final DateTimePath<java.time.LocalDateTime> counselDate = createDateTime("counselDate", java.time.LocalDateTime.class);
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final QUser student;
+    public final DateTimePath<java.time.LocalDateTime> regDate = createDateTime("regDate", java.time.LocalDateTime.class);
+
+    public final QUser user;
 
     public QCounsel(String variable) {
         this(Counsel.class, forVariable(variable), INITS);
@@ -46,7 +46,7 @@ public class QCounsel extends EntityPathBase<Counsel> {
 
     public QCounsel(Class<? extends Counsel> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.student = inits.isInitialized("student") ? new QUser(forProperty("student")) : null;
+        this.user = inits.isInitialized("user") ? new QUser(forProperty("user")) : null;
     }
 
 }

@@ -23,8 +23,6 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Slf4j
 public class HomeController {
-    private final UserService userService;
-    private final AdminService adminService;
 
 //    @GetMapping("/")
 //    public String home(HttpServletRequest request, Model model) {
@@ -45,7 +43,13 @@ public class HomeController {
 //    }
 
     @GetMapping("/hello")
-    public String test(){
+    public String hello() {
+        return "hello";
+    }
+
+
+    @GetMapping("/home")
+    public String home(){
         return "React & Spring connection Successful";
     }
 }

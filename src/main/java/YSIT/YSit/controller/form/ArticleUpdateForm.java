@@ -7,18 +7,8 @@ import lombok.Setter;
 
 @Getter @Setter
 public class ArticleUpdateForm {
-    private Long id;
-    private String originTitle;
-    private String originBody;
     @Size(max = 50)
-    private String updateTitle;
-    private String updateBody;
+    private String title;
+    private String body;
     private Boolean status;
-
-    @Builder
-    public ArticleUpdateForm(Long id, String originTitle, String originBody) {
-        this.id = id;
-        this.originTitle = originTitle;
-        this.originBody = originBody;
-    }
 }

@@ -36,7 +36,7 @@ public class QRentalVideoTool extends EntityPathBase<RentalVideoTool> {
 
     public final DateTimePath<java.time.LocalDateTime> returnDate = createDateTime("returnDate", java.time.LocalDateTime.class);
 
-    public final QUser student;
+    public final QUser user;
 
     public final QVideoTool videoTool;
 
@@ -58,7 +58,7 @@ public class QRentalVideoTool extends EntityPathBase<RentalVideoTool> {
 
     public QRentalVideoTool(Class<? extends RentalVideoTool> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.student = inits.isInitialized("student") ? new QUser(forProperty("student")) : null;
+        this.user = inits.isInitialized("user") ? new QUser(forProperty("user")) : null;
         this.videoTool = inits.isInitialized("videoTool") ? new QVideoTool(forProperty("videoTool"), inits.get("videoTool")) : null;
     }
 

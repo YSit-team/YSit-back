@@ -53,7 +53,7 @@ public class CommentServiceTest {
         User user = User.builder()
                 .name("TEST")
                 .loginId("TEST")
-                .loginPw(userRepository.encryption("TEST"))
+                .loginPw(userService.encryption("TEST"))
                 .build();
         userService.register(user);
         Article article = Article.builder()
@@ -77,7 +77,7 @@ public class CommentServiceTest {
         User user = User.builder()
                 .name("TEST")
                 .loginId("TEST")
-                .loginPw(userRepository.encryption("TEST"))
+                .loginPw(userService.encryption("TEST"))
                 .build();
         userService.register(user);
         Article article = Article.builder()
@@ -102,7 +102,7 @@ public class CommentServiceTest {
         User user = User.builder()
                 .name("TEST")
                 .loginId("TEST")
-                .loginPw(userRepository.encryption("TEST"))
+                .loginPw(userService.encryption("TEST"))
                 .build();
         userService.register(user);
         Article article = Article.builder()
@@ -129,7 +129,7 @@ public class CommentServiceTest {
         User user = User.builder()
                 .name("TEST")
                 .loginId("TEST")
-                .loginPw(userRepository.encryption("TEST"))
+                .loginPw(userService.encryption("TEST"))
                 .build();
         userService.register(user);
         Article article = Article.builder()

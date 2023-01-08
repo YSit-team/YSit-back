@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="YSIT.YSit.service.ArticleServiceTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-01-07T05:29:58" hostname="DESKTOP-LFB9EBL" time="0.113">
+<testsuite name="YSIT.YSit.service.ArticleServiceTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-01-07T09:07:03" hostname="DESKTOP-LFB9EBL" time="0.109">
   <properties/>
-  <testcase name="saveTest" classname="YSIT.YSit.service.ArticleServiceTest" time="0.039"/>
-  <testcase name="articleUpdateTest" classname="YSIT.YSit.service.ArticleServiceTest" time="0.029"/>
-  <testcase name="findByLoginIdTest" classname="YSIT.YSit.service.ArticleServiceTest" time="0.017"/>
+  <testcase name="saveTest" classname="YSIT.YSit.service.ArticleServiceTest" time="0.036"/>
+  <testcase name="articleUpdateTest" classname="YSIT.YSit.service.ArticleServiceTest" time="0.025"/>
+  <testcase name="findByLoginIdTest" classname="YSIT.YSit.service.ArticleServiceTest" time="0.018"/>
   <testcase name="findByTitle" classname="YSIT.YSit.service.ArticleServiceTest" time="0.014"/>
-  <testcase name="deleteTest" classname="YSIT.YSit.service.ArticleServiceTest" time="0.012"/>
-  <system-out><![CDATA[2023-01-07T14:29:58.029+09:00  INFO 5684 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [YSIT.YSit.service.ArticleServiceTest]: ArticleServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2023-01-07T14:29:58.030+09:00  INFO 5684 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration YSIT.YSit.YSitApplication for test class YSIT.YSit.service.ArticleServiceTest
-2023-01-07T14:29:58.039+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+  <testcase name="deleteTest" classname="YSIT.YSit.service.ArticleServiceTest" time="0.013"/>
+  <system-out><![CDATA[2023-01-07T18:07:03.467+09:00  INFO 5384 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [YSIT.YSit.service.ArticleServiceTest]: ArticleServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-01-07T18:07:03.469+09:00  INFO 5384 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration YSIT.YSit.YSitApplication for test class YSIT.YSit.service.ArticleServiceTest
+2023-01-07T18:07:03.476+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     select
         u1_0.user_id,
         u1_0.login_id,
@@ -32,7 +32,7 @@ Hibernate:
         users u1_0 
     where
         u1_0.login_id=?
-2023-01-07T14:29:58.042+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.479+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     select
         next_val as id_val 
     from
@@ -42,7 +42,7 @@ Hibernate:
         next_val as id_val 
     from
         users_seq for update
-2023-01-07T14:29:58.043+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.480+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     update
         users_seq 
     set
@@ -56,7 +56,7 @@ Hibernate:
         next_val= ? 
     where
         next_val=?
-2023-01-07T14:29:58.061+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.497+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     select
         a1_0.article_id,
         a1_0.body,
@@ -88,7 +88,7 @@ Hibernate:
         a1_0.title like ? 
     order by
         a1_0.article_id desc
-2023-01-07T14:29:58.064+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.500+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     select
         next_val as id_val 
     from
@@ -98,7 +98,7 @@ Hibernate:
         next_val as id_val 
     from
         article_seq for update
-2023-01-07T14:29:58.066+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.501+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     update
         article_seq 
     set
@@ -112,7 +112,7 @@ Hibernate:
         next_val= ? 
     where
         next_val=?
-2023-01-07T14:29:58.077+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.511+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     select
         u1_0.user_id,
         u1_0.login_id,
@@ -136,7 +136,7 @@ Hibernate:
         users u1_0 
     where
         u1_0.login_id=?
-2023-01-07T14:29:58.079+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.513+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     select
         next_val as id_val 
     from
@@ -146,7 +146,7 @@ Hibernate:
         next_val as id_val 
     from
         users_seq for update
-2023-01-07T14:29:58.080+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.513+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     update
         users_seq 
     set
@@ -160,7 +160,7 @@ Hibernate:
         next_val= ? 
     where
         next_val=?
-2023-01-07T14:29:58.084+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.517+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     select
         a1_0.article_id,
         a1_0.body,
@@ -192,7 +192,7 @@ Hibernate:
         a1_0.title like ? 
     order by
         a1_0.article_id desc
-2023-01-07T14:29:58.086+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.518+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     select
         next_val as id_val 
     from
@@ -202,7 +202,7 @@ Hibernate:
         next_val as id_val 
     from
         article_seq for update
-2023-01-07T14:29:58.087+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.519+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     update
         article_seq 
     set
@@ -216,7 +216,7 @@ Hibernate:
         next_val= ? 
     where
         next_val=?
-2023-01-07T14:29:58.093+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.524+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     insert 
     into
         users
@@ -230,7 +230,7 @@ Hibernate:
         (login_id, login_pw, name, reg_date, school_category, user_id) 
     values
         (?, ?, ?, ?, ?, ?)
-2023-01-07T14:29:58.095+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.527+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     insert 
     into
         article
@@ -244,7 +244,7 @@ Hibernate:
         (body, category, reg_date, status, title, user_id, write_user, article_id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?)
-2023-01-07T14:29:58.098+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.529+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     update
         article 
     set
@@ -270,7 +270,7 @@ Hibernate:
         write_user=? 
     where
         article_id=?
-2023-01-07T14:29:58.107+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.538+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     select
         u1_0.user_id,
         u1_0.login_id,
@@ -294,7 +294,7 @@ Hibernate:
         users u1_0 
     where
         u1_0.login_id=?
-2023-01-07T14:29:58.109+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.540+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     select
         a1_0.article_id,
         a1_0.body,
@@ -326,7 +326,7 @@ Hibernate:
         a1_0.title like ? 
     order by
         a1_0.article_id desc
-2023-01-07T14:29:58.114+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.545+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     insert 
     into
         users
@@ -340,7 +340,7 @@ Hibernate:
         (login_id, login_pw, name, reg_date, school_category, user_id) 
     values
         (?, ?, ?, ?, ?, ?)
-2023-01-07T14:29:58.115+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.546+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     insert 
     into
         article
@@ -354,7 +354,7 @@ Hibernate:
         (body, category, reg_date, status, title, user_id, write_user, article_id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?)
-2023-01-07T14:29:58.116+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.547+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     select
         a1_0.article_id,
         a1_0.body,
@@ -386,7 +386,7 @@ Hibernate:
         a1_0.write_user=? 
     order by
         a1_0.article_id desc
-2023-01-07T14:29:58.124+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.556+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     select
         u1_0.user_id,
         u1_0.login_id,
@@ -410,7 +410,7 @@ Hibernate:
         users u1_0 
     where
         u1_0.login_id=?
-2023-01-07T14:29:58.126+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.557+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     select
         a1_0.article_id,
         a1_0.body,
@@ -442,7 +442,7 @@ Hibernate:
         a1_0.title like ? 
     order by
         a1_0.article_id desc
-2023-01-07T14:29:58.128+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.560+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     insert 
     into
         users
@@ -456,7 +456,7 @@ Hibernate:
         (login_id, login_pw, name, reg_date, school_category, user_id) 
     values
         (?, ?, ?, ?, ?, ?)
-2023-01-07T14:29:58.129+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.561+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     insert 
     into
         article
@@ -470,7 +470,7 @@ Hibernate:
         (body, category, reg_date, status, title, user_id, write_user, article_id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?)
-2023-01-07T14:29:58.131+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.562+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     select
         a1_0.article_id,
         a1_0.body,
@@ -502,7 +502,7 @@ Hibernate:
         a1_0.title like ? 
     order by
         a1_0.article_id desc
-2023-01-07T14:29:58.138+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.571+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     select
         u1_0.user_id,
         u1_0.login_id,
@@ -526,7 +526,7 @@ Hibernate:
         users u1_0 
     where
         u1_0.login_id=?
-2023-01-07T14:29:58.140+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.573+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     select
         a1_0.article_id,
         a1_0.body,

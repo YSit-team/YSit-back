@@ -1,9 +1,6 @@
 package YSIT.YSit.controller.user;
 
-import YSIT.YSit.controller.form.ArticleForm;
-import YSIT.YSit.controller.form.ArticleListForm;
-import YSIT.YSit.controller.form.ArticleUpdateForm;
-import YSIT.YSit.controller.form.CommentForm;
+import YSIT.YSit.controller.form.*;
 import YSIT.YSit.domain.*;
 import YSIT.YSit.repository.ArticleRepository;
 import YSIT.YSit.service.ArticleService;
@@ -15,6 +12,8 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,54 +28,41 @@ import java.util.Objects;
 @Slf4j
 public class ArticleController {
     private final UserService userService;
-    private final ArticleRepository articleRepository;
     private final ArticleService articleService;
-    private final EntityManager em;
     private final CommentService commentService;
 
-    @GetMapping("/article/write")
-    public String writeForm(Model model, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        Long id = (Long) session.getAttribute("Id");
-        if (Objects.isNull(session.getAttribute("Id"))){
-            return "redirect:/";
-        }
-        User user = userService.findOne(id);
-        model.addAttribute("loginId", user.getLoginId());
-        model.addAttribute("articleForm", new ArticleForm());
-        return "users/article/Write";
-    }
+    @PostMapping("/article/write") // 작성
+    public ResponseEntity write(@ModelAttribute ArticleForm form,
+                        HttpServletRequest request) {
 
-    @PostMapping("/article/write")
-    public String write(@ModelAttribute ArticleForm form, BindingResult result,
-                        HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         Long id = (Long) session.getAttribute("Id");
         User user = userService.findOne(id);
 
-        model.addAttribute("loginId", user.getLoginId());
-        if (Objects.isNull(session.getAttribute("Id"))){
-            return "redirect:/";
+        // 검증
+        ResponseEntity response = userValid(request);
+        if (response != null) {
+            return response;
         }
         if (form.getTitle() == null || form.getTitle().isEmpty()) {
-            result.rejectValue("title", "required");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("제목 값이 없습니다");
         }
         if (form.getBody().isEmpty() || form.getBody() == null) {
-            result.rejectValue("body", "required");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("내용 값이 없습니다");
         }
         if (form.getCategory() == null) {
-            result.rejectValue("category", "required");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("카테고리 값이 없습니다");
         } else if (form.getCategory() == Board.공지 && user.getSchoolCategory() == SchoolCategory.STUDENT) {
-            result.rejectValue("category", "studentCantSetNotice");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("학생은 공지를 작성할 수 없습니다");
         }
-        if (result.hasErrors()) {
-            return "users/article/write";
+        if (form.getStatus() == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("공개여부 값이 없습니다");
         }
-        if (!articleRepository.findByTitle(form.getTitle()).isEmpty()) {
-            result.rejectValue("title", "sameTitle");
-            return "users/article/write";
+        if (!articleService.findByTitle(form.getTitle()).isEmpty()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 같은 제목의 게시물이 있습니다");
         }
 
+        // 데이터 처리
         ArticleStatus articleStatus;
         if (form.getStatus()) {
             articleStatus = ArticleStatus.PRIVATE;
@@ -93,131 +79,88 @@ public class ArticleController {
                 .regDate(LocalDateTime.now())
                 .build();
         articleService.save(article);
-
-        return "redirect:/";
+        Article responseArt = articleService.findOne(article.getId());
+        return ResponseEntity.status(HttpStatus.OK).body(responseArt);
     }
 
-    @GetMapping("/article/articleList")
-    public String articleListForm(Model model, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        Long id = (Long)session.getAttribute("Id");
-        User user = userService.findOne(id);
-        List<Article> articles = articleService.findAll();
+    @GetMapping("/article/articleList/{bool_title}/{bool_body}/{searchBody}")
+    public ResponseEntity articleListForm(
+            @PathVariable("bool_title") Boolean title,
+            @PathVariable("bool_body") Boolean body,
+            @PathVariable("searchBody") String searchBody,
+            HttpServletRequest request) {
 
-        model.addAttribute("modal", false);
-        model.addAttribute("user", user);
-        model.addAttribute("articles", articles);
-        model.addAttribute("articleList", new ArticleListForm());
-
-        return "users/article/ArticleList";
-    }
-
-    @PostMapping("/article/articleList")
-    public String articleList(@ModelAttribute ArticleListForm form, Model model,
-                              HttpServletRequest request) {
-        int nullCheck = 0;
-        List<Article> findList = null;
-        HttpSession session = request.getSession();
-        Long userId = (Long) session.getAttribute("Id");
-        User user = userService.findOne(userId);
-
-        if (form.getTitle()) {
-            nullCheck += 1;
-            findList = articleService.findByTitle(form.getSearch());
+        ResponseEntity response = userValid(request);
+        if (response != null) {
+            return response;
         }
-        if (form.getBody()) {
-            nullCheck += 1;
-            findList = articleService.findByBody(form.getSearch());
-        }
-        if (form.getMyPage()) {
-            nullCheck += 1;
-            findList = articleService.findByWriteUser(user.getLoginId());
-        }
-        if (nullCheck >= 3 || nullCheck <= 0) {
-             findList = articleService.findAll();
-        }
-
-        if (findList != null) {
-            model.addAttribute("articles", findList);
+        List<Article> findList;
+        if (title && body || searchBody.isEmpty()) {
+            findList = articleService.findAll();
+        } else if (title) {
+            findList = articleService.findByTitle(searchBody);
+        } else if (body) {
+            findList = articleService.findByBody(searchBody);
         } else {
-            Article article = Article.builder()
-                    .title(null)
-                    .body(null)
-                    .status(null)
-                    .user(null)
-                    .regDate(null)
-                    .build();
-            model.addAttribute("articles", article);
+            findList = articleService.findAll();
         }
-        model.addAttribute("modal", false);
-        model.addAttribute("articleList", new ArticleListForm());
-        model.addAttribute("user", user);
-        return "users/article/articleList";
+
+        return ResponseEntity.status(HttpStatus.OK).body(findList);
     }
 
     @GetMapping("/article/articlePage/{articleId}/view")
-    public String articlePageForm(@PathVariable("articleId") Long articleId, Model model,
+    public ResponseEntity articlePageForm(@PathVariable("articleId") Long articleId,
                                   HttpServletRequest request) {
+        Article viewArticle = articleService.findOne(articleId);
         HttpSession session = request.getSession();
-        Long userId = (Long) session.getAttribute("Id");
-        User user = userService.findOne(userId);
-        Article article = articleService.findOne(articleId);
+        Long id = (Long) session.getAttribute("Id");
+        User user = userService.findOne(id);
+        List<Comment> artInComment = commentService.findByArt(articleId);
 
-        if (article.getStatus() == ArticleStatus.PRIVATE) {
-            if (user.getSchoolCategory() == SchoolCategory.STUDENT) {
-                if (user.getLoginId() != article.getWriteUser() && !Objects.isNull(article.getUser())) {
-                    List<Article> articles = articleService.findAll();
-                    model.addAttribute("articles", articles);
-                    model.addAttribute("modal", true);
-                    model.addAttribute("articleList", new ArticleListForm());
-                    model.addAttribute("user", user);
-                    return "users/article/ArticleList";
-                }
-            }
-        }
-
-        List<Comment> comments = commentService.findByArt(articleId);
-        model.addAttribute("user", user);
-        model.addAttribute("comments", comments);
-        model.addAttribute("article", article);
-        model.addAttribute("commentForm", new CommentForm());
-        return "users/article/ArticlePage";
-    }
-
-    @GetMapping("/article/articlePage/{articleId}/update")
-    public String articleUpdateForm(@PathVariable("articleId") Long articleId, Model model) {
-        Article article = articleService.findOne(articleId);
-        ArticleUpdateForm form = ArticleUpdateForm.builder()
-                .id(articleId)
-                .originTitle(article.getTitle())
-                .originBody(article.getBody())
+        ArtAndComForm responseBody = ArtAndComForm.builder()
+                .title(viewArticle.getTitle())
+                .body(viewArticle.getBody())
+                .category(viewArticle.getCategory())
+                .status(viewArticle.getStatus())
+                .writeUser(viewArticle.getWriteUser())
+                .regDate(viewArticle.getRegDate())
+                .comments(artInComment)
                 .build();
-        model.addAttribute("articleUpdateForm", form);
-        model.addAttribute("articleId", articleId);
-        return "users/article/ArticleUpdate";
+
+        ResponseEntity response = userValid(request);
+        if (response != null) {
+            return response;
+        }
+        if (viewArticle.getStatus() == ArticleStatus.PRIVATE) {
+            if (user.getLoginId() == viewArticle.getWriteUser() || user.getSchoolCategory() == SchoolCategory.TEACHER ) {
+                return ResponseEntity.status(HttpStatus.OK).body(responseBody);
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("학생은 비공개 게시물을 볼 수 없습니다");
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(responseBody);
+        }
     }
 
-    @PostMapping("/article/articlePage/{articleUpdateFormId}/update")
-    public String articleUpdate(@PathVariable("articleUpdateFormId") Long articleId,
+    @PostMapping("/article/articlePage/{articleId}/update")
+    public ResponseEntity articleUpdate(@PathVariable("articleId") Long articleId,
                                 @Valid @ModelAttribute ArticleUpdateForm form,
-                                BindingResult result,
-                                HttpServletRequest request,
-                                Model model) {
-        List<Article> compareArt = articleService.findByTitle(form.getUpdateTitle());
-        if (!compareArt.isEmpty()) {
-            result.rejectValue("updateTitle", "sameTitle");
-            return "users/article/ArticleUpdate";
-        }
-
+                                HttpServletRequest request) {
+        Article updateArt = articleService.findOne(articleId);
+        List<Article> compareArt = articleService.findByTitle(form.getTitle());
         HttpSession session = request.getSession();
         Long userId = (Long) session.getAttribute("Id");
         User user = userService.findOne(userId);
 
-        Article checkArt = articleService.findOne(articleId);
-        if (!checkArt.getWriteUser().equals(user.getLoginId())) {
-            return "redirect:/";
+        // 검증
+        if (!compareArt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 같은 제목의 게시물이 있습니다");
+        }
+        if (!updateArt.getWriteUser().equals(user.getLoginId())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("게시물 작성자가 아닙니다");
         }
 
+        // 처리
         ArticleStatus status;
         if (form.getStatus()) {
             status = ArticleStatus.PRIVATE;
@@ -227,13 +170,24 @@ public class ArticleController {
 
         Article article = Article.builder()
                 .id(articleId)
-                .title(form.getUpdateTitle())
-                .body(form.getUpdateBody())
+                .title(form.getTitle())
+                .body(form.getBody())
                 .status(status)
                 .build();
         articleService.updateArticle(article);
+        Article updatedArt = articleService.findOne(articleId);
 
-        return "redirect:/article/articlePage/" + article.getId().toString() + "/view";
+        return ResponseEntity.status(HttpStatus.OK).body(updatedArt);
+    }
+    public ResponseEntity userValid(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Long id = (Long) session.getAttribute("Id");
+        User user = userService.findOne(id);
+        if (Objects.isNull(user)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("작성자가 아니거나 로그인 상태가 아닙니다");
+        } else {
+            return null;
+        }
     }
 }
 

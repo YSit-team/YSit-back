@@ -13,8 +13,8 @@ public class RentalVideoTool {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
-    @JoinColumn(name = "student_id")
-    private User student;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = VideoTool.class)
     @JoinColumn(name = "videoTool_id")

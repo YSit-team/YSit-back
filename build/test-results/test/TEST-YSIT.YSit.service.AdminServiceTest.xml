@@ -1,27 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="YSIT.YSit.service.AdminServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-01-07T05:29:57" hostname="DESKTOP-LFB9EBL" time="0.707">
+<testsuite name="YSIT.YSit.service.AdminServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-01-07T09:07:03" hostname="DESKTOP-LFB9EBL" time="0.398">
   <properties/>
-  <testcase name="findByLoginCode" classname="YSIT.YSit.service.AdminServiceTest" time="0.679"/>
-  <testcase name="findByName" classname="YSIT.YSit.service.AdminServiceTest" time="0.015"/>
-  <testcase name="save" classname="YSIT.YSit.service.AdminServiceTest" time="0.012"/>
-  <system-out><![CDATA[14:29:51.875 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [AdminServiceTest]: using SpringBootContextLoader
-14:29:51.880 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [YSIT.YSit.service.AdminServiceTest]: no resource found for suffixes {-context.xml, Context.groovy}.
-14:29:51.881 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [YSIT.YSit.service.AdminServiceTest]: AdminServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-14:29:51.907 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using ContextCustomizers for test class [AdminServiceTest]: [DisableObservabilityContextCustomizer, PropertyMappingContextCustomizer, Customizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, MockitoContextCustomizer, TestRestTemplateContextCustomizer]
-14:29:51.985 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [C:\Users\Yang\Desktop\Code\Spring\YSit\build\classes\java\main\YSIT\YSit\YSitApplication.class]
-14:29:51.987 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration YSIT.YSit.YSitApplication for test class YSIT.YSit.service.AdminServiceTest
-14:29:52.079 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners for test class [AdminServiceTest]: [ServletTestExecutionListener, DirtiesContextBeforeModesTestExecutionListener, ApplicationEventsTestExecutionListener, MockitoTestExecutionListener, DependencyInjectionTestExecutionListener, DirtiesContextTestExecutionListener, TransactionalTestExecutionListener, SqlScriptsTestExecutionListener, EventPublishingTestExecutionListener, RestDocsTestExecutionListener, MockRestServiceServerResetTestExecutionListener, MockMvcPrintOnlyOnFailureTestExecutionListener, WebDriverTestExecutionListener, MockWebServiceServerTestExecutionListener, ResetMocksTestExecutionListener]
-14:29:52.081 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [YSIT.YSit.service.AdminServiceTest]
-14:29:52.082 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [YSIT.YSit.service.AdminServiceTest]
-14:29:52.083 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [YSIT.YSit.service.AdminServiceTest]
-14:29:52.084 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [YSIT.YSit.service.AdminServiceTest]
-14:29:52.085 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [YSIT.YSit.service.AdminServiceTest]
-14:29:52.085 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [YSIT.YSit.service.AdminServiceTest]
-14:29:52.085 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [YSIT.YSit.service.AdminServiceTest]
-14:29:52.085 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [YSIT.YSit.service.AdminServiceTest]
-14:29:52.087 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: class [AdminServiceTest], class annotated with @DirtiesContext [false] with mode [null]
-14:29:52.090 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [YSIT.YSit.service.AdminServiceTest]
-14:29:52.090 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [YSIT.YSit.service.AdminServiceTest]
+  <testcase name="findByLoginCode" classname="YSIT.YSit.service.AdminServiceTest" time="0.369"/>
+  <testcase name="findByName" classname="YSIT.YSit.service.AdminServiceTest" time="0.013"/>
+  <testcase name="save" classname="YSIT.YSit.service.AdminServiceTest" time="0.014"/>
+  <system-out><![CDATA[2023-01-07T18:06:59.954+09:00  INFO 5384 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [YSIT.YSit.service.AdminServiceTest]: AdminServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-01-07T18:06:59.972+09:00  INFO 5384 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration YSIT.YSit.YSitApplication for test class YSIT.YSit.service.AdminServiceTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -31,19 +15,19 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.0.0)
 
-2023-01-07T14:29:52.336+09:00  INFO 5684 --- [    Test worker] YSIT.YSit.service.AdminServiceTest       : Starting AdminServiceTest using Java 19.0.1 with PID 5684 (started by Yang in C:\Users\Yang\Desktop\Code\Spring\YSit)
-2023-01-07T14:29:52.337+09:00  INFO 5684 --- [    Test worker] YSIT.YSit.service.AdminServiceTest       : No active profile set, falling back to 1 default profile: "default"
-2023-01-07T14:29:53.056+09:00  INFO 5684 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-01-07T14:29:53.091+09:00  INFO 5684 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 25 ms. Found 0 JPA repository interfaces.
-2023-01-07T14:29:53.739+09:00  INFO 5684 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-01-07T14:29:53.810+09:00  INFO 5684 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.5.Final
-2023-01-07T14:29:53.961+09:00  WARN 5684 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-2023-01-07T14:29:54.094+09:00  INFO 5684 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2023-01-07T14:29:54.451+09:00  INFO 5684 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6ce15112
-2023-01-07T14:29:54.453+09:00  INFO 5684 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2023-01-07T14:29:54.472+09:00  INFO 5684 --- [    Test worker] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
-2023-01-07T14:29:54.472+09:00  WARN 5684 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
-2023-01-07T14:29:55.373+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:00.014+09:00  INFO 5384 --- [    Test worker] YSIT.YSit.service.AdminServiceTest       : Starting AdminServiceTest using Java 19.0.1 with PID 5384 (started by Yang in C:\Users\Yang\Desktop\Code\Spring\YSit)
+2023-01-07T18:07:00.015+09:00  INFO 5384 --- [    Test worker] YSIT.YSit.service.AdminServiceTest       : No active profile set, falling back to 1 default profile: "default"
+2023-01-07T18:07:00.326+09:00  INFO 5384 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-07T18:07:00.343+09:00  INFO 5384 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 0 JPA repository interfaces.
+2023-01-07T18:07:00.576+09:00  INFO 5384 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-07T18:07:00.638+09:00  INFO 5384 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.5.Final
+2023-01-07T18:07:00.686+09:00  WARN 5384 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-01-07T18:07:00.791+09:00  INFO 5384 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-01-07T18:07:01.122+09:00  INFO 5384 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4bfe83d
+2023-01-07T18:07:01.124+09:00  INFO 5384 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-01-07T18:07:01.139+09:00  INFO 5384 --- [    Test worker] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-01-07T18:07:01.140+09:00  WARN 5384 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2023-01-07T18:07:01.833+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table after_class 
        drop 
@@ -53,7 +37,7 @@ Hibernate:
     alter table after_class 
        drop 
        foreign key FKfwrmsm98t3k10klljl0j6uxcx
-2023-01-07T14:29:55.399+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.851+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table after_class_student 
        drop 
@@ -63,7 +47,7 @@ Hibernate:
     alter table after_class_student 
        drop 
        foreign key FK8lk4v50fmrclu47ym8fay0pxn
-2023-01-07T14:29:55.408+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.858+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table after_class_student 
        drop 
@@ -73,7 +57,7 @@ Hibernate:
     alter table after_class_student 
        drop 
        foreign key FK8dd2poqtcbkkfrntf7dntwc9l
-2023-01-07T14:29:55.416+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.868+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table article 
        drop 
@@ -83,7 +67,7 @@ Hibernate:
     alter table article 
        drop 
        foreign key FK15yy37u1qw43hjduyhs3bgomr
-2023-01-07T14:29:55.427+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.877+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table comment 
        drop 
@@ -93,7 +77,7 @@ Hibernate:
     alter table comment 
        drop 
        foreign key FKhae8pnorx05u8ghul0ict4lhq
-2023-01-07T14:29:55.435+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.884+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table comment 
        drop 
@@ -103,7 +87,7 @@ Hibernate:
     alter table comment 
        drop 
        foreign key FKgfcxlc2bfa7tf3bw3qoqgumy5
-2023-01-07T14:29:55.443+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.893+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table counsel 
        drop 
@@ -113,17 +97,17 @@ Hibernate:
     alter table counsel 
        drop 
        foreign key FK5d3howxym2rpmhhdu5vymq887
-2023-01-07T14:29:55.457+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.903+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table rental_video_tool 
        drop 
-       foreign key FKs1c0h3rp92oyjh9mc41lkm3ph
+       foreign key FK7w82k2fy8spwb4xk09hjr4abt
 Hibernate: 
     
     alter table rental_video_tool 
        drop 
-       foreign key FKs1c0h3rp92oyjh9mc41lkm3ph
-2023-01-07T14:29:55.466+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+       foreign key FK7w82k2fy8spwb4xk09hjr4abt
+2023-01-07T18:07:01.909+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table rental_video_tool 
        drop 
@@ -133,7 +117,7 @@ Hibernate:
     alter table rental_video_tool 
        drop 
        foreign key FKhg4d6sxud4anbbd1p47qd47xx
-2023-01-07T14:29:55.474+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.915+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table video_tool 
        drop 
@@ -143,115 +127,115 @@ Hibernate:
     alter table video_tool 
        drop 
        foreign key FK4n1mav9vu8evxkheewacujoh5
-2023-01-07T14:29:55.482+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.928+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     drop table if exists admins
 Hibernate: 
     
     drop table if exists admins
-2023-01-07T14:29:55.489+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.939+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     drop table if exists admins_seq
 Hibernate: 
     
     drop table if exists admins_seq
-2023-01-07T14:29:55.495+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.943+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     drop table if exists after_class_seq
 Hibernate: 
     
     drop table if exists after_class_seq
-2023-01-07T14:29:55.502+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.948+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     drop table if exists after_class_student_seq
 Hibernate: 
     
     drop table if exists after_class_student_seq
-2023-01-07T14:29:55.509+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.953+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     drop table if exists after_class
 Hibernate: 
     
     drop table if exists after_class
-2023-01-07T14:29:55.516+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.957+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     drop table if exists after_class_student
 Hibernate: 
     
     drop table if exists after_class_student
-2023-01-07T14:29:55.525+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.962+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     drop table if exists article
 Hibernate: 
     
     drop table if exists article
-2023-01-07T14:29:55.536+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.968+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     drop table if exists article_seq
 Hibernate: 
     
     drop table if exists article_seq
-2023-01-07T14:29:55.542+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.972+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     drop table if exists comment
 Hibernate: 
     
     drop table if exists comment
-2023-01-07T14:29:55.550+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.977+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     drop table if exists comment_seq
 Hibernate: 
     
     drop table if exists comment_seq
-2023-01-07T14:29:55.557+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.982+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     drop table if exists counsel
 Hibernate: 
     
     drop table if exists counsel
-2023-01-07T14:29:55.564+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.991+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     drop table if exists counsel_seq
 Hibernate: 
     
     drop table if exists counsel_seq
-2023-01-07T14:29:55.570+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:01.996+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     drop table if exists rental_video_tool_seq
 Hibernate: 
     
     drop table if exists rental_video_tool_seq
-2023-01-07T14:29:55.576+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.003+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     drop table if exists rental_video_tool
 Hibernate: 
     
     drop table if exists rental_video_tool
-2023-01-07T14:29:55.584+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.008+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     drop table if exists users
 Hibernate: 
     
     drop table if exists users
-2023-01-07T14:29:55.591+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.014+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     drop table if exists users_seq
 Hibernate: 
     
     drop table if exists users_seq
-2023-01-07T14:29:55.598+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.019+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     drop table if exists video_tool_seq
 Hibernate: 
     
     drop table if exists video_tool_seq
-2023-01-07T14:29:55.604+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.023+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     drop table if exists video_tool
 Hibernate: 
     
     drop table if exists video_tool
-2023-01-07T14:29:55.614+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.032+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     create table admins (
        admin_id bigint not null,
@@ -269,7 +253,7 @@ Hibernate:
         reg_date datetime(6),
         primary key (admin_id)
     ) engine=InnoDB
-2023-01-07T14:29:55.634+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.050+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     create table admins_seq (
        next_val bigint
@@ -279,13 +263,13 @@ Hibernate:
     create table admins_seq (
        next_val bigint
     ) engine=InnoDB
-2023-01-07T14:29:55.646+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.062+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     insert into admins_seq values ( 1 )
 Hibernate: 
     
     insert into admins_seq values ( 1 )
-2023-01-07T14:29:55.649+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.066+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     create table after_class_seq (
        next_val bigint
@@ -295,13 +279,13 @@ Hibernate:
     create table after_class_seq (
        next_val bigint
     ) engine=InnoDB
-2023-01-07T14:29:55.666+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.077+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     insert into after_class_seq values ( 1 )
 Hibernate: 
     
     insert into after_class_seq values ( 1 )
-2023-01-07T14:29:55.670+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.080+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     create table after_class_student_seq (
        next_val bigint
@@ -311,13 +295,13 @@ Hibernate:
     create table after_class_student_seq (
        next_val bigint
     ) engine=InnoDB
-2023-01-07T14:29:55.681+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.092+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     insert into after_class_student_seq values ( 1 )
 Hibernate: 
     
     insert into after_class_student_seq values ( 1 )
-2023-01-07T14:29:55.685+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.095+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     create table after_class (
        after_class_id bigint not null,
@@ -337,7 +321,7 @@ Hibernate:
         admin_id bigint,
         primary key (after_class_id)
     ) engine=InnoDB
-2023-01-07T14:29:55.696+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.110+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     create table after_class_student (
        after_class_student_id bigint not null,
@@ -359,7 +343,7 @@ Hibernate:
         user_id bigint,
         primary key (after_class_student_id)
     ) engine=InnoDB
-2023-01-07T14:29:55.716+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.118+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     create table article (
        article_id bigint not null,
@@ -385,7 +369,7 @@ Hibernate:
         user_id bigint,
         primary key (article_id)
     ) engine=InnoDB
-2023-01-07T14:29:55.726+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.132+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     create table article_seq (
        next_val bigint
@@ -395,13 +379,13 @@ Hibernate:
     create table article_seq (
        next_val bigint
     ) engine=InnoDB
-2023-01-07T14:29:55.743+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.141+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     insert into article_seq values ( 1 )
 Hibernate: 
     
     insert into article_seq values ( 1 )
-2023-01-07T14:29:55.747+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.144+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     create table comment (
        comment_id bigint not null,
@@ -433,7 +417,7 @@ Hibernate:
         user_user_id bigint,
         primary key (comment_id)
     ) engine=InnoDB
-2023-01-07T14:29:55.758+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.154+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     create table comment_seq (
        next_val bigint
@@ -443,13 +427,13 @@ Hibernate:
     create table comment_seq (
        next_val bigint
     ) engine=InnoDB
-2023-01-07T14:29:55.774+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.167+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     insert into comment_seq values ( 1 )
 Hibernate: 
     
     insert into comment_seq values ( 1 )
-2023-01-07T14:29:55.777+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.170+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     create table counsel (
        counsel_id bigint not null,
@@ -465,7 +449,7 @@ Hibernate:
         user_id bigint,
         primary key (counsel_id)
     ) engine=InnoDB
-2023-01-07T14:29:55.795+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.181+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     create table counsel_seq (
        next_val bigint
@@ -475,13 +459,13 @@ Hibernate:
     create table counsel_seq (
        next_val bigint
     ) engine=InnoDB
-2023-01-07T14:29:55.825+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.192+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     insert into counsel_seq values ( 1 )
 Hibernate: 
     
     insert into counsel_seq values ( 1 )
-2023-01-07T14:29:55.833+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.195+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     create table rental_video_tool_seq (
        next_val bigint
@@ -491,13 +475,13 @@ Hibernate:
     create table rental_video_tool_seq (
        next_val bigint
     ) engine=InnoDB
-2023-01-07T14:29:55.855+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.202+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     insert into rental_video_tool_seq values ( 1 )
 Hibernate: 
     
     insert into rental_video_tool_seq values ( 1 )
-2023-01-07T14:29:55.865+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.209+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     create table rental_video_tool (
        rental_vt_id bigint not null,
@@ -507,7 +491,7 @@ Hibernate:
         reg_date datetime(6),
         rental_date datetime(6),
         return_date datetime(6),
-        student_id bigint,
+        user_id bigint,
         video_tool_id bigint,
         primary key (rental_vt_id)
     ) engine=InnoDB
@@ -521,11 +505,11 @@ Hibernate:
         reg_date datetime(6),
         rental_date datetime(6),
         return_date datetime(6),
-        student_id bigint,
+        user_id bigint,
         video_tool_id bigint,
         primary key (rental_vt_id)
     ) engine=InnoDB
-2023-01-07T14:29:55.911+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.223+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     create table users (
        user_id bigint not null,
@@ -547,7 +531,7 @@ Hibernate:
         school_category varchar(255),
         primary key (user_id)
     ) engine=InnoDB
-2023-01-07T14:29:55.933+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.234+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     create table users_seq (
        next_val bigint
@@ -557,13 +541,13 @@ Hibernate:
     create table users_seq (
        next_val bigint
     ) engine=InnoDB
-2023-01-07T14:29:55.960+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.247+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     insert into users_seq values ( 1 )
 Hibernate: 
     
     insert into users_seq values ( 1 )
-2023-01-07T14:29:55.973+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.250+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     create table video_tool_seq (
        next_val bigint
@@ -573,13 +557,13 @@ Hibernate:
     create table video_tool_seq (
        next_val bigint
     ) engine=InnoDB
-2023-01-07T14:29:55.998+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.257+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     insert into video_tool_seq values ( 1 )
 Hibernate: 
     
     insert into video_tool_seq values ( 1 )
-2023-01-07T14:29:56.004+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.262+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     create table video_tool (
        video_tool_id bigint not null,
@@ -601,7 +585,7 @@ Hibernate:
         admin_id bigint,
         primary key (video_tool_id)
     ) engine=InnoDB
-2023-01-07T14:29:56.025+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.276+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table admins 
        add constraint UK_j0jcn1ohhsbex1n4q3d3wcyk5 unique (login_code)
@@ -609,7 +593,7 @@ Hibernate:
     
     alter table admins 
        add constraint UK_j0jcn1ohhsbex1n4q3d3wcyk5 unique (login_code)
-2023-01-07T14:29:56.037+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.285+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table users 
        add constraint UK_i3xs7wmfu2i3jt079uuetycit unique (login_id)
@@ -617,7 +601,7 @@ Hibernate:
     
     alter table users 
        add constraint UK_i3xs7wmfu2i3jt079uuetycit unique (login_id)
-2023-01-07T14:29:56.054+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.297+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table video_tool 
        add constraint UK_sfbtdvtoo942uknsy40ofnry7 unique (name)
@@ -625,7 +609,7 @@ Hibernate:
     
     alter table video_tool 
        add constraint UK_sfbtdvtoo942uknsy40ofnry7 unique (name)
-2023-01-07T14:29:56.072+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.310+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table after_class 
        add constraint FKfwrmsm98t3k10klljl0j6uxcx 
@@ -637,7 +621,7 @@ Hibernate:
        add constraint FKfwrmsm98t3k10klljl0j6uxcx 
        foreign key (admin_id) 
        references admins (admin_id)
-2023-01-07T14:29:56.101+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.347+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table after_class_student 
        add constraint FK8lk4v50fmrclu47ym8fay0pxn 
@@ -649,7 +633,7 @@ Hibernate:
        add constraint FK8lk4v50fmrclu47ym8fay0pxn 
        foreign key (after_class_id) 
        references after_class (after_class_id)
-2023-01-07T14:29:56.140+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.375+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table after_class_student 
        add constraint FK8dd2poqtcbkkfrntf7dntwc9l 
@@ -661,7 +645,7 @@ Hibernate:
        add constraint FK8dd2poqtcbkkfrntf7dntwc9l 
        foreign key (user_id) 
        references users (user_id)
-2023-01-07T14:29:56.178+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.405+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table article 
        add constraint FK15yy37u1qw43hjduyhs3bgomr 
@@ -673,7 +657,7 @@ Hibernate:
        add constraint FK15yy37u1qw43hjduyhs3bgomr 
        foreign key (user_id) 
        references users (user_id)
-2023-01-07T14:29:56.208+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.434+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table comment 
        add constraint FKhae8pnorx05u8ghul0ict4lhq 
@@ -685,7 +669,7 @@ Hibernate:
        add constraint FKhae8pnorx05u8ghul0ict4lhq 
        foreign key (article_article_id) 
        references article (article_id)
-2023-01-07T14:29:56.247+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.460+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table comment 
        add constraint FKgfcxlc2bfa7tf3bw3qoqgumy5 
@@ -697,7 +681,7 @@ Hibernate:
        add constraint FKgfcxlc2bfa7tf3bw3qoqgumy5 
        foreign key (user_user_id) 
        references users (user_id)
-2023-01-07T14:29:56.298+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.494+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table counsel 
        add constraint FK5d3howxym2rpmhhdu5vymq887 
@@ -709,19 +693,19 @@ Hibernate:
        add constraint FK5d3howxym2rpmhhdu5vymq887 
        foreign key (user_id) 
        references users (user_id)
-2023-01-07T14:29:56.333+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.519+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table rental_video_tool 
-       add constraint FKs1c0h3rp92oyjh9mc41lkm3ph 
-       foreign key (student_id) 
+       add constraint FK7w82k2fy8spwb4xk09hjr4abt 
+       foreign key (user_id) 
        references users (user_id)
 Hibernate: 
     
     alter table rental_video_tool 
-       add constraint FKs1c0h3rp92oyjh9mc41lkm3ph 
-       foreign key (student_id) 
+       add constraint FK7w82k2fy8spwb4xk09hjr4abt 
+       foreign key (user_id) 
        references users (user_id)
-2023-01-07T14:29:56.368+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.548+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table rental_video_tool 
        add constraint FKhg4d6sxud4anbbd1p47qd47xx 
@@ -733,7 +717,7 @@ Hibernate:
        add constraint FKhg4d6sxud4anbbd1p47qd47xx 
        foreign key (video_tool_id) 
        references video_tool (video_tool_id)
-2023-01-07T14:29:56.410+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.634+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     
     alter table video_tool 
        add constraint FK4n1mav9vu8evxkheewacujoh5 
@@ -745,12 +729,12 @@ Hibernate:
        add constraint FK4n1mav9vu8evxkheewacujoh5 
        foreign key (admin_id) 
        references admins (admin_id)
-2023-01-07T14:29:56.457+09:00  INFO 5684 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-01-07T14:29:56.465+09:00  INFO 5684 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-01-07T14:29:56.795+09:00  WARN 5684 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2023-01-07T14:29:57.018+09:00  INFO 5684 --- [    Test worker] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
-2023-01-07T14:29:57.275+09:00  INFO 5684 --- [    Test worker] YSIT.YSit.service.AdminServiceTest       : Started AdminServiceTest in 5.146 seconds (process running for 7.038)
-2023-01-07T14:29:57.652+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:02.694+09:00  INFO 5384 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-07T18:07:02.707+09:00  INFO 5384 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-07T18:07:02.923+09:00  WARN 5384 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-07T18:07:02.972+09:00  INFO 5384 --- [    Test worker] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2023-01-07T18:07:03.064+09:00  INFO 5384 --- [    Test worker] YSIT.YSit.service.AdminServiceTest       : Started AdminServiceTest in 3.083 seconds (process running for 5.802)
+2023-01-07T18:07:03.131+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     select
         next_val as id_val 
     from
@@ -760,7 +744,7 @@ Hibernate:
         next_val as id_val 
     from
         admins_seq for update
-2023-01-07T14:29:57.669+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.145+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     update
         admins_seq 
     set
@@ -774,7 +758,7 @@ Hibernate:
         next_val= ? 
     where
         next_val=?
-2023-01-07T14:29:57.956+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.396+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     insert 
     into
         admins
@@ -788,7 +772,7 @@ Hibernate:
         (login_code, name, reg_date, admin_id) 
     values
         (?, ?, ?, ?)
-2023-01-07T14:29:57.984+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.426+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     select
         a1_0.admin_id,
         a1_0.login_code,
@@ -808,7 +792,7 @@ Hibernate:
         admins a1_0 
     where
         a1_0.login_code=?
-2023-01-07T14:29:58.002+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.439+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     select
         next_val as id_val 
     from
@@ -818,7 +802,7 @@ Hibernate:
         next_val as id_val 
     from
         admins_seq for update
-2023-01-07T14:29:58.003+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.440+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     update
         admins_seq 
     set
@@ -832,7 +816,7 @@ Hibernate:
         next_val= ? 
     where
         next_val=?
-2023-01-07T14:29:58.008+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.444+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     insert 
     into
         admins
@@ -846,7 +830,7 @@ Hibernate:
         (login_code, name, reg_date, admin_id) 
     values
         (?, ?, ?, ?)
-2023-01-07T14:29:58.009+09:00 DEBUG 5684 --- [    Test worker] org.hibernate.SQL                        : 
+2023-01-07T18:07:03.445+09:00 DEBUG 5384 --- [    Test worker] org.hibernate.SQL                        : 
     select
         a1_0.admin_id,
         a1_0.login_code,
