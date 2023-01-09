@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/article")
 @RequiredArgsConstructor
 @Slf4j
 public class ArticleController {
@@ -32,7 +32,7 @@ public class ArticleController {
     private final ArticleService articleService;
     private final CommentService commentService;
 
-    @PostMapping("/article/write") // 작성
+    @PostMapping("/write") // 작성
     public ResponseEntity write(@ModelAttribute ArticleForm form,
                         HttpServletRequest request) {
         log.info("성공");
@@ -79,12 +79,14 @@ public class ArticleController {
         return ResponseEntity.status(HttpStatus.OK).body(responseArt);
     }
 
-    @GetMapping("/article/articleList/{bool_title}/{bool_body}/{searchBody}")
+    @GetMapping("/articleList/{bool_title}/{bool_body}/{searchBody}")
     public ResponseEntity articleListForm(
             @PathVariable("bool_title") Boolean title,
             @PathVariable("bool_body") Boolean body,
             @PathVariable("searchBody") String searchBody,
             HttpServletRequest request) {
+
+        log.info("\ntitle = {}\nbody = {}\nsearchBody = {}",title,body,searchBody);
 
         ResponseEntity response = userValid(request);
         if (response != null) {
@@ -104,7 +106,7 @@ public class ArticleController {
         return ResponseEntity.status(HttpStatus.OK).body(findList);
     }
 
-    @GetMapping("/article/articlePage/{articleId}/view")
+    @GetMapping("/articlePage/{articleId}/view")
     public ResponseEntity articlePageForm(@PathVariable("articleId") Long articleId,
                                   HttpServletRequest request) {
         Article viewArticle = articleService.findOne(articleId);
@@ -138,7 +140,7 @@ public class ArticleController {
         }
     }
 
-    @PostMapping("/article/articlePage/{articleId}/update")
+    @PostMapping("/articlePage/{articleId}/update")
     public ResponseEntity articleUpdate(@PathVariable("articleId") Long articleId,
                                 @Valid @ModelAttribute ArticleUpdateForm form,
                                 HttpServletRequest request) {

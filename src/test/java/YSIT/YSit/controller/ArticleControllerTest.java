@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -66,13 +67,35 @@ public class ArticleControllerTest {
                 .andExpect(jsonPath("$.status").value("PUBLIC"));
     }
 
+    @Test
+    public void artList() throws Exception {
+        write();
+        User user = User.builder()
+                .name("TEST2")
+                .loginId("TEST2")
+                .loginPw("TEST2")
+                .build();
+        userService.register(user);
+
+        MockHttpSession session = new MockHttpSession();
+        session.setAttribute("Id", user.getId());
+
+
+        mvc.perform(get("/api/article/articleList/{bool_title}/{bool_body}/{searchBody}",
+                        true, true, "test")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .session(session))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].title").value("test"));
+    }
+
 
 
     public User createUser() {
         User user1 = User.builder()
-                .name("test")
-                .loginId("test")
-                .loginPw("test")
+                .name("TEST")
+                .loginId("TEST")
+                .loginPw("TEST")
                 .build();
         userService.register(user1);
         return user1;
