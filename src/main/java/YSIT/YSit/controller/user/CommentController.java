@@ -12,6 +12,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.engine.spi.Resolution;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,17 +32,15 @@ public class CommentController {
     private final ArticleService articleService;
     private final UserService userService;
     private final EntityManager em;
+
     @PostMapping("/comment/write")
-    public String parentIsNull(HttpServletRequest request,
-                             @ModelAttribute CommentForm form,
-                             BindingResult result, Model model) {
+    public ResponseEntity parentIsNull_CommentWrite(HttpServletRequest request,
+                                       @ModelAttribute CommentForm form) {
         HttpSession session = request.getSession();
         Long userId = (Long) session.getAttribute("Id");
 
         if (form.getBody().isEmpty()) {
-            result.rejectValue("body", "required");
-
-            return returnPage(userId, form.getArticleId(), model);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("값이 없습니다");
         }
 
         User user = userService.findOne(userId);
@@ -54,74 +55,64 @@ public class CommentController {
                 .build();
         commentService.save(comment);
 
-        return returnPage(userId, form.getArticleId(), model);
+        Comment responseComment = commentService.findOne(comment.getId());
+        return ResponseEntity.status(HttpStatus.OK).body(responseComment);
     }
-
-    @PostMapping("/comment/nestedReply")
-    public String parentIsExist(@ModelAttribute CommentForm form,
-                              BindingResult result,
-                              HttpServletRequest request,
-                              Model model) {
-        HttpSession session = request.getSession();
-        Long userId = (Long) session.getAttribute("Id");
-
-        if (form.getBody().isEmpty()) {
-            result.rejectValue("body", "required");
-            return returnPage(userId, form.getArticleId(), model);
-        }
-
-
-        User user = userService.findOne(userId);
-
-        Comment parentCom = commentService.findOne(form.getParentId());
-        Comment refOrderEmptyCheck = commentService.findByRefOrder(parentCom.getRefOrder() + 1);
-        if (!Objects.isNull(refOrderEmptyCheck)) {
-            Long plussedRefOrder = refOrderEmptyCheck.getRefOrder() + 1;
-            refOrderEmptyCheck.changeRefOrder(plussedRefOrder);
-            while (!Objects.isNull(commentService.findByRefOrder(plussedRefOrder))) {
-                Comment loopEmptyCheck = commentService.findByRefOrder(plussedRefOrder);
-                plussedRefOrder += 1;
-                loopEmptyCheck.changeRefOrder(plussedRefOrder);
-            }
-        }
-
-        Comment comment = Comment.builder()
-                .articleId(form.getArticleId())
-                .writeUser(user.getLoginId())
-                .parentId(form.getParentId()) //
-                .body(form.getBody())
-                .ref(parentCom.getRef()) //
-                .step(parentCom.getStep() + 1) //
-                .refOrder(parentCom.getRefOrder() + 1) //
-                .build();
-        commentService.save(comment);
-
-        return returnPage(userId, form.getArticleId(), model);
-    }
-
-    @PostMapping("/comment/delComment")
-    public String delete(@ModelAttribute CommentForm form,
-                             Model model, HttpServletRequest request) {
-        log.info("\n통과");
-        HttpSession session = request.getSession();
-        Long userId = (Long) session.getAttribute("Id");
-        Comment comment = commentService.findOne(form.getId());
-        commentService.delCommentByUser(comment);
-
-        Comment check = commentService.findOne(form.getId());
-        log.info("\nCommentBody = {}", check.getBody());
-
-        return returnPage(userId, form.getArticleId(), model);
-    }
-
-    public String returnPage(Long userId, Long articleId, Model model) {
-        User user = userService.findOne(userId);
-        Article article = articleService.findOne(articleId);
-        List<Comment> comments = commentService.findByArt(articleId);
-        model.addAttribute("user", user);
-        model.addAttribute("article", article);
-        model.addAttribute("commentForm", new CommentForm());
-        model.addAttribute("comments", comments);
-        return "redirect:/article/articlePage/" + articleId.toString() + "/view";
-    }
+//
+//    @PostMapping("/comment/nestedReply")
+//    public String parentIsExist(@ModelAttribute CommentForm form,
+//                              BindingResult result,
+//                              HttpServletRequest request,
+//                              Model model) {
+//        HttpSession session = request.getSession();
+//        Long userId = (Long) session.getAttribute("Id");
+//
+//        if (form.getBody().isEmpty()) {
+//            result.rejectValue("body", "required");
+//            return returnPage(userId, form.getArticleId(), model);
+//        }
+//
+//
+//        User user = userService.findOne(userId);
+//
+//        Comment parentCom = commentService.findOne(form.getParentId());
+//        Comment refOrderEmptyCheck = commentService.findByRefOrder(parentCom.getRefOrder() + 1);
+//        if (!Objects.isNull(refOrderEmptyCheck)) {
+//            Long plussedRefOrder = refOrderEmptyCheck.getRefOrder() + 1;
+//            refOrderEmptyCheck.changeRefOrder(plussedRefOrder);
+//            while (!Objects.isNull(commentService.findByRefOrder(plussedRefOrder))) {
+//                Comment loopEmptyCheck = commentService.findByRefOrder(plussedRefOrder);
+//                plussedRefOrder += 1;
+//                loopEmptyCheck.changeRefOrder(plussedRefOrder);
+//            }
+//        }
+//
+//        Comment comment = Comment.builder()
+//                .articleId(form.getArticleId())
+//                .writeUser(user.getLoginId())
+//                .parentId(form.getParentId()) //
+//                .body(form.getBody())
+//                .ref(parentCom.getRef()) //
+//                .step(parentCom.getStep() + 1) //
+//                .refOrder(parentCom.getRefOrder() + 1) //
+//                .build();
+//        commentService.save(comment);
+//
+//        return returnPage(userId, form.getArticleId(), model);
+//    }
+//
+//    @PostMapping("/comment/delComment")
+//    public String delete(@ModelAttribute CommentForm form,
+//                             Model model, HttpServletRequest request) {
+//        log.info("\n통과");
+//        HttpSession session = request.getSession();
+//        Long userId = (Long) session.getAttribute("Id");
+//        Comment comment = commentService.findOne(form.getId());
+//        commentService.delCommentByUser(comment);
+//
+//        Comment check = commentService.findOne(form.getId());
+//        log.info("\nCommentBody = {}", check.getBody());
+//
+//        return returnPage(userId, form.getArticleId(), model);
+//    }
 }

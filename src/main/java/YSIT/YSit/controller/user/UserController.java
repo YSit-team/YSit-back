@@ -11,14 +11,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Controller
-@CrossOrigin
+@RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 @Slf4j
@@ -76,81 +74,30 @@ public class UserController {
         }
     }
 
-//    @GetMapping("/user/userList") // 회원 목록
-//    public String userListForm(Model model) {
-//        List<User> users = userService.findUserAll();
-//        model.addAttribute("users", users);
-//        model.addAttribute("userList", new UserListForm());
-//        return "users/user/UserList";
-//    }
-//
-//    @PostMapping("/user/userList")
-//    public String userList(@ModelAttribute UserListForm form, Model model) {
-//        int check_bool = 0;
-//        List<User> findList = null;
-//
-//        if (form.getStudent()) {
-//            findList = userService.findStudentAll();
-//            check_bool += 1;
-//        }
-//        if (form.getTeacher()) {
-//            findList = userService.findTeacherAll();
-//            check_bool += 1;
-//        }
-//        if (check_bool >= 2 || check_bool <= 0) {
-//            findList = userService.findUserAll();
-//        }
-//
-//        if (findList != null) {
-//            model.addAttribute("users", findList);
-//        } else {
-//            User user = User.builder()
-//                    .name(null)
-//                    .loginId(null)
-//                    .loginPw(null)
-//                    .schoolCategory(null)
-//                    .regDate(null)
-//                    .build();
-//            model.addAttribute("users", user);
-//        }
-//        model.addAttribute("userList", new UserListForm());
-//        return "users/user/UserList";
-//    }
-//
-//    @GetMapping("/user/userUpdate")
-//    public String updatePageForm(Model model, HttpServletRequest request) {
-//        HttpSession session = request.getSession();
-//        Long id = (Long) session.getAttribute("Id");
-//        User user = userService.findOne(id);
-//
-//        model.addAttribute("user", user);
-//        model.addAttribute("userForm", new UserForm());
-//        return "users/user/UserUpdate";
-//    }
-//    @PostMapping("/user/userUpdate")
-//    public String userUpdate(@ModelAttribute UserForm form, BindingResult result,
-//                             Model model, HttpServletRequest request) {
-//        List<User> valid = userService.findLoginId(form.getLoginId());
-//        HttpSession session = request.getSession();
-//        Long id = (Long) session.getAttribute("Id");
-//        User user = userService.findOne(id);
-//
-//        if (!valid.isEmpty()) {
-//            result.rejectValue("loginId", "sameId");
-//            model.addAttribute("user", user);
-//            return "users/user/UserUpdate";
-//        }
-//
-//        User user2 = User.builder()
-//                .id(id)
-//                .name(form.getName())
-//                .loginId(form.getLoginId())
-//                .loginPw(form.getLoginPw())
-//                .build();
-//        userService.updateUser(user2);
-//
-//        return "redirect:/";
-//    }
+    @PostMapping("/user/update")
+    public ResponseEntity userUpdate(
+            @RequestParam("loginId") String loginId, @RequestParam("loginPw") String loginPw,
+                             @RequestParam("name") String name, HttpServletRequest request) {
+        List<User> valid = userService.findLoginId(loginId);
+        HttpSession session = request.getSession();
+        Long id = (Long) session.getAttribute("Id");
+        User targetUser = userService.findOne(id);
+
+        if (!valid.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 있는 아이디입니다");
+        }
+
+        User updateUser = User.builder()
+                .id(targetUser.getId())
+                .name(name)
+                .loginId(loginId)
+                .loginPw(userService.encryption(loginPw))
+                .build();
+        userService.updateUser(updateUser);
+
+        User responseUser = userService.findOne(id);
+        return ResponseEntity.status(HttpStatus.OK).body(responseUser);
+    }
 
     @GetMapping("/user/logout")
     public ResponseEntity logout(HttpServletRequest request) {

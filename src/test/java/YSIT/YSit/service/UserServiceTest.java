@@ -141,17 +141,17 @@ class UserServiceTest {
     @Test
     public void updateUserTest() {
         User user = createUser("Test","Test","Test");
-        User user1 = userService.findOne(user.getId());
         String name2 = "Com";
-        User user2 = createUser(name2,"Com","Com");
-        userService.updateUser(user2);
-        em.flush();
-        User result = userService.findOne(user1.getId());
+        User updateUser = User.builder()
+                .id(user.getId())
+                .name("Com")
+                .loginId("Com")
+                .loginPw(userService.encryption("Com"))
+                .build();
+        userService.updateUser(updateUser);
+
+        User result = userService.findOne(user.getId());
         if (result.getName() == name2) {
-            return;
-        }
-        User temp = userService.findOne(2L);
-        if (Objects.isNull(temp)) {
             return;
         }
         fail("실패");

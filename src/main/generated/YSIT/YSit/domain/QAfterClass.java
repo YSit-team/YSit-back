@@ -22,8 +22,6 @@ public class QAfterClass extends EntityPathBase<AfterClass> {
 
     public static final QAfterClass afterClass = new QAfterClass("afterClass");
 
-    public final QAdmins admins;
-
     public final ListPath<AfterClassStudent, QAfterClassStudent> afterClassStudents = this.<AfterClassStudent, QAfterClassStudent>createList("afterClassStudents", AfterClassStudent.class, QAfterClassStudent.class, PathInits.DIRECT2);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
@@ -33,6 +31,8 @@ public class QAfterClass extends EntityPathBase<AfterClass> {
     public final DateTimePath<java.time.LocalDateTime> regDate = createDateTime("regDate", java.time.LocalDateTime.class);
 
     public final EnumPath<AppStatus> status = createEnum("status", AppStatus.class);
+
+    public final QUser user;
 
     public QAfterClass(String variable) {
         this(AfterClass.class, forVariable(variable), INITS);
@@ -52,7 +52,7 @@ public class QAfterClass extends EntityPathBase<AfterClass> {
 
     public QAfterClass(Class<? extends AfterClass> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.admins = inits.isInitialized("admins") ? new QAdmins(forProperty("admins")) : null;
+        this.user = inits.isInitialized("user") ? new QUser(forProperty("user")) : null;
     }
 
 }

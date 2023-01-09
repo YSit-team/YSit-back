@@ -18,12 +18,11 @@ public class AfterClass {
     @Enumerated(EnumType.STRING)
     private AppStatus status;
 
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+    @JoinColumn(name = "user_id")
+    private User user;
     @OneToMany(mappedBy = "afterClass", cascade = CascadeType.ALL)
     private List<AfterClassStudent> afterClassStudents = new ArrayList<>();
-
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Admins.class)
-    @JoinColumn(name = "admin_id")
-    private Admins admins;
 
     private LocalDateTime regDate;
 }

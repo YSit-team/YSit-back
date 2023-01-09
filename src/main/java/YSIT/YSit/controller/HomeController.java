@@ -24,24 +24,6 @@ import java.util.Objects;
 @Slf4j
 public class HomeController {
 
-//    @GetMapping("/")
-//    public String home(HttpServletRequest request, Model model) {
-//        HttpSession session = request.getSession();
-//        Long userId = (Long) session.getAttribute("Id");
-//        Long adminId = (Long) session.getAttribute("adminId");
-//        if (!Objects.isNull(userId)) {
-//            User user = userService.findOne(userId);
-//            model.addAttribute("user", user);
-//            return "users/LoginUserHome";
-//        } else if (!Objects.isNull(adminId)){
-//            Admins admin = adminService.findOne(adminId);
-//            model.addAttribute("admin", admin);
-//            return "admins/LoginAdminHome";
-//        } else {
-//            return "Home";
-//        }
-//    }
-
     @GetMapping("/hello")
     public String hello() {
         return "hello";

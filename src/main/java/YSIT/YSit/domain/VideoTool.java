@@ -19,11 +19,12 @@ public class VideoTool {
     private String name;
     private int quantity;
     private int maxQuantity;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "admin_id")
-    private Admins admins;
+    private String addUser;
     private LocalDateTime regDate;
+
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Builder
     public VideoTool(Long id, String name, int quantity, int maxQuantity, Admins admin, LocalDateTime regDate) {
@@ -34,7 +35,6 @@ public class VideoTool {
         this.name = name;
         this.quantity = quantity;
         this.maxQuantity = maxQuantity;
-        this.admins = admin;
         this.regDate = regDate;
 
     }
