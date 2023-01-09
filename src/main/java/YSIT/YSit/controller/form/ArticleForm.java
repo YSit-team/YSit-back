@@ -15,13 +15,10 @@ import java.time.LocalDateTime;
 @Setter
 public class ArticleForm {
     private Long id;
-    @NotBlank
     private String title;
-    @NotBlank
     private String body;
-    @NotBlank
     private Board category;
-    private Boolean status;
+    private ArticleStatus status;
     private LocalDateTime regDate;
     public ArticleForm() {
     }

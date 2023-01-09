@@ -23,7 +23,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
-@Controller
+@RestController
+@RequestMapping("/api")
 @RequiredArgsConstructor
 @Slf4j
 public class ArticleController {
@@ -34,7 +35,7 @@ public class ArticleController {
     @PostMapping("/article/write") // 작성
     public ResponseEntity write(@ModelAttribute ArticleForm form,
                         HttpServletRequest request) {
-
+        log.info("성공");
         HttpSession session = request.getSession();
         Long id = (Long) session.getAttribute("Id");
         User user = userService.findOne(id);
@@ -44,10 +45,10 @@ public class ArticleController {
         if (response != null) {
             return response;
         }
-        if (form.getTitle() == null || form.getTitle().isEmpty()) {
+        if (form.getTitle().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("제목 값이 없습니다");
         }
-        if (form.getBody().isEmpty() || form.getBody() == null) {
+        if (form.getBody().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("내용 값이 없습니다");
         }
         if (form.getCategory() == null) {
@@ -61,19 +62,14 @@ public class ArticleController {
         if (!articleService.findByTitle(form.getTitle()).isEmpty()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 같은 제목의 게시물이 있습니다");
         }
+        log.info("성공2");
 
         // 데이터 처리
-        ArticleStatus articleStatus;
-        if (form.getStatus()) {
-            articleStatus = ArticleStatus.PRIVATE;
-        } else {
-            articleStatus = ArticleStatus.PUBLIC;
-        }
         User intoArt = userService.findOne(id);
         Article article = Article.builder()
                 .title(form.getTitle())
                 .body(form.getBody())
-                .status(articleStatus)
+                .status(form.getStatus())
                 .category(form.getCategory())
                 .user(intoArt)
                 .regDate(LocalDateTime.now())

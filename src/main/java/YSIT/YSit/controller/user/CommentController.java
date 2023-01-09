@@ -58,61 +58,56 @@ public class CommentController {
         Comment responseComment = commentService.findOne(comment.getId());
         return ResponseEntity.status(HttpStatus.OK).body(responseComment);
     }
-//
-//    @PostMapping("/comment/nestedReply")
-//    public String parentIsExist(@ModelAttribute CommentForm form,
-//                              BindingResult result,
-//                              HttpServletRequest request,
-//                              Model model) {
-//        HttpSession session = request.getSession();
-//        Long userId = (Long) session.getAttribute("Id");
-//
-//        if (form.getBody().isEmpty()) {
-//            result.rejectValue("body", "required");
-//            return returnPage(userId, form.getArticleId(), model);
-//        }
-//
-//
-//        User user = userService.findOne(userId);
-//
-//        Comment parentCom = commentService.findOne(form.getParentId());
-//        Comment refOrderEmptyCheck = commentService.findByRefOrder(parentCom.getRefOrder() + 1);
-//        if (!Objects.isNull(refOrderEmptyCheck)) {
-//            Long plussedRefOrder = refOrderEmptyCheck.getRefOrder() + 1;
-//            refOrderEmptyCheck.changeRefOrder(plussedRefOrder);
-//            while (!Objects.isNull(commentService.findByRefOrder(plussedRefOrder))) {
-//                Comment loopEmptyCheck = commentService.findByRefOrder(plussedRefOrder);
-//                plussedRefOrder += 1;
-//                loopEmptyCheck.changeRefOrder(plussedRefOrder);
-//            }
-//        }
-//
-//        Comment comment = Comment.builder()
-//                .articleId(form.getArticleId())
-//                .writeUser(user.getLoginId())
-//                .parentId(form.getParentId()) //
-//                .body(form.getBody())
-//                .ref(parentCom.getRef()) //
-//                .step(parentCom.getStep() + 1) //
-//                .refOrder(parentCom.getRefOrder() + 1) //
-//                .build();
-//        commentService.save(comment);
-//
-//        return returnPage(userId, form.getArticleId(), model);
-//    }
-//
-//    @PostMapping("/comment/delComment")
-//    public String delete(@ModelAttribute CommentForm form,
-//                             Model model, HttpServletRequest request) {
-//        log.info("\n통과");
-//        HttpSession session = request.getSession();
-//        Long userId = (Long) session.getAttribute("Id");
-//        Comment comment = commentService.findOne(form.getId());
-//        commentService.delCommentByUser(comment);
-//
-//        Comment check = commentService.findOne(form.getId());
-//        log.info("\nCommentBody = {}", check.getBody());
-//
-//        return returnPage(userId, form.getArticleId(), model);
-//    }
+
+    @PostMapping("/comment/nestedReply")
+    public ResponseEntity parentIsExist(@ModelAttribute CommentForm form,
+                                                HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Long userId = (Long) session.getAttribute("Id");
+
+        if (form.getBody().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("값이 없습니다");
+        }
+
+        User user = userService.findOne(userId);
+
+        Comment parentCom = commentService.findOne(form.getParentId());
+        Comment refOrderEmptyCheck = commentService.findByRefOrder(parentCom.getRefOrder() + 1);
+        if (!Objects.isNull(refOrderEmptyCheck)) {
+            Long plussedRefOrder = refOrderEmptyCheck.getRefOrder() + 1;
+            refOrderEmptyCheck.changeRefOrder(plussedRefOrder);
+            while (!Objects.isNull(commentService.findByRefOrder(plussedRefOrder))) {
+                Comment loopEmptyCheck = commentService.findByRefOrder(plussedRefOrder);
+                plussedRefOrder += 1;
+                loopEmptyCheck.changeRefOrder(plussedRefOrder);
+            }
+        }
+
+        Comment comment = Comment.builder()
+                .articleId(form.getArticleId())
+                .writeUser(user.getLoginId())
+                .parentId(form.getParentId()) //
+                .body(form.getBody())
+                .ref(parentCom.getRef()) //
+                .step(parentCom.getStep() + 1) //
+                .refOrder(parentCom.getRefOrder() + 1) //
+                .build();
+        commentService.save(comment);
+
+        Comment responseComment = commentService.findOne(comment.getId());
+        return ResponseEntity.status(HttpStatus.OK).body(responseComment);
+    }
+
+    @PostMapping("/comment/delComment")
+    public ResponseEntity delete(@ModelAttribute CommentForm form,
+                             HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Long userId = (Long) session.getAttribute("Id");
+        Comment comment = commentService.findOne(form.getId());
+        commentService.delCommentByUser(comment);
+
+        Comment responseComment = commentService.findOne(form.getId());
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseComment);
+    }
 }

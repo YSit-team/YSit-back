@@ -22,7 +22,7 @@ public class QVideoTool extends EntityPathBase<VideoTool> {
 
     public static final QVideoTool videoTool = new QVideoTool("videoTool");
 
-    public final QAdmins admins;
+    public final StringPath addUser = createString("addUser");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
@@ -33,6 +33,8 @@ public class QVideoTool extends EntityPathBase<VideoTool> {
     public final NumberPath<Integer> quantity = createNumber("quantity", Integer.class);
 
     public final DateTimePath<java.time.LocalDateTime> regDate = createDateTime("regDate", java.time.LocalDateTime.class);
+
+    public final QUser user;
 
     public QVideoTool(String variable) {
         this(VideoTool.class, forVariable(variable), INITS);
@@ -52,7 +54,7 @@ public class QVideoTool extends EntityPathBase<VideoTool> {
 
     public QVideoTool(Class<? extends VideoTool> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.admins = inits.isInitialized("admins") ? new QAdmins(forProperty("admins")) : null;
+        this.user = inits.isInitialized("user") ? new QUser(forProperty("user")) : null;
     }
 
 }

@@ -1,4 +1,4 @@
-package YSIT.YSit.controller.user;
+package YSIT.YSit.controller;
 
 import YSIT.YSit.service.UserService;
 import org.junit.Test;
@@ -140,6 +140,7 @@ public class UserControllerTest {
         // given
         String updateLoginId = "Complete";
         String updateLoginPw = "Complete";
+        String updateName = "Complete";
 
         register();
 
@@ -151,6 +152,7 @@ public class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("loginId", updateLoginId)
                         .param("loginPw", updateLoginPw)
+                        .param("name", updateName)
                         .session(session))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.loginId").value(updateLoginId))

@@ -1,7 +1,6 @@
 package YSIT.YSit.repository;
 
 import YSIT.YSit.domain.Article;
-import YSIT.YSit.domain.User;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
