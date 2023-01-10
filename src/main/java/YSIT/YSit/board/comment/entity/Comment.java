@@ -1,0 +1,56 @@
+package YSIT.YSit.board.comment.entity;
+
+import YSIT.YSit.board.article.entity.Article;
+import YSIT.YSit.user.entity.User;
+import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Getter
+@NoArgsConstructor
+public class Comment {
+    @Id @GeneratedValue
+    @Column(name = "comment_id")
+    private Long id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Article article;
+    private Long articleId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+    private String writeUser;
+    private String body;
+    private LocalDateTime regDate;
+    private Long ref;
+    private Long step;
+    private Long refOrder;
+    private Long parentId;
+
+    @Builder
+    public Comment(Long id, Long articleId, String writeUser, String body, Long ref, Long step, Long refOrder, Long parentId, LocalDateTime regDate) {
+        if (step == null) step = 0L;
+        if (refOrder == null) refOrder = 0L;
+        if (parentId == null) parentId = 0L;
+        if (regDate == null) regDate = LocalDateTime.now();
+
+        this.id = id;
+        this.articleId = articleId;
+        this.writeUser = writeUser;
+        this.body = body;
+        this.ref = ref;
+        this.step = step;
+        this.refOrder = refOrder;
+        this.parentId = parentId;
+        this.regDate = regDate;
+    }
+
+    public void changeRefOrder(Long refOrder) {
+        this.refOrder = refOrder;
+    }
+    public void changeBody (String body) {
+        this.body = body;
+    }
+}
