@@ -17,17 +17,18 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     @Transactional(readOnly = false)
-    public Long save(Comment comment) {
+    public String save(Comment comment) {
         commentRepository.save(comment);
+
         return comment.getId();
     }
     public Long getMaxRef() {
-        return commentRepository.maxRef();
+        return commentRepository.findMaxRef();
     }
-    public List<Comment> findByArt(Long artId) {
+    public List<Comment> findByArt(String artId) {
         return commentRepository.findByArt(artId);
     }
-    public Comment findOne(Long comId) {
+    public Comment findOne(String comId) {
         return commentRepository.findOne(comId);
     }
     public Comment findByRefOrder(Long refOrder) {
@@ -45,5 +46,13 @@ public class CommentService {
         Comment comment = commentRepository.findOne(delCom.getId());
         String deleteMention = "관리자에 의해 삭제되었습니다";
         comment.changeBody(deleteMention);
+    }
+
+    @Transactional
+    public void addRefOrderForCommentRef(Long changeRef, Long changeOverRefOrder) {
+        List<Comment> changeComments = commentRepository.findByRefAndOverRefOrder(changeRef, changeOverRefOrder);
+        for (Comment comment : changeComments) {
+            comment.changeRefOrder(comment.getRefOrder() + 1);
+        }
     }
 }

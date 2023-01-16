@@ -1,6 +1,7 @@
 package YSIT.YSit.board.article.repsitory;
 
 import YSIT.YSit.board.article.entity.Article;
+import YSIT.YSit.user.entity.User;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -16,13 +17,13 @@ public class ArticleRepository {
         em.persist(article);
     }
 
-    public Article findOne(Long id) {
+    public Article findOne(String id) {
         return em.find(Article.class, id);
     }
 
-    public List<Article> findByWriteUser(String loginId) {
-        return em.createQuery("select a from Article a where a.writeUser = :writeUser order by a.id desc", Article.class)
-                .setParameter("writeUser", loginId)
+    public List<Article> findByUser(User user) {
+        return em.createQuery("select a from Article a where a.user = :user order by a.id desc", Article.class)
+                .setParameter("user", user)
                 .getResultList();
     }
 
@@ -44,7 +45,7 @@ public class ArticleRepository {
                 .setParameter("body", paramBody)
                 .getResultList();
     }
-    public void deleteById(Long Id) {
+    public void deleteById(String Id) {
         Article art = em.find(Article.class, Id);
         em.remove(art);
     }

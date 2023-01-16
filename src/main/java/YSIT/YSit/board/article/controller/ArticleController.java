@@ -1,7 +1,7 @@
 package YSIT.YSit.board.article.controller;
 
 import YSIT.YSit.board.dto.ArtAndComForm;
-import YSIT.YSit.board.Board;
+import YSIT.YSit.board.article.Board;
 import YSIT.YSit.board.article.*;
 import YSIT.YSit.board.article.dto.ArticleForm;
 import YSIT.YSit.board.article.dto.ArticleUpdateForm;
@@ -14,7 +14,6 @@ import YSIT.YSit.user.entity.User;
 import YSIT.YSit.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -39,7 +38,7 @@ public class ArticleController {
                         HttpServletRequest request) {
         log.info("성공");
         HttpSession session = request.getSession();
-        Long id = (Long) session.getAttribute("Id");
+        String id = (String) session.getAttribute("Id");
         User user = userService.findOne(id);
 
         // 검증
@@ -109,20 +108,21 @@ public class ArticleController {
     }
 
     @GetMapping("/articlePage/{articleId}/view")
-    public ResponseEntity view(@PathVariable("articleId") Long articleId,
+    public ResponseEntity view(@PathVariable("articleId") String articleId,
                                   HttpServletRequest request) {
         Article viewArticle = articleService.findOne(articleId);
         HttpSession session = request.getSession();
-        Long id = (Long) session.getAttribute("Id");
+        String id = (String) session.getAttribute("Id");
         User user = userService.findOne(id);
         List<Comment> artInComment = commentService.findByArt(articleId);
+        User writeUser = viewArticle.getUser();
 
         ArtAndComForm responseBody = ArtAndComForm.builder()
                 .title(viewArticle.getTitle())
                 .body(viewArticle.getBody())
                 .category(viewArticle.getCategory())
                 .status(viewArticle.getStatus())
-                .writeUser(viewArticle.getWriteUser())
+                .writeUser(writeUser.getName())
                 .regDate(viewArticle.getRegDate())
                 // 조회수 1 추가
                 .viewCnt(viewArticle.getViewCnt() + 1)
@@ -135,7 +135,7 @@ public class ArticleController {
         }
 
         if (viewArticle.getStatus() == ArticleStatus.PRIVATE) {
-            if (user.getLoginId() == viewArticle.getWriteUser() || user.getSchoolCategory() == SchoolCategory.TEACHER ) {
+            if (user.getLoginId().equals(writeUser.getLoginId()) || user.getSchoolCategory() == SchoolCategory.TEACHER ) {
                 // DB에 조회수 1 추가
                 viewArticle.addViewCnt();
                 return ResponseEntity.status(HttpStatus.OK).body(responseBody);
@@ -150,7 +150,7 @@ public class ArticleController {
     }
 
     @PostMapping("/articlePage/{articleId}/update")
-    public ResponseEntity update(@PathVariable("articleId") Long articleId,
+    public ResponseEntity update(@PathVariable("articleId") String articleId,
                                 @ModelAttribute ArticleUpdateForm form,
                                 HttpServletRequest request) {
         log.info("성공");
@@ -158,19 +158,15 @@ public class ArticleController {
         Article updateArt = articleService.findOne(articleId);
         List<Article> compareArt = articleService.findByTitle(form.getTitle());
         HttpSession session = request.getSession();
-        Long userId = (Long) session.getAttribute("Id");
+        String userId = (String) session.getAttribute("Id");
         User user = userService.findOne(userId);
 
         // 검증
         if (!compareArt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 같은 제목의 게시물이 있습니다");
         }
-        if (!updateArt.getWriteUser().equals(user.getLoginId())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("게시물 작성자가 아닙니다");
-        }
 
         // 처리
-
         Article article = Article.builder()
                 .id(articleId)
                 .title(form.getTitle())
@@ -190,7 +186,7 @@ public class ArticleController {
     }
     public ResponseEntity userValid(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        Long id = (Long) session.getAttribute("Id");
+        String id = (String) session.getAttribute("Id");
         User user = userService.findOne(id);
         if (Objects.isNull(user)){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("작성자가 아니거나 로그인 상태가 아닙니다");

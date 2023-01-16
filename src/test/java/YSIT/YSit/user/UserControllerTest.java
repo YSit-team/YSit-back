@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import java.util.UUID;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -174,18 +176,15 @@ public class UserControllerTest {
         register(); // 업데이트할 유저
 
         // when
-        MultiValueMap<String, String> query_param = new LinkedMultiValueMap<>();
-        query_param.add("loginId", updateLoginId);
-        query_param.add("loginPw", updateLoginPw);
-        query_param.add("name", updateName);
-        query_param.add("rank", String.valueOf(rank));
-
-        mvc.perform(post("/api/user/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .params(query_param));
+        User user = User.builder()
+                .loginPw(updateLoginPw)
+                .loginId(updateLoginId)
+                .name(updateName)
+                .build();
+        userService.register(user);
 
         MockHttpSession session = new MockHttpSession();
-        session.setAttribute("Id", 1L);
+        session.setAttribute("Id", user.getId());
 
         mvc.perform(post("/api/user/update")
                         .contentType(MediaType.APPLICATION_JSON)

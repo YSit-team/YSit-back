@@ -39,7 +39,7 @@ class UserServiceTest {
                 .loginId(loginId)
                 .loginPw(loginPw)
                 .build();
-        Long saveId = userService.register(user);
+        String saveId = userService.register(user);
 
         assertEquals(user, userRepository.findOne(saveId));
     }

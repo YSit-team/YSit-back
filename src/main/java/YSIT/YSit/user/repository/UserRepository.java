@@ -16,7 +16,7 @@ public class UserRepository {
         em.persist(user);
     }
 
-    public User findOne(Long id) {
+    public User findOne(String id) {
         return em.find(User.class, id);
     }
 
@@ -50,7 +50,7 @@ public class UserRepository {
                 .getResultList();
     }
 
-    public void deleteById(Long Id) {
+    public void deleteById(String Id) {
         User user = em.find(User.class, Id);
         em.remove(user);
     }

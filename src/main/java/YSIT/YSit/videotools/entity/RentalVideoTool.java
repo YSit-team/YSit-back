@@ -25,9 +25,9 @@ public class RentalVideoTool {
     private LocalDateTime rentalDate;
     private LocalDateTime returnDate;
     private LocalDateTime regDate;
-    private String reason;
+    private String body;
     @Enumerated(EnumType.STRING)
-    private RentalStatus appStatus;
+    private RentalStatus status;
 
     private Long ref;
 }

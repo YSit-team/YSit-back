@@ -2,6 +2,7 @@ package YSIT.YSit.board.article.service;
 
 import YSIT.YSit.board.article.entity.Article;
 import YSIT.YSit.board.article.repsitory.ArticleRepository;
+import YSIT.YSit.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +15,7 @@ import java.util.List;
 public class ArticleService {
     private final ArticleRepository articleRepository;
     @Transactional(readOnly = false)
-    public Long save(Article article) {
+    public String save(Article article) {
         List<Article> articles = articleRepository.findByTitle(article.getTitle());
         if (!articles.isEmpty()){
             throw new IllegalStateException("이미 있는 제목입니다");
@@ -37,7 +38,7 @@ public class ArticleService {
         }
     }
     @Transactional(readOnly = false)
-    public void deleteById(Long Id) {
+    public void deleteById(String Id) {
         articleRepository.deleteById(Id);
     }
 
@@ -47,13 +48,13 @@ public class ArticleService {
     public List<Article> findByTitle(String title) {
         return articleRepository.findByTitle(title);
     }
-    public List<Article> findByWriteUser(String loginId) {
-        return articleRepository.findByWriteUser(loginId);
+    public List<Article> findByUser(User user) {
+        return articleRepository.findByUser(user);
     }
     public List<Article> findByBody(String body) {
         return articleRepository.findByBody(body);
     }
-    public Article findOne(Long id) {
+    public Article findOne(String id) {
         return articleRepository.findOne(id);
     }
 }

@@ -9,14 +9,14 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class CommentForm {
-    private Long id;
+    private String id;
     private Long ref;
     private Long step;
     private Long refOrder;
-    private Long parentId;
-    private Long userId;
+    private String parentId;
+    private String userId;
     private String writeUser;
-    private Long articleId;
+    private String articleId;
     private String body;
     private LocalDateTime regDate;
 

@@ -1,6 +1,6 @@
 package YSIT.YSit.board.article.dto;
 
-import YSIT.YSit.board.Board;
+import YSIT.YSit.board.article.Board;
 import YSIT.YSit.board.article.ArticleStatus;
 import lombok.Getter;
 import lombok.Setter;

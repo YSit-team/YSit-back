@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class UserForm {
-    private static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
-    private Long id;
+    private static final String DATE_PATTERN = "yyyy/MM/dd";
+    private String id;
     private String loginId;
     private String loginPw;
     private String name;

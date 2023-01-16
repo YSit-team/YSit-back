@@ -3,7 +3,7 @@ package YSIT.YSit.article;
 
 import YSIT.YSit.board.article.entity.Article;
 import YSIT.YSit.board.article.ArticleStatus;
-import YSIT.YSit.board.Board;
+import YSIT.YSit.board.article.Board;
 import YSIT.YSit.board.article.service.ArticleService;
 import YSIT.YSit.user.SchoolCategory;
 import YSIT.YSit.user.entity.User;
@@ -13,7 +13,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringRunner;

@@ -79,7 +79,7 @@ public class UserController {
                              @RequestParam("name") String name, HttpServletRequest request) {
         List<User> valid = userService.findLoginId(loginId);
         HttpSession session = request.getSession();
-        Long id = (Long) session.getAttribute("Id");
+        String id = (String) session.getAttribute("Id");
         User targetUser = userService.findOne(id);
 
         if (!valid.isEmpty()) {

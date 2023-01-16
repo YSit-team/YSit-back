@@ -8,38 +8,44 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Getter
 @NoArgsConstructor
 public class Comment {
-    @Id @GeneratedValue
+    @Id
     @Column(name = "comment_id")
-    private Long id;
+    private String id;
     @ManyToOne(fetch = FetchType.LAZY)
     private Article article;
-    private Long articleId;
+    private String articleId;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
     private String writeUser;
     private String body;
     private LocalDateTime regDate;
-    private Long ref;
-    private Long step;
-    private Long refOrder;
-    private Long parentId;
+    private Long ref; // 그룹
+    private Long step; // 그룹 내 단계
+    private Long refOrder; // 그룹 내 순서
+    private String parentId; // 부모 ID
 
     @Builder
-    public Comment(Long id, Long articleId, String writeUser, String body, Long ref, Long step, Long refOrder, Long parentId, LocalDateTime regDate) {
+    public Comment(String id, String articleId, User user, String body, Long ref, Long step, Long refOrder, String parentId, LocalDateTime regDate) {
         if (step == null) step = 0L;
         if (refOrder == null) refOrder = 0L;
-        if (parentId == null) parentId = 0L;
+        if (parentId == null) parentId = null;
         if (regDate == null) regDate = LocalDateTime.now();
+        if (id == null || id.isEmpty()) {
+            id = UUID.randomUUID().toString();
+        }
 
         this.id = id;
         this.articleId = articleId;
-        this.writeUser = writeUser;
         this.body = body;
+        this.user = user;
+        this.writeUser = user.getLoginId();
         this.ref = ref;
         this.step = step;
         this.refOrder = refOrder;

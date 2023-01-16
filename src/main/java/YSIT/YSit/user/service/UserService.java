@@ -19,7 +19,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional(readOnly = false)
-    public Long register(User user) {
+    public String register(User user) {
         List<User> findDoubleCheck = doubleCheckLoginId(user.getLoginId());
         if (!findDoubleCheck.isEmpty()){
             throw new IllegalStateException("Id already exists");
@@ -55,11 +55,11 @@ public class UserService {
     }
 
     @Transactional(readOnly = false)
-    public void deleteById(Long Id) {
+    public void deleteById(String Id) {
         userRepository.deleteById(Id);
     }
 
-    public User findOne(Long id) {
+    public User findOne(String id) {
         return userRepository.findOne(id);
     }
 

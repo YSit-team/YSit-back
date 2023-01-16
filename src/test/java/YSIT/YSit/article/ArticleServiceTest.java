@@ -3,7 +3,7 @@ package YSIT.YSit.article;
 import YSIT.YSit.board.article.service.ArticleService;
 import YSIT.YSit.board.article.entity.Article;
 import YSIT.YSit.board.article.ArticleStatus;
-import YSIT.YSit.board.Board;
+import YSIT.YSit.board.article.Board;
 import YSIT.YSit.user.entity.User;
 import YSIT.YSit.board.article.repsitory.ArticleRepository;
 import YSIT.YSit.user.service.UserService;
@@ -156,7 +156,7 @@ public class ArticleServiceTest {
                 .build();
         articleService.save(article);
 
-        List<Article> articleList = articleRepository.findByWriteUser(user.getLoginId());
+        List<Article> articleList = articleRepository.findByUser(user);
         if (articleList.isEmpty()) {
             fail("실패");
         }
