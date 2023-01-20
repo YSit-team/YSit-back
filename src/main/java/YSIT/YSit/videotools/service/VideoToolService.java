@@ -14,11 +14,11 @@ import java.util.List;
 public class VideoToolService {
     private final VideoToolRepository videoToolRepository;
     @Transactional(readOnly = false)
-    public Long save(VideoTool videoTool) {
+    public String save(VideoTool videoTool) {
         return videoToolRepository.save(videoTool);
     }
 
-    public VideoTool findOne(Long id) {
+    public VideoTool findOne(String id) {
         return videoToolRepository.findOne(id);
     }
 
@@ -27,5 +27,20 @@ public class VideoToolService {
     }
     public List<VideoTool> findAll() {
         return videoToolRepository.findAll();
+    }
+    @Transactional(readOnly = false)
+    public void addMaxQuantity(String vtId, int addQuantity) {
+        VideoTool target = findOne(vtId);
+        target.addMaxQuantity(addQuantity);
+    }
+    @Transactional(readOnly = false)
+    public void addQuantity(String vtId, int addQuantity) {
+        VideoTool target = findOne(vtId);
+        target.addQuantity(addQuantity);
+    }
+    @Transactional(readOnly = false)
+    public void removeQuantity(String vtId, int removeQuantity) {
+        VideoTool target = findOne(vtId);
+        target.removeQuantity(removeQuantity);
     }
 }

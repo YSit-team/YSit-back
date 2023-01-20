@@ -16,13 +16,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 @RequiredArgsConstructor
+@CrossOrigin
 @Slf4j
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/user/register") // 회원가입 기능
+    @PostMapping("/register") // 회원가입 기능
     public ResponseEntity register(
                 @ModelAttribute UserForm form) {
         if (form.getLoginId().isEmpty() || form.getLoginPw().isEmpty()) {
@@ -56,24 +57,33 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(responseUser);
     }
 
-    @PostMapping("/user/login") // 로그인 기능
+    @PostMapping("/login") // 로그인 기능
     public ResponseEntity login(
                                 HttpServletRequest request,
             @RequestParam("loginId") String loginId, @RequestParam("loginPw") String loginPw) {
-        List<User> matchLogins = userService.matchLogins(loginId, loginPw);
-        if (matchLogins.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("암호가 일치하지 않습니다");
-        } else {
-            User responseUser = matchLogins.get(0);
+        log.info("\nLoginID = {}\nLoginPW = {}", loginId, loginPw);
 
-            HttpSession session = request.getSession();
-            session.setAttribute("Id", responseUser.getId());
+        User user = User.builder()
+                .loginPw(loginPw)
+                .loginId(loginId)
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(user);
 
-            return ResponseEntity.status(HttpStatus.OK).body(responseUser);
-        }
+//        List<User> matchLogins = userService.matchLogins(loginId, loginPw);
+//
+//        if (matchLogins.isEmpty()) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("암호가 일치하지 않습니다");
+//        } else {
+//            User responseUser = matchLogins.get(0);
+//
+//            HttpSession session = request.getSession();
+//            session.setAttribute("Id", responseUser.getId());
+//
+//            return ResponseEntity.status(HttpStatus.OK).body(responseUser);
+//        }
     }
 
-    @PostMapping("/user/update")
+    @PostMapping("/update")
     public ResponseEntity userUpdate(
             @RequestParam("loginId") String loginId, @RequestParam("loginPw") String loginPw,
                              @RequestParam("name") String name, HttpServletRequest request) {
@@ -98,7 +108,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(responseUser);
     }
 
-    @GetMapping("/user/logout")
+    @GetMapping("/logout")
     public ResponseEntity logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.invalidate();

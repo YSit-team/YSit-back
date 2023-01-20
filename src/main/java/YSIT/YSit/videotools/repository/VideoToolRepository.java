@@ -12,12 +12,12 @@ import java.util.List;
 public class VideoToolRepository {
     private final EntityManager em;
 
-    public Long save(VideoTool videoTool) {
+    public String save(VideoTool videoTool) {
         em.persist(videoTool);
         return videoTool.getId();
     }
 
-    public VideoTool findOne(Long vtId) {
+    public VideoTool findOne(String vtId) {
         return em.find(VideoTool.class, vtId);
     }
 
