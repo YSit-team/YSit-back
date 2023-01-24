@@ -28,7 +28,7 @@ public class VideoToolRepository {
         return videoTools;
     }
     public List<VideoTool> findAll() {
-        return em.createQuery("select v from VideoTool v", VideoTool.class)
+        return em.createQuery("select v from VideoTool v order by v.name asc", VideoTool.class)
                 .getResultList();
     }
 }

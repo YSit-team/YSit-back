@@ -14,17 +14,11 @@ public class VideoToolForm {
     private static final String TIME_PATTERN = "hh:mm";
     private Long id;
     private String name;
-    private int use;
+    private int maxQuantity;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_PATTERN, timezone = "Asia/Seoul")
-    private LocalDateTime rentalDate;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_PATTERN, timezone = "Asia/Seoul")
-    private LocalDateTime returnDate;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = TIME_PATTERN, timezone = "Asia/Seoul")
-    private LocalDateTime bringTime;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = TIME_PATTERN, timezone = "Asia/Seoul")
-    private LocalDateTime returnTime;
-    private int quantity;
-//    private int
+    private LocalDateTime regDate;
+
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = TIME_PATTERN, timezone = "Asia/Seoul")
     public VideoToolForm() {
     }
 }

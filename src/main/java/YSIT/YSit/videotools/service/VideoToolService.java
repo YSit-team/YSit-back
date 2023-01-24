@@ -28,19 +28,4 @@ public class VideoToolService {
     public List<VideoTool> findAll() {
         return videoToolRepository.findAll();
     }
-    @Transactional(readOnly = false)
-    public void addMaxQuantity(String vtId, int addQuantity) {
-        VideoTool target = findOne(vtId);
-        target.addMaxQuantity(addQuantity);
-    }
-    @Transactional(readOnly = false)
-    public void addQuantity(String vtId, int addQuantity) {
-        VideoTool target = findOne(vtId);
-        target.addQuantity(addQuantity);
-    }
-    @Transactional(readOnly = false)
-    public void removeQuantity(String vtId, int removeQuantity) {
-        VideoTool target = findOne(vtId);
-        target.removeQuantity(removeQuantity);
-    }
 }

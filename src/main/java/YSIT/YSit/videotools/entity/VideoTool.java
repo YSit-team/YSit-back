@@ -22,13 +22,13 @@ public class VideoTool {
     private String name;
     private int quantity;
     private int maxQuantity;
-    private String writer;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_PATTERN, timezone = "Asia/Seoul")
     private LocalDateTime regDate;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
     @JoinColumn(name = "user_id")
     private User user;
+    private String writer;
     @Builder
     public VideoTool(String id, String name, int quantity, int maxQuantity, User user, LocalDateTime regDate) {
         if (regDate == null) {
@@ -42,7 +42,7 @@ public class VideoTool {
         this.quantity = quantity;
         this.maxQuantity = maxQuantity;
         this.user = user;
-        this.writer = user.getName();
+        this.writer = user.getId();
         this.regDate = regDate;
 
     }
