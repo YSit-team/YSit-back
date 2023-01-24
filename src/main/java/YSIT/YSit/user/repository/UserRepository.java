@@ -21,7 +21,7 @@ public class UserRepository {
     }
 
     public List<User> findLoginIdAndPw(String loginId, String loginPw) {
-        return em.createQuery("select u from User u where u.loginId = :loginId and u.loginPw = :loginPw", User.class)
+        return em.createQuery("select u from User u where u.loginId like :loginId and u.loginPw like :loginPw", User.class)
                 .setParameter("loginId", loginId)
                 .setParameter("loginPw", loginPw)
                 .getResultList();
@@ -30,6 +30,12 @@ public class UserRepository {
     public List<User> findLoginId(String loginId) {
         return em.createQuery("select u from User u where u.loginId = :loginId", User.class)
                 .setParameter("loginId", loginId)
+                .getResultList();
+    }
+
+    public List<User> findLoginPw(String loginPw) {
+        return em.createQuery("select u from User u where u.loginPw like :loginPw", User.class)
+                .setParameter("loginPw", loginPw)
                 .getResultList();
     }
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/user")
@@ -60,26 +61,35 @@ public class UserController {
     @PostMapping("/login") // 로그인 기능
     public ResponseEntity login(
                                 HttpServletRequest request,
-            @RequestParam("loginId") String loginId, @RequestParam("loginPw") String loginPw) {
-        log.info("\nLoginID = {}\nLoginPW = {}", loginId, loginPw);
+                                @ModelAttribute UserForm form) {
+        log.info("\nLoginID = {}\nLoginPW = {}", form.getLoginId(), form.getLoginPw());
 
-        User user = User.builder()
-                .loginPw(loginPw)
-                .loginId(loginId)
-                .build();
-        return ResponseEntity.status(HttpStatus.OK).body(user);
+        List<User> matchId = userService.findLoginId(form.getLoginId());
+        if (matchId.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.OK).body("아이디가 일치하지 않습니다");
+        }
+        List<User> matchPw = userService.findLoginPw(form.getLoginPw());
+        if (matchPw.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.OK).body("비밀번호가 일치하지 않습니다");
+        }
+        Boolean matchLogin = userService.matchLogins(form.getLoginId(), form.getLoginPw());
+        if (!matchLogin) {
+            return ResponseEntity.status(HttpStatus.OK).body("암호가 일치하지 않습니다");
+        }
 
-//        List<User> matchLogins = userService.matchLogins(loginId, loginPw);
-//
+        User resUser = null;
+        for (User user : matchId) {
+            resUser = user;
+        }
+//            HttpSession session = request.getSession();
+//            session.setAttribute("Id", responseUser.getId());
+
+        System.out.printf("user = %s", resUser.getLoginId());
+        return ResponseEntity.status(HttpStatus.OK).body(resUser);
+
 //        if (matchLogins.isEmpty()) {
 //            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("암호가 일치하지 않습니다");
 //        } else {
-//            User responseUser = matchLogins.get(0);
-//
-//            HttpSession session = request.getSession();
-//            session.setAttribute("Id", responseUser.getId());
-//
-//            return ResponseEntity.status(HttpStatus.OK).body(responseUser);
 //        }
     }
 

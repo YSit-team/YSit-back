@@ -10,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Objects;
 
 
 @Transactional(readOnly = true)
@@ -24,6 +25,7 @@ public class UserService {
         if (!findDoubleCheck.isEmpty()){
             throw new IllegalStateException("Id already exists");
         }
+        user.changeLoginPw(encryption(user.getLoginPw()));
         userRepository.save(user);
         return user.getId();
     }
@@ -32,9 +34,12 @@ public class UserService {
         return userRepository.findLoginId(LoginId);
     }
 
-    public List<User> matchLogins(String loginId, String loginPw) { //
+    public Boolean matchLogins(String loginId, String loginPw) { //
         List<User> users = userRepository.findLoginIdAndPw(loginId, encryption(loginPw));
-        return users;
+        if (users.isEmpty()) {
+            return false;
+        }
+        return true;
     }
 
     @Transactional(readOnly = false) // Dirty Check
@@ -74,6 +79,9 @@ public class UserService {
     }
     public List<User> findLoginId(String loginId) {
         return userRepository.findLoginId(loginId);
+    }
+    public List<User> findLoginPw(String loginPw) {
+        return userRepository.findLoginPw(encryption(loginPw));
     }
     public String encryption(String password) {
         StringBuffer hexSHA256hash = null;

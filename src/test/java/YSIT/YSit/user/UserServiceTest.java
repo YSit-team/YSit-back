@@ -104,17 +104,15 @@
 //        String loginId = "Test";
 //        String loginPw = "Test";
 //
-//        String pw_encrypt = userService.encryption(loginPw);
-//
 //        User user1 = User.builder()
 //                .name(name)
 //                .loginId(loginId)
-//                .loginPw(pw_encrypt)
+//                .loginPw(loginPw)
 //                .build();
 //
 //        userService.register(user1);
-//        List<User> users = userService.matchLogins(loginId, loginPw);
-//        if (users.isEmpty()) {
+//        Boolean matchLogins = userService.matchLogins(loginId, loginPw);
+//        if (!matchLogins) {
 //            fail("유저가 존재하지 않습니다");
 //        }
 //    }
@@ -131,8 +129,8 @@
 //                .build();
 //        userService.register(user1);
 //
-//        List<User> users = userService.matchLogins("1111", "1111");
-//        if (users.isEmpty()) {
+//        Boolean matchLogins = userService.matchLogins("1111", "1111");
+//        if (!matchLogins) {
 //            return;
 //        }
 //        fail("예외가 발생해야 한다");
