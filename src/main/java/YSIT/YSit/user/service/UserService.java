@@ -36,7 +36,7 @@ public class UserService {
 
     public Boolean matchLogins(String loginId, String loginPw) { //
         List<User> users = userRepository.findLoginIdAndPw(loginId, encryption(loginPw));
-        if (users.isEmpty()) {
+        if (users.isEmpty() || Objects.isNull(users)) {
             return false;
         }
         return true;

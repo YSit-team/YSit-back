@@ -21,13 +21,24 @@ public class RentalRepository {
     public Rental findOne(String rentalId) {
         return em.find(Rental.class, rentalId);
     }
-    public List<Rental> findRequestsByWait() {
-        return em.createQuery("select r from Rental r where r.status like :status order by r.status asc", Rental.class)
-                .setParameter("status", RentalStatus.wait)
-                .getResultList();
-    }
-    public List<Rental> findRequestsAll() {
+
+    public List<Rental> findAll() {
         return em.createQuery("select r from Rental r order by r.status asc", Rental.class)
                 .getResultList();
+    }
+    public List<Rental> findRequestById(String id) {
+        return em.createQuery("select r from Rental r where r.uploader like :id order by r.status asc", Rental.class)
+                .setParameter("id", id)
+                .getResultList();
+    }
+
+    public String deleteById(String id) {
+        Rental deleteRental = em.find(Rental.class, id);
+        try {
+            em.remove(deleteRental);
+        } catch (IllegalStateException e) {
+            return "Fail";
+        }
+        return "Complete";
     }
 }

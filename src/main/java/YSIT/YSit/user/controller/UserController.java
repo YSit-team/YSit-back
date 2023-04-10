@@ -49,7 +49,7 @@ public class UserController {
         User user = User.builder()
                 .name(form.getName())
                 .loginId(form.getLoginId())
-                .loginPw(userService.encryption(form.getLoginPw()))
+                .loginPw(form.getLoginPw())
                 .schoolCategory(schoolCategory)
                 .regDate(LocalDateTime.now())
                 .build();
@@ -65,11 +65,11 @@ public class UserController {
         log.info("\nLoginID = {}\nLoginPW = {}", form.getLoginId(), form.getLoginPw());
 
         List<User> matchId = userService.findLoginId(form.getLoginId());
-        if (matchId.isEmpty()) {
+        if (Objects.isNull(matchId)) {
             return ResponseEntity.status(HttpStatus.OK).body("아이디가 일치하지 않습니다");
         }
         List<User> matchPw = userService.findLoginPw(form.getLoginPw());
-        if (matchPw.isEmpty()) {
+        if (Objects.isNull(matchPw)) {
             return ResponseEntity.status(HttpStatus.OK).body("비밀번호가 일치하지 않습니다");
         }
         Boolean matchLogin = userService.matchLogins(form.getLoginId(), form.getLoginPw());
@@ -81,16 +81,13 @@ public class UserController {
         for (User user : matchId) {
             resUser = user;
         }
-//            HttpSession session = request.getSession();
-//            session.setAttribute("Id", responseUser.getId());
+
+        HttpSession session = request.getSession();
+        session.setAttribute("Id", resUser.getId());
 
         System.out.printf("user = %s", resUser.getLoginId());
         return ResponseEntity.status(HttpStatus.OK).body(resUser);
 
-//        if (matchLogins.isEmpty()) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("암호가 일치하지 않습니다");
-//        } else {
-//        }
     }
 
     @PostMapping("/update")

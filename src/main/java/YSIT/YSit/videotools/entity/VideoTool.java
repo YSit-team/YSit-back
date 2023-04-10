@@ -46,7 +46,6 @@ public class VideoTool {
         this.regDate = regDate;
 
     }
-
     public void addQuantity(int quantity) {
         this.quantity += quantity;
     }

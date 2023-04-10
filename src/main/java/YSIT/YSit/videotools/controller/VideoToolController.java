@@ -22,36 +22,10 @@ import java.util.List;
 @Slf4j
 public class VideoToolController {
     private final VideoToolService videoToolService;
-    private final UserService userService;
-    @PostMapping("/videoTools")
-    public ResponseEntity save(@ModelAttribute VideoToolForm form, HttpServletRequest request) {
-        List<VideoTool> duplicateValidation = videoToolService.findByName(form.getName());
-        if (duplicateValidation.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.OK).body("이미 있는 기자재명입니다");
-        }
-        HttpSession session = request.getSession();
-        String id = (String) session.getAttribute("Id");
-        User writer = userService.findOne(id);
 
-        VideoTool videoTool = VideoTool.builder()
-                .name(form.getName())
-                .quantity(form.getMaxQuantity())
-                .maxQuantity(form.getMaxQuantity())
-                .user(writer)
-                .build();
-        videoToolService.save(videoTool);
-        return ResponseEntity.status(HttpStatus.OK).body(videoTool);
-    }
-
-    @GetMapping("/videoToolList")
-    public ResponseEntity list() {
+    @GetMapping("/videoToolList") // 장비 목록
+    public ResponseEntity list(HttpServletRequest request) {
         List<VideoTool> videoTools = videoToolService.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(videoTools);
-    }
-
-    @GetMapping("/videoToolList/{searchName}")
-    public ResponseEntity searchList(@PathVariable("searchName") String searchName) {
-        List<VideoTool> videoTools = videoToolService.findByName(searchName);
         return ResponseEntity.status(HttpStatus.OK).body(videoTools);
     }
 }

@@ -42,6 +42,22 @@ public class VideoToolServiceTest {
     }
 
     @Test
+    public void findAll() {
+        User user = createUser("test","test","test",SchoolCategory.TEACHER);
+        VideoTool videoTool = VideoTool.builder()
+                .name("카메라")
+                .quantity(10)
+                .maxQuantity(10)
+                .user(user)
+                .build();
+        videoToolService.save(videoTool);
+        List<VideoTool> videoTools = videoToolService.findAll();
+        if (Objects.isNull(videoTools) || videoTools.isEmpty()) {
+            fail("검색 실패");
+        }
+    }
+
+    @Test
     public void findByNameTest() {
         User user = createUser("test","test","test",SchoolCategory.TEACHER);
         VideoTool videoTool = VideoTool.builder()
