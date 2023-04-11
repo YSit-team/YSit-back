@@ -16,6 +16,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -27,35 +31,35 @@ public class RentalController {
     private final RentalService rentalService;
 
     @PostMapping("/rentals")
-    public ResponseEntity save(@ModelAttribute RentalForm rentalForm,
-                               HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        String id = (String) session.getAttribute("Id");
-
+    @ResponseBody
+    public ResponseEntity save(@RequestBody HashMap<String, String> map) {
         Rental rental = Rental.builder()
-                .headCnt(rentalForm.getHeadCount())
-                .rentalTools(rentalForm.getRentalTools())
-                .uploader(id)
-                .rentalDate(rentalForm.getRentalDate())
-                .returnDate(rentalForm.getReturnDate())
-                .reason(rentalForm.getReason())
-                .phoneNum(rentalForm.getPhoneNum())
+                .headCnt(map.get("headCount"))
+                .rentalTools(null)
+                .uploader(map.get("uploader"))
+                .rentalDate(map.get("rentalDate"))
+                .returnDate(map.get("returnDate"))
+                .reason(map.get("reason"))
                 .status(RentalStatus.wait)
                 .build();
-
-        log.info(String.valueOf(rental));
-
-        rentalService.save(rental);
-        return ResponseEntity.status(HttpStatus.OK).body(rental);
+        String rentalID = rentalService.save(rental);
+        return ResponseEntity.status(HttpStatus.OK).body("OK");
     }
 
     @PostMapping("/rentalHistory")
     public ResponseEntity history(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        String id = (String) session.getAttribute("Id");
-
-        List<Rental> res = rentalService.findRequestById(id);
+        List<Rental> res = rentalService.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(res);
+    }
+
+    @PostMapping("/rentalDetail")
+    public ResponseEntity detail(@RequestBody HashMap<String, String> map) {
+        List<Rental> res = rentalService.findRequestById(map.get("rentalId"));
+        Rental response = null;
+        for (Rental resp : res) {
+            response = resp;
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("/delete")

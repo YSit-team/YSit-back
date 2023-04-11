@@ -9,8 +9,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,27 +21,30 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Rental {
 
-    private static final String DATE_PATTERN = "yyyy/MM/dd hh:mm:ss";
+    private static final String DATE_PATTERN = "yyyy-MM-dd";
+
     @Id
     @Column(name = "rentalVt_id")
     private String id;
-    private int headCnt; // 인원
+    private String headCnt; // 인원
     private List<String> rentalTools;
     private String uploader;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_PATTERN, timezone = "Asia/Seoul")
-    private LocalDateTime rentalDate; // 대여일
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_PATTERN, timezone = "Asia/Seoul")
-    private LocalDateTime returnDate; // 반납일
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_PATTERN, timezone = "Asia/Seoul")
+    private String rentalDate; // 대여일
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_PATTERN, timezone = "Asia/Seoul")
+    private String returnDate; // 반납일
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_PATTERN, timezone = "Asia/Seoul")
     private LocalDateTime regDate; // 작성일
     private String reason;
     @Enumerated(EnumType.STRING)
     private RentalStatus status;
-    private long phoneNum;
+//    private long phoneNum;
     @Builder
-    private Rental(String id, int headCnt, String uploader, List<String> rentalTools,
-                   LocalDateTime regDate, LocalDateTime rentalDate, LocalDateTime returnDate,
-                   String reason, RentalStatus status, long phoneNum) {
+    private Rental(String id, String headCnt, String uploader, List<String> rentalTools,
+                   LocalDateTime regDate, String rentalDate, String returnDate,
+                   String reason, RentalStatus status
+//            , long phoneNum
+            ) {
         if (id == null) {
             id = UUID.randomUUID().toString();
         }
@@ -55,7 +60,7 @@ public class Rental {
         this.regDate = regDate;
         this.reason = reason;
         this.status = status;
-        this.phoneNum = phoneNum;
+//        this.phoneNum = phoneNum;
     }
 
     public void changeStatus(RentalStatus status) {

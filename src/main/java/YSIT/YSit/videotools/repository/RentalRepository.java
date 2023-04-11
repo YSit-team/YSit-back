@@ -3,6 +3,7 @@ package YSIT.YSit.videotools.repository;
 import YSIT.YSit.videotools.RentalStatus;
 import YSIT.YSit.videotools.entity.Rental;
 import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
+@Transactional
 public class RentalRepository {
     private final EntityManager em;
 

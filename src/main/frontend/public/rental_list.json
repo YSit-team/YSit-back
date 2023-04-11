@@ -1,0 +1,40 @@
+[{
+    "id" : "1",
+    "name" : "정채윤",
+    "number" : "2218",
+    "person" : "5",
+    "period" : "3/14 ~ 3/20",
+    "meet" : "7:00pm ~ 10:00am",
+    "phonenum" : "01050610163",
+    "purpose" : "응애"
+},
+{
+    "id" : "2",
+    "name" : "박기홍",
+    "number" : "2213",
+    "person" : "5",
+    "period" : "3/14 ~ 3/20",
+    "meet" : "7:00pm ~ 10:00am",
+    "phonenum" : "01050610163",
+    "purpose" : "응애"
+},
+{
+    "id" : "3",
+    "name" : "박상규",
+    "number" : "2108",
+    "person" : "5",
+    "period" : "3/14 ~ 3/20",
+    "meet" : "7:00pm ~ 10:00am",
+    "phonenum" : "01050610163",
+    "purpose" : "응애"
+},
+{
+    "id" : "4",
+    "name" : "김영재",
+    "number" : "2603",
+    "person" : "5",
+    "period" : "3/14 ~ 3/20",
+    "meet" : "7:00pm ~ 10:00am",
+    "phonenum" : "01050610163",
+    "purpose" : "응애"
+}]

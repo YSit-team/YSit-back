@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins ="*", allowedHeaders = "*")
-@RestController
+@Controller
 @RequestMapping("/")
 @RequiredArgsConstructor
 @Slf4j
@@ -21,7 +21,7 @@ public class HomeController {
 
     private final UserService userService;
     @GetMapping("")
-    public ResponseEntity home(
+    public String home(
 //            HttpServletRequest request
     ) {
 //        HttpSession session = request.getSession();
@@ -35,6 +35,6 @@ public class HomeController {
                 .loginId("H1")
                 .loginPw("h1").build();
 
-        return ResponseEntity.status(HttpStatus.OK).body(user);
+        return "forward:/index.html";
     }
 }
